@@ -10,9 +10,9 @@
  * @author carlos
  */
 
-require_once '../adodb/adodb.inc.php';
-require_once '../adodb/adodb-exceptions.inc.php';
-require_once '../config/configuracion.php'; 
+require_once '//adodb.inc.php';
+require_once '/adodb-exceptions.inc.php';
+require_once '/config/configuracion.php'; 
 
 class conexion
 {

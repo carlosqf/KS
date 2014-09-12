@@ -5,7 +5,9 @@
  *
  * @author CARLOS QUISPE FERNANDEZ y FREDDY QUISPE FERNANDEZ
  */
-require_once 'conexion.php';
+define('__ROOT__', dirname(dirname(__FILE__)));
+
+require_once __ROOT__.'conexion.php';
 
 class dat_usuario {
 

@@ -4,8 +4,9 @@
  *
  * @author CARLOS
  */
+define('__ROOT__', dirname(dirname(__FILE__)));
 
-require_once '../datos/dat_usuario.php';
+require __ROOT__.'/datos/dat_usuario.php';
 
 class mod_usuario {
     
