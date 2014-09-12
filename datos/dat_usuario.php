@@ -3,7 +3,7 @@
 /**
  * Description of dat_usuario
  *
- * @author CARLOS QUISPE FERNANDEZ
+ * @author CARLOS QUISPE FERNANDEZ y FREDDY QUISPE FERNANDEZ
  */
 require_once 'conexion.php';
 
