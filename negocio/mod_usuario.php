@@ -4,9 +4,7 @@
  *
  * @author CARLOS
  */
-define('__ROOT__', dirname(dirname(__FILE__)));
-
-require __ROOT__.'/datos/dat_usuario.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/KS/datos/dat_usuario.php';
 
 class mod_usuario {
     
@@ -35,6 +33,10 @@ class mod_usuario {
         return $this->dat_usuario->consultarPorRol();
     }
     
+    public function numeroDeUsuariosPorRol($id_rol) {
+        return $this->dat_usuario->numeroDeUsuariosPorRol($id_rol);
+    }
+    
     public function consultarPorCodigo($id) {
         $this->dat_usuario->setId($id);
         return $this->dat_usuario->consultarPorCodigo();
@@ -59,7 +61,7 @@ class mod_usuario {
     }
     
     public function consultarUsuarios($numero_pagina, $id_rol) {
-        return $this->dat_usuario->consultarUsuarios($numero_pagina, $id_r11ol);
+        return $this->dat_usuario->consultarUsuarios($numero_pagina, $id_rol);
     }
     
 }

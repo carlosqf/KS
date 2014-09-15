@@ -1,6 +1,5 @@
 <?php
 
  
-
-echo dirname(__FILE__) ;
+echo $_SERVER['DOCUMENT_ROOT'].'/KS/';
 

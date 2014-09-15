@@ -4,7 +4,8 @@
         <link rel="shortcut icon" href="../../imagenes/logo.png">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">        
         <title>Usuarios</title>     
-        <script type="text/javascript" src="../Librerias/jquery.js"></script>   
+        <script type="text/javascript" src="../../js/jquery.js"></script>
+        <script type="text/javascript" src="usuario.js"></script>
         <link rel="stylesheet" type="text/css" href="../../css/paginacion.css"/>
     </head>    
     <body bgcolor="#818286">
