@@ -5,9 +5,8 @@
  *
  * @author CARLOS QUISPE FERNANDEZ y FREDDY QUISPE FERNANDEZ
  */
-define('__ROOT__', dirname(dirname(__FILE__)));
 
-require_once __ROOT__.'conexion.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/KS/datos/conexion.php';
 
 class dat_usuario {
 
@@ -65,7 +64,7 @@ class dat_usuario {
     public function registrar() {
         $this->con->conectar();
         $consulta = "insert into to_usuarios values(default,'$this->identificadorempresa','$this->username','$this->password',$this->id_rol,'$this->nombre','$this->telefono',$this->activo,$this->borrado);";
-        $result = $this->con->ejecutarSQL($consulta);
+        $result = $this->con->ejecutarConsulta($consulta);
         $this->con->desconectar();
         return $result;
     }
@@ -76,9 +75,24 @@ class dat_usuario {
 from to_usuarios
 where id_rol = $this->id_rol
 order by nombre;";
-        $result = $this->con->getArray($consulta);
+        $result = $this->con->getArrayModoColumna($consulta);
         $this->con->desconectar();
         return $result;
+    }
+    
+    public function numeroDeUsuariosPorRol($id_rol) {
+        $this->con->Conectar();
+        if ( $id_rol == 0 ){
+            $consulta = "select count(id) as cantidad
+                        from to_usuarios;";
+        }else{
+            $consulta = "select count(id) as cantidad
+                        from to_usuarios
+                        where id_rol = $id_rol;";
+        }
+        $result = $this->con->getArrayModoRegistro($consulta);
+        $this->con->desconectar();
+        return $result[0][0];
     }
 
     public function consultarPorCodigo() {
@@ -86,7 +100,7 @@ order by nombre;";
         $consulta = "select id, identificadorempresa, username, password, id_rol, nombre, telefono, activo, borrado
 from to_usuarios
 where id = $this->id;";
-        $result = $this->con->getArray($consulta);
+        $result = $this->con->getArrayModoColumna($consulta);
         $this->con->desconectar();
         return $result;
     }
@@ -94,7 +108,7 @@ where id = $this->id;";
     public function buscarUsuario() {
         $this->con->Conectar();
         $consulta = "select id, nombre, activo from to_usuarios where nombre LIKE '%$this->nombre';";
-        $result = $this->con->getArray($consulta);
+        $result = $this->con->getArrayModoColumna($consulta);
         $this->con->desconectar();
         return $result;
     }
@@ -104,7 +118,7 @@ where id = $this->id;";
         $consulta = "update to_usuarios
 set identificadorempresa='$this->identificadorempresa', username='$this->username', password='$this->password', id_rol=$this->id_rol, nombre='$this->nombre', telefono='$this->telefono', activo=$this->activo, borrado=$this->borrado
 where id = $this->id;";
-        $result = $this->con->ejecutarSQL($consulta);
+        $result = $this->con->ejecutarConsulta($consulta);
         $this->con->desconectar();
         return $result; 
     }
@@ -120,11 +134,11 @@ where id = $this->id;";
         }else{
             $consulta = "select id, nombre, activo, id_rol
                         from to_usuarios
-                        where id_rol = 1
+                        where id_rol = $id_rol
                         order by nombre
                         limit $pagina,10;";
         }
-        $result = $this->con->getArray($consulta);
+        $result = $this->con->getArrayModoColumna($consulta);
         $this->con->desconectar();
         return $result;
     }
