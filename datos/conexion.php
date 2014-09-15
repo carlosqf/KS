@@ -35,10 +35,8 @@ class conexion
 
     public function conectar()
     {        
-        try {            
-            // DATOS DE LA BASE DE DATOS Y EL USUARIO con autentificacion de windows               
-            $driver   = 'mysql';
-              
+        try {                       
+            $driver   = 'mysql';              
             $server   = $GLOBALS[ 'server_mysql' ];
             $database = $GLOBALS[ 'database_mysql' ];
             $user     = $GLOBALS[ 'usuario_mysql' ];
@@ -62,17 +60,7 @@ class conexion
             die();
         }
     }
-    
-    public function ejecutarSQL($sql)
-    {
-        $this->db->Execute("SET NAMES 'utf8'");
-        if ($this->db->Execute($sql)){
-            return 1;  // SE EJECUTO CORRECTAMENTE
-        }else{
-            return 0;  // NO SE EJECUTO CORRECTAMENTE
-        }
-    }
-    
+        
     public function ejecutarConsulta($sql)
     {
         $this->db->Execute("SET NAMES 'utf8'");
@@ -84,10 +72,22 @@ class conexion
         }
     }
     
-    public function getArray($sql)
+    public function getArrayModoColumna($sql)
     {
         $this->db->Execute("SET NAMES 'utf8'");
-        try {            
+        try {  
+            $this->db->SetFetchMode(ADODB_FETCH_ASSOC);
+            $rs = $this->db->GetArray($sql); 
+            return $rs;
+        } catch (Exception $exc) {
+            echo 'Error en la Ejecucion de la Consulta getArray!!!'.$sql;
+        }
+    }
+    
+    public function getArrayModoRegistro($sql)
+    {
+        $this->db->Execute("SET NAMES 'utf8'");
+        try {  
             $rs = $this->db->GetArray($sql); 
             return $rs;
         } catch (Exception $exc) {
