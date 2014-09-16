@@ -107,7 +107,7 @@ where id = $this->id;";
 
     public function buscarUsuario() {
         $this->con->Conectar();
-        $consulta = "select id, nombre, activo from to_usuarios where nombre LIKE '%$this->nombre';";
+        $consulta = "select id, nombre, activo from to_usuarios where nombre LIKE '%$this->nombre%';";
         $result = $this->con->getArrayModoColumna($consulta);
         $this->con->desconectar();
         return $result;

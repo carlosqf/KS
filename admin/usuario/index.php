@@ -1,6 +1,7 @@
 <?php
 // Primero declaro todas las Clases que se utilizaran
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_usuario.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_rol.php';
 
 $view = new stdClass();   // clase estandar para variables globales
 $view->principal = true;  // true para mostrar plantilla por defecto
@@ -21,6 +22,11 @@ if (isset($_POST['id_rol'])) {
 if (isset($_POST['nombre_buscar'])) {  
     $view->nombre_buscar = $_POST['nombre_buscar'];
 }
+if (isset($_POST['id'])){
+    $view->id = $_POST['id']; // id del usuario
+}
+
+
 switch ($accion) {
     case 'principal':
         $view->plantilla = "usuario_lista.php";
@@ -36,6 +42,10 @@ switch ($accion) {
     case 'lista':
         $view->principal = false;
         $view->plantilla = "usuario_lista.php";
+        break;
+    case 'busqueda':
+        $view->principal = false;
+        $view->plantilla = "usuario_busqueda.php";
         break;
 }
 
