@@ -4,33 +4,10 @@
     margin: 0px 0;
 }
 
-.pagination ul {
-    border-radius: 3px 3px 3px 3px;
-    margin-left:0px;
-    box-shadow: 3px 3px 2px;
-}
 .pagination li {
     display: inline;
 }
-.pagination a {
-    -moz-border-bottom-colors: none;
-    -moz-border-image: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    border-color: #DDDDDD;
-    border-style: solid;
-    border-width: 1px 1px 1px 0;
-    float: left;
-    line-height: 25px;
-    padding: 0 15px 0px 10px;
-    text-decoration: none;
-}
-.pagination a:hover, .pagination .active a {    
-	outline:0;
-	text-decoration:none;
-	font-weight: bold;
-}
+
 .active{
     color: blue;
     cursor: default;
@@ -40,13 +17,6 @@
     background-color: transparent;
     color: #999999;
     cursor: default;
-}
-.pagination li:first-child a {
-    border-left-width: 1px;
-    border-radius: 3px 0 0 3px;
-}
-.pagination li:last-child a {
-    border-radius: 0 3px 3px 0;
 }
 
 a {

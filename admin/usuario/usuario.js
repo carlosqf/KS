@@ -1,14 +1,5 @@
 $(document).ready(function() {       
     
-        $('.paginate').live('click', function(){
-		//$('#content').html('<div class="loading"><img src="../../imagenes/loading.gif" width="70px" height="70px"/></div>');
-		var page = $(this).attr('data');
-                parametros={};
-                parametros.accion = "lista";
-                parametros.pagina = page;
-                parametros.id_rol = document.getElementById("miselectrol").value;
-                $('#contenido').load('index.php',parametros,function(){});
-        });
         
         $('#miselectrol').change(function(){
             var id_rol = document.getElementById("miselectrol").value;
@@ -51,26 +42,101 @@ $(document).ready(function() {
             $('.editable').css("font-weight","normal");
             $('#editar').attr("disabled","true");
             document.getElementById("nombre_usuario").focus(); 
-            $('#modificar').removeAttr('disabled');
+            $('.modificar').removeAttr('disabled');
             $('.cancelar_modificacion').removeAttr('disabled');
         });
         
         $('.cancelar_modificacion').click(function(event){
-            var id = event.target.id; 
-            parametros={};
-            parametros.accion = "detalle";
-            $('#contenido').load('index.php?id='+id, parametros, function(){});
+            location.reload();
         });
         
-        $('.usuario_enlace').click(function(event){
-            var id = event.target.id; 
-            parametros={};
-            parametros.accion = "detalle";
-            parametros.id = id;
-            $('#contenido').load('index.php', parametros, function(){});
+        $('.modificar').click(function(event){
+            var id = event.target.id;
+            
+            var nombre = $.trim(document.getElementById("nombre_usuario").value);
+            var identificador = $.trim(document.getElementById("identificador_usuario").value);
+            var user = $.trim(document.getElementById("user_usuario").value);
+            var password = $.trim(document.getElementById("password_usuario").value);
+            var rol = document.getElementById("miselectrol_mod").value;
+            var telefono = $.trim(document.getElementById("telefono_usuario").value);
+            var estado = document.getElementById("miselectestado_mod").value;
+            
+            if ( user.length > 0 && password.length > 0 ){
+                //$('#carga1').html('<div><img src="../imagenes/pagina/ajax-loader.gif"/></div>');
+                var valores = {    
+                    "accion" : "modificar-usuario",
+                    "id" : id,
+                    "nombre" : nombre,
+                    "identificador" : identificador,
+                    "user" : user,                    
+                    "password" : password,
+                    "rol" : rol,
+                    "telefono" : telefono,                    
+                    "estado": estado
+                };
+                $.ajax({
+                        data:  valores,
+                        url:   'usuario_ajax.php',
+                        type:  'post',
+                        beforeSend: function () {
+                        },
+                        success:  function (respuesta) {
+                            location.reload();
+                        }
+                });
+            }else{
+                //$('#mensaje1').html('Datos Incorrectos');    
+                //$("#numero_factura").focus();
+                alert("Datos incorrectos");
+            }
+            
         });
         
+        $('#cancelar_registro').click(function(event){
+            window.location = "usuario_lista.php";
+        });
         
+        $('#registrar').click(function(){
+            
+            var nombre = $.trim(document.getElementById("nombre_usuario").value);
+            var identificador = $.trim(document.getElementById("identificador_usuario").value);
+            var user = $.trim(document.getElementById("user_usuario").value);
+            var password = $.trim(document.getElementById("password_usuario").value);
+            var rol = document.getElementById("miselectrol_mod").value;
+            var telefono = $.trim(document.getElementById("telefono_usuario").value);
+            var estado = document.getElementById("miselectestado_mod").value;
+            
+            if ( user.length > 0 && password.length > 0 ){
+                //$('#carga1').html('<div><img src="../imagenes/pagina/ajax-loader.gif"/></div>');
+                var valores = {    
+                    "accion" : "registrar-usuario",
+                    "nombre" : nombre,
+                    "identificador" : identificador,
+                    "user" : user,                    
+                    "password" : password,
+                    "rol" : rol,
+                    "telefono" : telefono,           
+                    "estado": estado
+                };
+                $.ajax({
+                        data:  valores,
+                        url:   'usuario_ajax.php',
+                        type:  'post',
+                        beforeSend: function () {
+                        },
+                        success:  function (respuesta) {
+                            var id_registrado = $.trim(respuesta);
+                            window.location = "usuario_detalle.php?id="+id_registrado;
+                        }
+                });
+            }else{
+                //$('#mensaje1').html('Datos Incorrectos');    
+                //$("#numero_factura").focus();
+                alert("Datos incorrectos");
+            }
+            
+        });
+           
         
 });
 

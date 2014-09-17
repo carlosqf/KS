@@ -89,10 +89,15 @@ $total_paginas = ceil($numero_usuarios / $usuarios_por_pagina);
                     $id_usuario     = $usuario_reg['id'];
                     $nombre_usuario = $usuario_reg['nombre'];
                     $estado_usuario = $usuario_reg['activo'];
+                    
+                    if (strcmp( trim($nombre_usuario) , "") == 0 ){
+                        $nombre_usuario = "SN";
+                    }
+                    
                     ?>
                     <tr>
                         <td width="40%" align="left">
-                            <div id="<?php echo $id_usuario;?>" class="usuario_enlace" style="cursor: pointer;" ><?php echo $nombre_usuario;?></div>
+                            <a href="usuario_detalle.php?id=<?php echo $id_usuario;?>" style="cursor: pointer;" ><?php echo $nombre_usuario;?></a>
                         </td>
                         <td width="20%">
                             25
@@ -147,9 +152,8 @@ $total_paginas = ceil($numero_usuarios / $usuarios_por_pagina);
             ?>
         </td>
     </tr>
-</table>                               
-                
-                
+</table>        
+            
         </div>
     </body>
 </html>

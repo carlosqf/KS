@@ -48,7 +48,8 @@ class mod_usuario {
         return $this->dat_usuario->buscarUsuario();
     }
     
-    public function modificarUsuario($identificadorempresa, $username, $password, $id_rol, $nombre, $telefono, $activo, $borrado) {
+    public function modificarUsuario($id, $identificadorempresa, $username, $password, $id_rol, $nombre, $telefono, $activo, $borrado) {
+        $this->dat_usuario->setId($id);
         $this->dat_usuario->setIdentificadorEmpresa($identificadorempresa);
         $this->dat_usuario->setUsername($username);
         $this->dat_usuario->setPassword($password);
@@ -62,6 +63,10 @@ class mod_usuario {
     
     public function consultarUsuarios($numero_pagina, $id_rol) {
         return $this->dat_usuario->consultarUsuarios($numero_pagina, $id_rol);
+    }
+    
+    public function consultarUltimoID(){        
+        return $this->dat_usuario->consultarUltimoID();
     }
     
 }

@@ -142,4 +142,13 @@ where id = $this->id;";
         $this->con->desconectar();
         return $result;
     }
+    
+    public function consultarUltimoID(){
+        $this->con->Conectar();        
+        $consulta = "select max(id) as id from to_usuarios;";        
+        $result = $this->con->getArrayModoRegistro($consulta);        
+        $this->con->desconectar();
+        return $result[0][0];
+    }
+    
 }
