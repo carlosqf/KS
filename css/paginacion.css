@@ -31,7 +31,7 @@
 	text-decoration:none;
 	font-weight: bold;
 }
-.pagination .active a {
+.active{
     color: blue;
     cursor: default;
     text-decoration: underline;
@@ -56,6 +56,7 @@ a {
 
 .paginate_disabled{
     color: #BDBDBD;
+    pointer-events: none;
 }
 .paginate{    
     cursor:pointer;

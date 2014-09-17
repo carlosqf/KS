@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100%">
     <head>
         <link rel="shortcut icon" href="../../imagenes/logo.png">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">        
@@ -8,9 +8,9 @@
         <script type="text/javascript" src="usuario.js"></script>
         <link rel="stylesheet" type="text/css" href="../../css/paginacion.css"/>
     </head>    
-    <body bgcolor="#818286">
-        <div id="pagina" style="background-color: white; width: 1000px; text-align: center; margin: 0 auto;">            
-            <div id="contenido">                
+    <body bgcolor="#818286" style="height: 97%">
+        <div style="background-color: white; width: 100%; height: 100%;" align="center">            
+            
 
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_usuario.php';
@@ -37,7 +37,7 @@ $usuarios_por_pagina = 10;
 
 $total_paginas = ceil($numero_usuarios / $usuarios_por_pagina);
 ?>
-<table width="70%" height="100%">
+<table width="97%" height="97%" rules="all" border="1">
     <tr>
         <td>
             <table width="100%">
@@ -77,7 +77,7 @@ $total_paginas = ceil($numero_usuarios / $usuarios_por_pagina);
     </tr>
     <tr>
         <td>
-            <table width="100%" height="80%">
+            <table width="100%">
                 <tr>
                     <td align="left">Nombre</td>
                     <td>Nro. Casos</td>
@@ -131,7 +131,7 @@ $total_paginas = ceil($numero_usuarios / $usuarios_por_pagina);
                 }
                 for ($i=$inicio;$i<=$fin;$i++) {
                     if ($pagina == $i){
-                        echo '<td class="active">5</td>';
+                        echo '<td class="active">'.$i.'</td>';
                     }else{
                         echo '<td><a href="usuario_lista.php?pag='.($i).'&rol='.$id_rol.'" >'.$i.'</a></td>';
                     }    
@@ -150,7 +150,6 @@ $total_paginas = ceil($numero_usuarios / $usuarios_por_pagina);
 </table>                               
                 
                 
-            </div>
         </div>
     </body>
 </html>
