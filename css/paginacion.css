@@ -1,42 +1,4 @@
-
-.pagination {
-    height: 0px;
-    margin: 0px 0;
-}
-
-.pagination li {
-    display: inline;
-}
-
-.active{
-    color: blue;
-    cursor: default;
-    text-decoration: underline;
-}
-.pagination .disabled a, .pagination .disabled a:hover {
-    background-color: transparent;
-    color: #999999;
-    cursor: default;
-}
-
-a {
-    font-weight: bold;
-    text-decoration: none;
-}
-
 .paginate_disabled{
     color: #BDBDBD;
     pointer-events: none;
 }
-.paginate{    
-    cursor:pointer;
-}
-
-.loading {
-width:100%;
-text-align:center;
-margin-top:40px;
-height:100px;
-}
-
-
