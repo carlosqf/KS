@@ -11,8 +11,9 @@ HTML - styles
 ============================================================================= */
 
 body {font:0.8em/1.5 "arial", sans-serif;}
-h1, h2, h3, h4, h5, h6, address, blockquote, dl, fieldset, ol, p, table, ul {margin:10px 0;}
-#content h1 {font-size:170%;}
+h2, h3, h4, h5, h6, address, blockquote, dl, fieldset, ol, p, table, ul {margin:10px 0;}
+h1 {margin: 0; padding: 0;}
+#content h1 {font-size:140%; height: 15px; padding-top: 0px;}
 #content h2 {font-size:160%;}
 #content h3 {font-size:140%;}
 #content h4 {font-size:120%;}
@@ -54,7 +55,7 @@ LAYOUT
 ============================================================================= */
 
 #main {min-width:980px; width:expression(document.body.clientWidth < 980? "980px" : "auto" );}
-#tray {padding:12px 15px; background:url("../design/tray.gif") 0 0 repeat-x; font:85%/1.2 "tahoma",sans-serif;}
+#tray {padding:5px 15px; background:url("../design/tray.gif") 0 0 repeat-x; font:85%/1.2 "tahoma",sans-serif;}
 #tray p {margin:0;}
 #tray p.f-left {width:50%;}
 #tray #logout {padding-left:18px; background:url("../design/tray-logout.gif") 0 50% no-repeat; text-transform:uppercase;}

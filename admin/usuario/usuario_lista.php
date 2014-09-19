@@ -15,9 +15,12 @@
 <script type="text/javascript" src="../../js/toggle.js"></script>
 <script type="text/javascript" src="../../js/ui.core.js"></script>
 <script type="text/javascript" src="../../js/ui.tabs.js"></script>
+
+<script type="text/javascript" src="usuario.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".tabs > ul").tabs();
+                document.getElementById("texto_busqueda").focus();
 	});
 	</script>
 </head>
@@ -39,14 +42,15 @@
       <li><a href=""><span><strong>Visitar KSolucion &raquo;</strong></span></a></li>
     </ul>
     <ul class="box">
-      <li id="menu-active"><a href=""><span>Lorem ipsum</span></a></li>
+        <li id="menu-active"><a href="usuario_lista.php"><span>Usuarios</span></a></li>
       <!-- Active -->
-      <li><a href=""><span>Lorema ipsum</span></a></li>
-      <li><a href=""><span>Lorem ipsum</span></a></li>
-      <li><a href=""><span>Lorem ipsum</span></a></li>
-      <li><a href=""><span>Lorem ipsum</span></a></li>
-      <li><a href=""><span>Lorem ipsum</span></a></li>
-      <li><a href=""><span>Lorem ipsum</span></a></li>
+      <li><a href=""><span>Voces</span></a></li>
+      <li><a href=""><span>Preceptos</span></a></li>
+      <li><a href=""><span>Especialidades</span></a></li>
+      <li><a href=""><span>Libros</span></a></li>
+      <li><a href=""><span>Documentos</span></a></li>
+      <li><a href=""><span>Mis casos</span></a></li>
+      <li><a href=""><span>Todos los casos</span></a></li>
     </ul>
   </div>
   <!-- /header -->
@@ -57,29 +61,28 @@
     <div id="aside" class="box">
       <div class="padding box">
         <!-- Search -->
-        <form action="" method="get" id="search">
+        <form action="usuario_busqueda.php" method="get" id="search">
           <fieldset>
-          <legend>Buscar</legend>
-          <p>
-            <input type="text" size="17" name="" class="input-text" />
+          <legend>Buscar</legend>          
+            <input type="text" name="texto" size="17" class="input-text" id="texto_busqueda" />
             &nbsp;
-            <input type="submit" value="OK" class="input-submit-02" />
+            <input type="submit" value="OK" class="input-submit-02" id="buscar" />
             <br />            
           </fieldset>
         </form>
         <!-- Create a new project -->
-        <p id="btn-create" class="box"><a href=""><span>Crear nuevo usuario</span></a></p>
+        <p id="btn-create" class="box"><a href="usuario_registrar.php"><span>Crear nuevo usuario</span></a></p>
       </div>
       <!-- /padding -->
       <ul class="box">
-        <li><a href="">Lista de Usuario</a></li>
+        <li><a href="usuario_lista.php">Lista de usuarios</a></li>
       </ul>
     </div>
     <!-- /aside -->
     <hr class="noscreen" />
     <!-- Content (Right Column) -->
-    <div id="content" class="box" style="min-height: 100%;">
-      <h1>Usuarios</h1>          
+    <div id="content" class="box" style="min-height: 470px;">
+      <h1>Usuarios (Lista)</h1>          
             
 
 <?php
@@ -103,124 +106,117 @@ $lista_usuarios = $usuario->consultarUsuarios($pagina, $id_rol);
 $numero_usuarios = $usuario->numeroDeUsuariosPorRol($id_rol);
 $usuarios_por_pagina = 10;
 $total_paginas = ceil($numero_usuarios / $usuarios_por_pagina);
+
+$total_usuarios = $usuario->numeroDeUsuariosPorRol($id_rol);
 ?>
-<table width="515px">
-    <tr>
-        <td>
-            <table width="100%">
-                <tr>
-                    <td align="left">
-                        <input type="text" name="texto" width="20" id="texto_busqueda">
-                        <input type="button" value="Buscar" id="buscar">
-                    </td>
-                    <td align="right">Usuarios
-                        <?php
-                        $rol = new mod_rol();
-                        $roles = $rol->consultarRoles();
-                        ?>
-                        <select id="miselectrol">
-                            <?php                            
-                            foreach ($roles as $reg_rol){
-                                $id_rol_reg = $reg_rol['id'];
-                                $tipo_rol_reg = $reg_rol['rol'];                                
-                                if ( $id_rol == $id_rol_reg ){
-                                    echo '<option value="'.$id_rol.'" selected>'.$tipo_rol_reg.'</option>';
-                                }else{
-                                    echo '<option value="'.$id_rol_reg.'">'.$tipo_rol_reg.'</option>';
-                                }                                 
-                            }
-                            if ( $id_rol == 0 ){
-                                echo '<option value="0" selected>Todos</option>';
-                            }else{
-                                echo '<option value="0">Todos</option>';
-                            }
-                            ?>
-                        </select>
-                    </td>
-                </tr>
-            </table>
-        </td>    
-    </tr>
-    <tr>
-        <td height="370px" minwidth="350px">
-            <table width="100%">
-                <tr>
-                    <td align="left">Nombre</td>
-                    <td>Nro. Casos</td>
-                    <td>Estado</td>
-                    <td align="right">Espacio</td>
-                </tr>
-                <?php                
-                foreach($lista_usuarios as $usuario_reg) {
-                    $id_usuario     = $usuario_reg['id'];
-                    $nombre_usuario = $usuario_reg['nombre'];
-                    $estado_usuario = $usuario_reg['activo'];                    
-                    if (strcmp( trim($nombre_usuario) , "") == 0 ){
-                        $nombre_usuario = "SN";
-                    }                    
-                    ?>
-                    <tr>
-                        <td width="40%" align="left">
-                            <a href="usuario_detalle.php?id=<?php echo $id_usuario;?>" style="cursor: pointer;" ><?php echo $nombre_usuario;?></a>
-                        </td>
-                        <td width="20%">
-                            25
-                        </td>
-                        <td width="20%">
-                            Activo
-                        </td>
-                        <td width="20%" align="right">
-                            ir
-                        </td>
-                    </tr>
-                    <?php                    
-                }                
-                ?>                
-            </table>
-        </td>    
-    </tr>
-    <tr>
-        <td align="center">
-            <?php
-                echo '<table rules="all" border="1" cellpadding="5">
-                    <tr>';
-            if ($total_paginas > 1) {
-                if ($pagina != 1){
-                    echo '<td><a href="usuario_lista.php?pag='.($pagina - 1).'&rol='.$id_rol.'" >Anterior</a></td>';
+<div style="margin-top: 10px; max-width: 700px;" >    
+            
+    <div align="right" style="margin-bottom: 6px;">Usuarios
+        <div style="float: left;">Pagina <?php echo $pagina;?>/<?php echo $total_paginas;?> (Total <?php echo $total_usuarios;?> Usuarios)</div>
+        <?php
+        $rol = new mod_rol();
+        $roles = $rol->consultarRoles();
+        ?>
+        <select id="miselectrol">
+            <?php                            
+            foreach ($roles as $reg_rol){
+                $id_rol_reg = $reg_rol['id'];
+                $tipo_rol_reg = $reg_rol['rol'];                                
+                if ( $id_rol == $id_rol_reg ){
+                    echo '<option value="'.$id_rol.'" selected>'.$tipo_rol_reg.'</option>';
                 }else{
-                    echo '<td><a href="" class="paginate_disabled">Anterior</a></td>';
-                }
-                $inicio = $pagina - 4;
-                if ( $inicio <= 0 ){
-                    $inicio = 1;
-                }		
-                $fin    = $inicio + 8;
-                if ($fin > $total_paginas){
-                    $fin = $total_paginas;
-                }
-                for ($i=$inicio;$i<=$fin;$i++) {
-                    if ($pagina == $i){
-                        echo '<td class="active">'.$i.'</td>';
-                    }else{
-                        echo '<td><a href="usuario_lista.php?pag='.($i).'&rol='.$id_rol.'" >'.$i.'</a></td>';
-                    }    
-                }
-                if ($pagina != $total_paginas){
-                    echo '<td><a href="usuario_lista.php?pag='.($pagina + 1).'&rol='.$id_rol.'">Siguiente</a></td>';
-                }else{
-                    echo '<td><a href="" class="paginate_disabled">Siguiente</a></td>';
-                }   
-                echo '</tr>
-                </table>';
-            }            
+                    echo '<option value="'.$id_rol_reg.'">'.$tipo_rol_reg.'</option>';
+                }                                 
+            }
+            if ( $id_rol == 0 ){
+                echo '<option value="0" selected>Todos</option>';
+            }else{
+                echo '<option value="0">Todos</option>';
+            }
             ?>
-        </td>
-    </tr>
-</table>  
+        </select>
+    </div>
+
+    <table width="100%">
+        <tr>
+            <th>Nombre</th>
+            <th>Nro. de casos</th>
+            <th>Rol</th>
+            <th>Estado</th>
+            <th><div align="right">Espacio de casos</div></th>
+        </tr>
+        <?php 
+        foreach($lista_usuarios as $usuario_reg) {
+            $id_usuario     = $usuario_reg['id'];
+            $nombre_usuario = $usuario_reg['nombre'];
+            $estado_usuario = $usuario_reg['activo'];
+            $id_rol_usuario = $usuario_reg['id_rol'];
+            $rol_descripcion = $rol->getRolId($id_rol_usuario);
+            $numero_casos = $usuario->numeroCasos($id_usuario);
+            if (strcmp( trim($nombre_usuario) , "") == 0 ){
+                $nombre_usuario = "SN";
+            }                    
+            ?>
+            <tr>
+                <td width="35%" align="left">
+                    <a href="usuario_detalle.php?id=<?php echo $id_usuario;?>"><?php echo $nombre_usuario;?></a>
+                </td>
+                <td width="15%">
+                    <?php echo $numero_casos;?>
+                </td>
+                <td width="17%">
+                    <?php echo $rol_descripcion;?>
+                </td>
+                <td width="15%">
+                    Habilitado
+                </td>
+                <td width="18%" align="right">                    
+                    <a href="">ir a espacio</a>
+                </td>
+            </tr>
+            <?php                    
+        }                
+        ?>                
+    </table> 
+    
+    <div align="center" style="margin-top: 15px;">            
+    <?php
+        echo '<table cellpadding="5">
+            <tr>';
+    if ($total_paginas > 1) {
+        if ($pagina != 1){
+            echo '<td><a href="usuario_lista.php?pag='.($pagina - 1).'&rol='.$id_rol.'" >Anterior</a></td>';
+        }else{
+            echo '<td><a href="" class="paginate_disabled">Anterior</a></td>';
+        }
+        $inicio = $pagina - 4;
+        if ( $inicio <= 0 ){
+            $inicio = 1;
+        }		
+        $fin    = $inicio + 8;
+        if ($fin > $total_paginas){
+            $fin = $total_paginas;
+        }
+        for ($i=$inicio;$i<=$fin;$i++) {
+            if ($pagina == $i){
+                echo '<td class="active">'.$i.'</td>';
+            }else{
+                echo '<td><a href="usuario_lista.php?pag='.($i).'&rol='.$id_rol.'" >'.$i.'</a></td>';
+            }    
+        }
+        if ($pagina != $total_paginas){
+            echo '<td><a href="usuario_lista.php?pag='.($pagina + 1).'&rol='.$id_rol.'">Siguiente</a></td>';
+        }else{
+            echo '<td><a href="" class="paginate_disabled">Siguiente</a></td>';
+        }   
+        echo '</tr>
+        </table>';
+    }            
+    ?>
+    </div>
+        
+</div>  
       
-      
-      
-         
             
             
 	</div>	
@@ -233,7 +229,7 @@ $total_paginas = ceil($numero_usuarios / $usuarios_por_pagina);
   <!-- /footer -->
 </div><br></br>
 <!-- /main -->
-<div align=center>This template  downloaded form <a href=''>free website templates</a></div>
-</div>
+
+</div>   
 </body>
 </html>

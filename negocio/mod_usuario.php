@@ -69,4 +69,9 @@ class mod_usuario {
         return $this->dat_usuario->consultarUltimoID();
     }
     
+    public function numeroCasos($id){
+        $this->dat_usuario->setId($id);
+        return $this->dat_usuario->numeroCasos();
+    }  
+        
 }

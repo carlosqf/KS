@@ -71,7 +71,7 @@ class dat_usuario {
 
     public function consultarPorRol() {
         $this->con->Conectar();
-        $consulta = "select id, nombre, activo
+        $consulta = "select id, nombre, activo, id_rol
 from to_usuarios
 where id_rol = $this->id_rol
 order by nombre;";
@@ -107,7 +107,7 @@ where id = $this->id;";
 
     public function buscarUsuario() {
         $this->con->Conectar();
-        $consulta = "select id, nombre, activo from to_usuarios where nombre LIKE '%$this->nombre%';";
+        $consulta = "select id, nombre, activo, id_rol from to_usuarios where nombre LIKE '%$this->nombre%' order by nombre;";
         $result = $this->con->getArrayModoColumna($consulta);
         $this->con->desconectar();
         return $result;
@@ -127,7 +127,7 @@ where id = $this->id;";
         $this->con->Conectar();
         $pagina = ($numero_pagina - 1) * 10;
         if ( $id_rol == 0 ){
-            $consulta = "select id, nombre, activo
+            $consulta = "select id, nombre, activo, id_rol
                         from to_usuarios
                         order by nombre
                         limit $pagina,10;";
@@ -146,6 +146,16 @@ where id = $this->id;";
     public function consultarUltimoID(){
         $this->con->Conectar();        
         $consulta = "select max(id) as id from to_usuarios;";        
+        $result = $this->con->getArrayModoRegistro($consulta);        
+        $this->con->desconectar();
+        return $result[0][0];
+    }
+    
+    public function numeroCasos(){
+        $this->con->Conectar();        
+        $consulta = "SELECT count(*) as total
+                    FROM to_casos
+                    where  id_admin= $this->id;";        
         $result = $this->con->getArrayModoRegistro($consulta);        
         $this->con->desconectar();
         return $result[0][0];

@@ -83,3 +83,6 @@ MESSAGES
 .msg.info {border:2px solid #B8E2FB; background-color:#E8F6FF;}
 .msg.done {border:2px solid #BBDF8D; background-color:#EAF7D9;}
 .msg.error {border:2px solid #FFAEAE; background-color:#FEEBEB;}
+
+
+.asterisco { color: red; font-weight: bold; font-size: 17px;}

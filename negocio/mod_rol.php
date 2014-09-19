@@ -18,4 +18,9 @@ class mod_rol {
         return $this->dat_rol->consultarRoles();
     }
     
+    public function getRolId($id) {
+        $this->dat_rol->setId($id);
+        return $this->dat_rol->getRolId();
+    }
+    
 }
