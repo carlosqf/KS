@@ -42,6 +42,7 @@
       <li><a href=""><span><strong>Visitar KSolucion &raquo;</strong></span></a></li>
     </ul>
     <ul class="box">
+      <li><a href=""><span>Inicio</span></a></li>  
         <li id="menu-active"><a href="usuario_lista.php"><span>Usuarios</span></a></li>
       <!-- Active -->
       <li><a href=""><span>Voces</span></a></li>
@@ -49,8 +50,7 @@
       <li><a href=""><span>Especialidades</span></a></li>
       <li><a href=""><span>Libros</span></a></li>
       <li><a href=""><span>Documentos</span></a></li>
-      <li><a href=""><span>Mis casos</span></a></li>
-      <li><a href=""><span>Todos los casos</span></a></li>
+      <li><a href=""><span>Casos</span></a></li>
     </ul>
   </div>
   <!-- /header -->
