@@ -74,14 +74,15 @@
       </div>
       <!-- /padding -->
       <ul class="box">
-        <li><a href="usuario_lista.php">Lista de usuarios</a></li>
+        <li><a href="usuario_lista.php">Usuarios</a></li>
       </ul>
     </div>
     <!-- /aside -->
     <hr class="noscreen" />
     <!-- Content (Right Column) -->
-    <div id="content" class="box" style="min-height: 470px;">
-      <h1>Usuarios (Busqueda)</h1>  
+    <div id="content" class="box" style="min-height: 490px;">
+      <h2>Busqueda de usuarios</h2>
+      
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_usuario.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_rol.php';
@@ -97,7 +98,7 @@ if (isset($_GET['texto'])) {
     $numero_usuarios = count($lista_usuarios);
 }
 ?>
-<div style="margin-top: 10px;  max-width: 700px;">
+<div style="max-width: 700px;">
       
         <table width="100%">
             <tr>
@@ -119,6 +120,12 @@ if (isset($_GET['texto'])) {
                 if (strcmp( trim($nombre_usuario) , "") == 0 ){
                     $nombre_usuario = "SN";
                 }
+                if ( $estado_usuario == 1 || $estado_usuario == 2){
+                    $estado_mostrar = "Habilitado";
+                }
+                if ($estado_usuario == 0){
+                    $estado_mostrar = "Deshabilitado";
+                }
                 ?>
                 <tr>
                     <td width="35%" align="left">
@@ -131,10 +138,10 @@ if (isset($_GET['texto'])) {
                         <?php echo $rol_descripcion;?>
                     </td>
                     <td width="15%">
-                        Habilitado
+                        <?php echo $estado_mostrar;?>
                     </td>
-                    <td width="18%" align="right">                    
-                        <a href="">ir a espacio</a>
+                    <td width="18%" align="right">
+                        <a href="usuario_espacio.php?id=<?php echo $id_usuario;?>">ir a espacio</a>
                     </td>
                 </tr>
                 <?php                    

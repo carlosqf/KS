@@ -42,7 +42,7 @@
     </ul>
     <ul class="box">
       <li><a href=""><span>Inicio</span></a></li>  
-        <li id="menu-active"><a href="usuario_lista.php"><span>Usuarios</span></a></li>
+        <li id="menu-active"><a href="usuario_lista.php" title="Lista de Usuarios"><span>Usuarios</span></a></li>
       <!-- Active -->
       <li><a href=""><span>Voces</span></a></li>
       <li><a href=""><span>Preceptos</span></a></li>
@@ -74,17 +74,20 @@
       </div>
       <!-- /padding -->
       <ul class="box">
-          <li><a href="usuario_lista.php">Lista de usuarios</a></li>
+          <li><a href="usuario_lista.php">Usuarios</a></li>
       </ul>
     </div>
     <!-- /aside -->
     <hr class="noscreen" />
     <!-- Content (Right Column) -->
-    <div id="content" class="box" style="min-height: 470px;">
-      <h1>Espacio de casos</h1>
+    <div id="content" class="box" style="min-height: 100%;">
+        <h2>Espacio de Casos</h2>
+        
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_usuario.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_rol.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_caso.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_tipocaso.php';
 
 if (isset($_GET['id'])){
     $id_usuario = $_GET['id']; // id del usuario
@@ -93,104 +96,198 @@ if (isset($_GET['id'])){
 $usuario = new mod_usuario();
 $usuario_reg = $usuario->consultarPorCodigo($id_usuario);
 foreach ($usuario_reg as $registro) {
-    $nombre = $registro['nombre'];  
-    $identificador_empresa = $registro['identificadorempresa'];
+    $nombre = $registro['nombre'];
     $id_rol = $registro['id_rol'];     
 }
 $rol = new mod_rol();
-$roles = $rol->consultarRoles();        
+
+$rol_descripcion = $rol->getRolId($id_rol);
+
+$caso = new mod_caso();
+$total_casos = $caso->totalCasos($id_usuario);
+$casos_judiciales = $caso->totalCasosJudiciales($id_usuario);
+$casos_extrajudiciales = $caso->totalCasosExtrajudiciales($id_usuario);
+$casos_consultas = $caso->totalCasosConsultas($id_usuario);
+$casos_finalizados = $caso->totalCasosFinalizados($id_usuario);
+$casos_empezados = $caso->totalCasosEmpezados($id_usuario);
+$casos_revisar = $caso->totalCasosParaRevisar($id_usuario);
+$casos_realizar_Cambios = $caso->totalCasosRealizarCambios($id_usuario);
+
 ?>
 
-<div style="margin-top: 10px; height: 350px; max-width: 600px;">
-
+<div style="max-width: 850px;">    
+    <h5> <?php echo $nombre;?> (<?php echo $rol_descripcion;?>)</h5>
     
-<table width="100%" border="0">
-                  <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp; </td>
-                  </tr>
-                  <tr>
-                    <td width="193">total casos :
-                      <?php 
-	   $sql_coun="select COUNT(*) as total
-	   	   	   	   from `to_casos`
-				    where id_admin=".$_SESSION['admin'];
-        $rs_coun=mysql_query($sql_coun);
-	
-	echo  mysql_result($rs_coun,0,"total") ?></td>
-                    <td width="303">total casos <a href="default_casos.php?id_estado=3">finalizados</a>:
-                      <?php 
-	   $sql_coun="select COUNT(*) as total
-	   	   	   	   from `to_casos`
-				   where id_estado=3 and not id_tipocaso=9 
-				    and id_admin=".$_SESSION['admin'];
-        $rs_coun=mysql_query($sql_coun);
-	
-	echo  mysql_result($rs_coun,0,"total") ?></td>
-                  </tr>
-                  <tr>
-                    <td>total casos <a href="default_casos.php?id_tipocaso=1">judiciales</a>:
-                      <?php 
-	   $sql_coun="select COUNT(*) as total
-	   	   	   	   from `to_casos`
-				   where id_tipocaso=1 
-				    and id_admin=".$_SESSION['admin']; 
-        $rs_coun=mysql_query($sql_coun);
-	
-	echo  mysql_result($rs_coun,0,"total") ?></td>
-                    <td>total casos <a href="default_casos.php?id_estado=1">empezados</a>:
-                      <?php 
-	   $sql_coun="select COUNT(*) as total
-	   	   	   	   from `to_casos`
-				   where id_estado=1 and not id_tipocaso=9 
-				    and id_admin=".$_SESSION['admin'];
-        $rs_coun=mysql_query($sql_coun);
-	
-	echo  mysql_result($rs_coun,0,"total") ?></td>
-                  </tr>
-                  <tr>
-                    <td>total casos <a href="default_casos.php?id_tipocaso=2">extrajudiciales</a>:
-                      <?php 
-	   $sql_coun="select COUNT(*) as total
-	   	   	   	   from `to_casos`
-				   where id_tipocaso=2  
-				    and id_admin=".$_SESSION['admin'];
-        $rs_coun=mysql_query($sql_coun);
-	
-	echo  mysql_result($rs_coun,0,"total") ?></td>
-                    <td>total casos <a href="default_casos.php?id_estado=2">para revisar</a> por Admin:
-                      <?php 
-	   $sql_coun="select COUNT(*) as total
-	   	   	   	   from `to_casos`
-				   where id_estado=2 and not id_tipocaso=9 
-				    and id_admin=".$_SESSION['admin'];
-        $rs_coun=mysql_query($sql_coun);
-	
-	echo  mysql_result($rs_coun,0,"total") ?></td>
-                  </tr>
-                  <tr>
-                    <td>total casos <a href="default_casos.php?id_tipocaso=9">consultas</a>:
-                      <?php 
-	   $sql_coun="select COUNT(*) as total
-	   	   	   	   from `to_casos`
-				   where id_tipocaso=9  
-				    and id_admin=".$_SESSION['admin'];
-        $rs_coun=mysql_query($sql_coun);
-	
-	echo  mysql_result($rs_coun,0,"total") ?></td>
-                    <td>total casos <a href="default_casos.php?id_estado=4">realizar cambios</a> exigidos por Admin:
-                      <?php 
-	   $sql_coun="select COUNT(*) as total
-	   	   	   	   from `to_casos`
-				   where id_estado=4 and not id_tipocaso=9 
-				    and id_admin=".$_SESSION['admin'];
-        $rs_coun=mysql_query($sql_coun);
-	
-	echo  mysql_result($rs_coun,0,"total") ?></td>
-                  </tr>
-                </table>     
+<table border="0" style="width: 600px;">              
+      <tr>
+          <td width="200">Total Casos: <div style="float: right; margin-right: 25px;"><?php echo $total_casos;?> 
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="usuario_espacio.php?id=<?php echo $id_usuario.'&cm=to';?>">ver</a>  </div>
+          </td>
+        <td width="200">Total Casos Finalizados: <div style="float: right; margin-right: 25px;"><?php echo $casos_finalizados;?>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="usuario_espacio.php?id=<?php echo $id_usuario.'&cm=fi';?>">ver</a>  </div>
+        </td>
+      </tr>
+      <tr>
+        <td>Total Casos Judiciales: <div style="float: right; margin-right: 25px;"><?php echo $casos_judiciales;?>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="usuario_espacio.php?id=<?php echo $id_usuario.'&cm=ju';?>">ver</a>  </div>
+        </td>
+        <td>Total Casos Empezados: <div style="float: right; margin-right: 25px;"><?php echo $casos_empezados;?>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="usuario_espacio.php?id=<?php echo $id_usuario.'&cm=em';?>">ver</a>  </div>
+        </td>
+      </tr>
+      <tr>
+        <td>Total Casos Extrajudiciales: <div style="float: right; margin-right: 25px;"><?php echo $casos_extrajudiciales;?>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="usuario_espacio.php?id=<?php echo $id_usuario.'&cm=ex';?>">ver</a>  </div>
+        </td>
+        <td>Total Casos para Revisar: <div style="float: right; margin-right: 25px;"><?php echo $casos_revisar;?>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="usuario_espacio.php?id=<?php echo $id_usuario.'&cm=re';?>">ver</a>  </div>
+        </td>
+      </tr>
+      <tr>
+        <td>Total Casos Consultas: <div style="float: right; margin-right: 25px;"><?php echo $casos_consultas;?>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="usuario_espacio.php?id=<?php echo $id_usuario.'&cm=co';?>">ver</a>  </div>
+        </td>
+        <td>Total Casos Realizar Cambios: <div style="float: right; margin-right: 25px;"><?php echo $casos_realizar_Cambios;?>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="usuario_espacio.php?id=<?php echo $id_usuario.'&cm=ca';?>">ver</a>  </div>
+        </td>
+      </tr>
+</table>   
     
+<?php 
+if (isset($_GET['cm'])){
+    $casos_a_mostrar = $_GET['cm'];
     
+    if (isset($_GET['pag'])){
+        $pagina = $_GET['pag'];
+    }else{
+        $pagina = 1;
+    }         
+    switch ($casos_a_mostrar) {
+        case "to":            
+            $registros = $caso->consultarTodosPorUsuario($pagina,$id_usuario);
+            $numero_registros_total = ($total_casos);
+            $seleccionado = "Total Casos";
+            break;
+        case "ju":
+            $registros = $caso->consultarJudicialesPorUsuario($pagina,$id_usuario);
+            $numero_registros_total = ($casos_judiciales);
+            $seleccionado = "Total Casos Judiciales";
+            break;
+        case "ex":
+            $registros = $caso->consultarExtrajudicialesPorUsuario($pagina,$id_usuario);
+            $numero_registros_total = ($casos_extrajudiciales);
+            $seleccionado = "Total Casos Extrajudiciales";
+            break;
+        case "co":
+            $registros = $caso->consultarConsultasPorUsuario($pagina,$id_usuario);
+            $numero_registros_total = ($casos_consultas);
+            $seleccionado = "Total Casos Consultas";
+            break;
+        case "fi":
+            $registros = $caso->consultarFinalizadosPorUsuario($pagina,$id_usuario);
+            $numero_registros_total = ($casos_finalizados);
+            $seleccionado = "Total Casos Finalizados";
+            break;
+        case "em":
+            $registros = $caso->consultarEmpezadosPorUsuario($pagina,$id_usuario);
+            $numero_registros_total = ($casos_empezados);
+            $seleccionado = "Total Casos Empezados";
+            break;
+        case "re":
+            $registros = $caso->consultarRevisadosPorUsuario($pagina,$id_usuario);
+            $numero_registros_total = ($casos_revisar);
+            $seleccionado = "Total Casos para Revisar";
+            break;
+        case "ca":
+            $registros = $caso->consultarCambiosRealizarPorUsuario($pagina,$id_usuario);
+            $numero_registros_total = ($casos_realizar_Cambios);
+            $seleccionado = "Total Casos Realizar Cambios";
+            break;
+    }    
+    $total_paginas = ceil($numero_registros_total / 10); 
+    if ($total_paginas == 0)
+        $pagina = 0;
+    ?>
+    <div style="display: table; text-align: left;">
+        <div style="display: table-row;">
+            <div style="display: table-cell;"><h3><?php echo $seleccionado;?></h3></div>
+            <div style="display: table-cell;">&nbsp;&nbsp;&nbsp;Pagina <?php echo $pagina;?>/<?php echo $total_paginas;?></div>
+        </div>
+    </div>
+    
+    <table width="100%">
+        <tr>
+            <th>Caso</th>
+            <th>Titulo</th>
+            <th>Tipo de Caso</th>
+            <th><div align="right">Ver caso</div></th>
+        </tr>
+        <?php
+        $tipocaso = new mod_tipocaso();
+        foreach($registros as $caso_reg) {
+            $id_caso     = $caso_reg['id'];
+            $titulo_caso = $caso_reg['titulo'];
+            $id_tipocaso    = $caso_reg['id_tipocaso'];
+                        
+            $tipocaso_descripcion = $tipocaso->getTipoCasoId($id_tipocaso);
+            ?>
+            <tr>
+                <td width="10%" align="left">
+                    <?php echo $id_caso;?>
+                </td>
+                <td width="58%">
+                    <?php echo $titulo_caso;?>
+                </td>
+                <td width="17%">
+                    <?php echo $tipocaso_descripcion;?>
+                </td>
+                <td width="15%" align="right">                    
+                    <a href="">Ver caso</a>
+                </td>
+            </tr>
+            <?php                    
+        }                
+        ?>                
+    </table>
+    
+    <div align="center" style="margin-top: 15px;">            
+    <?php        
+    if ($total_paginas > 1) {
+        echo '<table cellpadding="5">
+            <tr>';
+        if ($pagina != 1){
+            echo '<td><a href="usuario_espacio.php?id='.$id_usuario.'&cm='.$casos_a_mostrar.'&pag='.($pagina - 1).'">Anterior</a></td>';
+        }else{
+            echo '<td><a href="" class="paginate_disabled">Anterior</a></td>';
+        }
+        $inicio = $pagina - 4;
+        if ( $inicio <= 0 ){
+            $inicio = 1;
+        }		
+        $fin    = $inicio + 8;
+        if ($fin > $total_paginas){
+            $fin = $total_paginas;
+        }
+        for ($i=$inicio;$i<=$fin;$i++) {
+            if ($pagina == $i){
+                echo '<td class="active">'.$i.'</td>';
+            }else{
+                echo '<td><a href="usuario_espacio.php?id='.$id_usuario.'&cm='.$casos_a_mostrar.'&pag='.($i).'">'.$i.'</a></td>';
+            }    
+        }
+        if ($pagina != $total_paginas){
+            echo '<td><a href="usuario_espacio.php?id='.$id_usuario.'&cm='.$casos_a_mostrar.'&pag='.($pagina + 1).'">Siguiente</a></td>';
+        }else{
+            echo '<td><a href="" class="paginate_disabled">Siguiente</a></td>';
+        }   
+        echo '</tr>
+        </table>';
+    }    
+    ?>        
+    </div>
+    <?php    
+}
+?>   
     
 </div>
 

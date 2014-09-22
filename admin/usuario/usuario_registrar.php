@@ -75,15 +75,14 @@
       </div>
       <!-- /padding -->
       <ul class="box">
-          <li><a href="usuario_lista.php">Lista de usuarios</a></li>
+          <li><a href="usuario_lista.php">Usuarios</a></li>
       </ul>
     </div>
     <!-- /aside -->
     <hr class="noscreen" />
     <!-- Content (Right Column) -->
-    <div id="content" class="box" style="min-height: 470px;">
-      <h1>Usuarios (Registro)</h1>             
-
+    <div id="content" class="box" style="min-height: 490px; height: 100%;">
+      <h2>Registro de usuarios</h2>
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_usuario.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_rol.php';
@@ -102,7 +101,7 @@ $rol = new mod_rol();
 $roles = $rol->consultarRoles();        
 ?>
 
-<div style="margin-top: 10px; height: 350px; max-width: 600px;">
+<div style="max-width: 600px;">
 
 <table width="100%" cellpadding="7" style="border: none; ">    
     <tr>
