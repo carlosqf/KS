@@ -12,7 +12,12 @@ class mod_caso {
     
     public function __construct() {
         $this->dat_caso = new dat_caso();
-    }    
+    }  
+    
+    public function consultarPorCodigo($id){
+        $this->dat_caso->setId($id);
+        return $this->dat_caso->consultarPorCodigo();
+    }
     
     public function totalCasos($id_admin){
         $this->dat_caso->setIdAdmin($id_admin);

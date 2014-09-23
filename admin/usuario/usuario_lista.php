@@ -20,7 +20,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".tabs > ul").tabs();
-                document.getElementById("texto_busqueda").focus();
+                document.getElementById("caso_busqueda").focus();
 	});
 	</script>
 </head>
@@ -60,10 +60,20 @@
     <!-- Aside (Left Column) -->
     <div id="aside" class="box">
       <div class="padding box">
+          <!-- Search caso -->
+        <form action="../caso/caso_edicion.php" method="get" id="search">
+          <fieldset>
+          <legend>Buscar caso</legend>          
+          <input style="color: red;" placeholder="Nro de caso" type="text" name="id" size="17" class="input-text" id="caso_busqueda"/>
+            &nbsp;
+            <input type="submit" value="OK" class="input-submit-02" id="buscar" />
+            <br />            
+          </fieldset>
+        </form>
         <!-- Search -->
         <form action="usuario_busqueda.php" method="get" id="search">
           <fieldset>
-          <legend>Buscar</legend>          
+          <legend>Buscar usuario</legend>          
             <input type="text" name="texto" size="17" class="input-text" id="texto_busqueda" />
             &nbsp;
             <input type="submit" value="OK" class="input-submit-02" id="buscar" />

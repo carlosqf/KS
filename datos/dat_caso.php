@@ -36,6 +36,16 @@ class dat_caso {
         $this->id_tipocaso = $id_tipocaso;
     }
     
+    public function consultarPorCodigo(){
+        $this->con->Conectar();
+        $consulta = "SELECT id, id_admin, id_especialidad, id_tipocaso, titulo, voces, id_norma, jurisprudencia, documentos, id_estado, fecha, cod, objetivo, estrategia, norma, id_docs, articulos, mostrarEnDemo, created_at, updated_at
+FROM to_casos t
+where id = $this->id;";
+        $result = $this->con->getArrayModoColumna($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
     public function totalCasos(){
         $this->con->Conectar();
         $consulta = "select COUNT(*) as total

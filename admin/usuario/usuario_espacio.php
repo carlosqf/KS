@@ -20,6 +20,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".tabs > ul").tabs();
+                document.getElementById("caso_busqueda").focus();
 	});
 	</script>
 </head>
@@ -59,23 +60,23 @@
     <!-- Aside (Left Column) -->
     <div id="aside" class="box">
       <div class="padding box">
-        <!-- Search -->
-        <form action="usuario_busqueda.php" method="get" id="search">
+        <!-- Search caso -->
+        <form action="../caso/caso_edicion.php" method="get" id="search">
           <fieldset>
-          <legend>Buscar</legend>          
-            <input type="text" name="texto" size="17" class="input-text" id="texto_busqueda" />
+          <legend>Buscar caso</legend>          
+          <input style="color: red;" placeholder="Nro de caso" type="text" name="id" size="17" class="input-text" id="caso_busqueda"/>
             &nbsp;
             <input type="submit" value="OK" class="input-submit-02" id="buscar" />
             <br />            
           </fieldset>
-        </form>
+        </form>                 
         <!-- Create a new project -->
-        <p id="btn-create" class="box"><a href=""><span>Crear nuevo Caso</span></a></p>
+        <p id="btn-create" class="box"><a href=""><span>Crear nuevo Caso</span></a></p>        
       </div>
       <!-- /padding -->
       <ul class="box">
           <li><a href="usuario_lista.php">Usuarios</a></li>
-      </ul>
+      </ul>      
     </div>
     <!-- /aside -->
     <hr class="noscreen" />
@@ -242,7 +243,7 @@ if (isset($_GET['cm'])){
                     <?php echo $tipocaso_descripcion;?>
                 </td>
                 <td width="15%" align="right">                    
-                    <a href="">Ver caso</a>
+                    <a href="../caso/caso_edicion.php?id=<?php echo $id_caso;?>" title="Editar el caso">Edicion</a> / <a href="../../vista/caso/caso.php?id=<?php echo $id_caso;?>"title="Vista del caso modo Cliente">Finalizado</a>
                 </td>
             </tr>
             <?php                    
