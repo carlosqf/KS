@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xml:lang="es" lang="es" style="height: 100%;">
 <head>
-<title>Detalle</title>
+<title>Especialidad</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/reset.css" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/main.css" />
@@ -16,7 +16,7 @@
 <script type="text/javascript" src="../../js/ui.core.js"></script>
 <script type="text/javascript" src="../../js/ui.tabs.js"></script>
 
-<script type="text/javascript" src="usuario.js"></script>
+<script type="text/javascript" src="especialidad.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".tabs > ul").tabs();
@@ -43,11 +43,11 @@
     </ul>
     <ul class="box">
       <li><a href=""><span>Inicio</span></a></li>  
-        <li id="menu-active"><a href="usuario_lista.php"><span>Usuarios</span></a></li>
+      <li><a href=""><span>Usuarios</span></a></li>
       <!-- Active -->
       <li><a href=""><span>Voces</span></a></li>
       <li><a href=""><span>Preceptos</span></a></li>
-      <li><a href=""><span>Especialidades</span></a></li>
+            <li id="menu-active"><a href="especialidad_arbol.php"><span>Especialidades</span></a></li>
       <li><a href=""><span>Libros</span></a></li>
       <li><a href=""><span>Documentos</span></a></li>
       <li><a href=""><span>Casos</span></a></li>
@@ -71,43 +71,37 @@
           </fieldset>
         </form>        
         <!-- Create a new project -->
-        <p id="btn-create" class="box"><a href="usuario_registrar.php"><span>Crear nuevo usuario</span></a></p>
+        <p id="btn-create" class="box"><a href="usuario_registrar.php"><span>Crear nueva especialidad</span></a></p>
       </div>
       <!-- /padding -->
       <ul class="box">
-          <li><a href="usuario_lista.php">Usuarios</a></li>
+          <li><a href="especialidad_arbol.php">Especialidades</a></li>
       </ul>
     </div>
     <!-- /aside -->
     <hr class="noscreen" />
     <!-- Content (Right Column) -->
     <div id="content" class="box" style="min-height: 490px; height: 100%;">
-      <h2>Detalle de usuario</h2>
+      <h2>Detalle de especialidad</h2>
       
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_especialidad.php';
 
-require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_usuario.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_rol.php';
+$especialidad = new mod_especialidad();
 
 if (isset($_GET['id'])){
-    $id_usuario = $_GET['id']; // id del usuario
+    $id_nivel = $_GET['id']; // id del usuario
+}else{
+    $id_nivel = 0;
 }
 
-$usuario = new mod_usuario();
-$usuario_reg = $usuario->consultarPorCodigo($id_usuario);
+$especialidad_reg = $especialidad->consultarPorCodigo($id_nivel);
 
-foreach ($usuario_reg as $registro) {
-    $nombre = $registro['nombre'];  
-    $identificador_empresa = $registro['identificadorempresa'];
-    $username = $registro['username'];
-    $password = $registro['password']; 
-    $id_rol = $registro['id_rol'];        
-    $telefono = $registro['telefono'];
-    $estado = $registro['activo'];    
+foreach ($especialidad_reg as $registro) {
+    $id_especialidad = $registro['id'];  
+    $especialidad_descripcion = $registro['especialidad'];
+    $estado = $registro['estado'];
 }
-
-$rol = new mod_rol();
-$roles = $rol->consultarRoles();
         
 ?>
 
@@ -116,79 +110,24 @@ $roles = $rol->consultarRoles();
 <table width="100%" cellpadding="7" style="border: none; ">
     <tr>
         <td style=" width: 35%;" align="left">
-            Nombre <span style="float: right;">:</span>
+            Especialidad <span style="float: right;">:</span>
         </td>
         <td style=" width: 65%;">
-            <input class="editable" type="text" name="texto" value="<?php echo $nombre;?>" disabled style="font-weight: bold; height: 35px; width: 97%;" id="nombre_usuario">
-        </td>
-    </tr>
-    <tr>
-        <td  align="left">
-            Identificador de Empresa <span style="float: right;">:</span>
-        </td>
-        <td>
-            <input class="editable" type="text" name="texto" value="<?php echo $identificador_empresa;?>" disabled style="font-weight: bold; height: 35px; width: 97%;" id="identificador_usuario">
-        </td>
-    </tr>
-    <tr>
-        <td  align="left">
-            User <span style="float: right;">:</span>
-        </td>
-        <td>
-            <input class="editable" type="text" name="texto" value="<?php echo $username;?>" disabled style="font-weight: bold; height: 35px; width: 97%;" id="user_usuario">
-            <span class="asterisco" style="float: right; margin-top: 12px;">*</span>  
-        </td>
-    </tr>
-    <tr>
-        <td  align="left">
-            Password <span style="float: right;">:</span>
-        </td>
-        <td>
-            <input class="editable" type="text" name="texto" value="<?php echo $password;?>" disabled style="font-weight: bold; height: 35px; width: 97%;" id="password_usuario">
+            <input class="editable" type="text" name="texto" value="<?php echo $especialidad_descripcion;?>" disabled style="font-weight: bold; height: 35px; width: 97%;" id="especialidad_descripcion"></input>
             <span class="asterisco" style="float: right; margin-top: 12px;">*</span>   
-        </td>
-    </tr>
-    <tr>
-        <td align="left">
-            Rol <span style="float: right;">:</span>
-        </td>
-        <td align="left">
-            <select class="editable" id="miselectrol_mod" style="width: 50%; height: 30px; font-weight: bold;" disabled>
-                <?php                            
-                foreach ($roles as $reg_rol){
-                    $id_rol_reg = $reg_rol['id'];
-                    $tipo_rol_reg = $reg_rol['rol'];                                
-                    if ( $id_rol == $id_rol_reg ){
-                        echo '<option value="'.$id_rol.'" selected>'.$tipo_rol_reg.'</option>';
-                    }else{
-                        echo '<option value="'.$id_rol_reg.'">'.$tipo_rol_reg.'</option>';
-                    }
-                }
-                ?>
-            </select>
-            <span class="asterisco" style="float: right; margin-top: 12px;">*</span>
-        </td>
-    </tr>
-    <tr>
-        <td align="left">
-            Telefono <span style="float: right;">:</span>
-        </td>
-        <td>
-            <input class="editable" type="text" name="texto" value="<?php echo $telefono;?>" disabled style="font-weight: bold; height: 35px; width: 97%;" id="telefono_usuario">
         </td>
     </tr>
     <tr>
         <td align="left">
             Estado <span style="float: right;">:</span>
         </td>
-        <td  align="left">
-            <select class="editable" id="miselectestado_mod" style="width: 50%; height: 30px; font-weight: bold;" disabled>
-                <?php
-                if ( $estado == 1 || $estado == 2 ){
+        <td align="left">
+            <select class="editable" id="miselect_estado" style="width: 50%; height: 30px; font-weight: bold;" disabled>
+                <?php                            
+                if ($estado == 1){
                     echo '<option value="1" selected>Habilitado</option>';
                     echo '<option value="0" >Deshabilitado</option>';
-                }
-                if ( $estado == 0 ){
+                }else{
                     echo '<option value="0" selected>Deshabilitado</option>';
                     echo '<option value="1" >Habilitado</option>';
                 }
@@ -196,14 +135,14 @@ $roles = $rol->consultarRoles();
             </select>
             <span class="asterisco" style="float: right; margin-top: 12px;">*</span>
         </td>
-    </tr>  
+    </tr> 
 </table>
     
 <div align="center" style="margin-top: 15px;">            
     <input type="button" value="Editar" id="editar" style="width: 20%; height: 28px; margin-right: 10px;"></input>
-    <input type="button" value="Modificar" class="modificar" id="<?php echo $id_usuario;?>" style="width: 20%; height: 28px; margin-right: 10px;" disabled></input>
-    <input type="button" value="Cancelar" class="cancelar_modificacion" id="<?php echo $id_usuario;?>" style="width: 20%; height: 28px;  margin-right: 10px;" disabled></input>
-    <input type="button" value="Eliminar" class="eliminar_usuario" id="<?php echo $id_usuario;?>" style="width: 20%; height: 28px;"></input>
+    <input type="button" value="Modificar" class="modificar" id="<?php echo $id_especialidad;?>" style="width: 20%; height: 28px; margin-right: 10px;" disabled></input>
+    <input type="button" value="Cancelar" class="cancelar_modificacion" id="<?php echo $id_especialidad;?>" style="width: 20%; height: 28px;  margin-right: 10px;" disabled></input>
+    <input type="button" value="Eliminar" class="eliminar_especialidad" id="<?php echo $id_especialidad;?>" style="width: 20%; height: 28px;"></input>
 </div>
     
     

@@ -106,5 +106,3 @@ $(document).ready(function() {
            
         
 });
-
-

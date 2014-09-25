@@ -1,8 +1,20 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_especialidad.php';
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+$respuesta = "false";
 
+$accion = $_POST['accion'];
+switch ($accion) {      
+    
+    case "modificar-especialidad":
+        $especialidad       = new mod_especialidad();
+        $id                 = $_POST['id'];
+        $especialidad_nombre= $_POST['especialidad'];
+        $estado             = $_POST['estado'];
+        
+        $especialidad->modificar($id, $especialidad_nombre, $estado);
+        
+        $respuesta = "true";
+        break;
+}
+echo $respuesta;

@@ -12,11 +12,16 @@ class dat_especialidad {
     private $id;
     private $especialidad;
     private $id_padre;
+    private $estado;
 
     public function __construct() {
         $this->con = Conexion::getInstancia();
     }
 
+    public function setEstado($estado) {
+        $this->estado = $estado;
+    }
+    
     public function setId($id) {
         $this->id = $id;
     }
@@ -39,15 +44,15 @@ class dat_especialidad {
     
     public function consultarPorCodigo() {
         $this->con->Conectar();
-        $consulta = "select id, especialidad from to_especialidad where id = $this->id;";
+        $consulta = "select id, especialidad, estado from to_especialidad where id = $this->id;";
         $result = $this->con->getArrayModoRegistro($consulta);
         $this->con->desconectar();
         return $result;
     }
     
-    public function consultarHijos(){
+    public function consultarHijosTodos(){// habilitados 1 e inhablitados 0
         $this->con->Conectar();
-        $consulta = "select id, especialidad, id_padre
+        $consulta = "select id, especialidad, id_padre, estado
 from to_especialidad
 where id_padre = $this->id_padre
 order by especialidad";
@@ -69,7 +74,9 @@ order by especialidad;";
     
     public function modificar(){
         $this->con->Conectar();
-        $consulta = "";
+        $consulta = "update to_especialidad
+set especialidad='$this->especialidad', estado=$this->estado
+where id = $this->id;";
         $result = $this->con->ejecutarConsulta($consulta);
         $this->con->desconectar();
         return $result;

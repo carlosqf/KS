@@ -97,37 +97,52 @@ if (isset($_GET['id'])){
 ?>
 <div style="max-width: 850px;">    
 <?php
-
 $ruta = $especialidad->devolverRuta($id_nivel);
-
-$especialidades_seleccionadas =  $especialidad->consultarHijos($id_nivel);
-
-
-
-?>
-    
+$especialidades_seleccionadas =  $especialidad->consultarHijosTodos($id_nivel);
+?>    
     <h5><?php echo $ruta;?>  </h5>       
     
 <table width="100%">
     <tr>
         <th>Especialidad</th>
+        <th>Estado</th>
         <th><div align="right">Opcion</div></th>
     </tr>
     <?php
-    foreach($especialidades_seleccionadas as $especialidad_reg) {
-        $id_especialidad     = $especialidad_reg['id'];
-        $nombre_especialidad = $especialidad_reg['especialidad'];
-        ?>
-        <tr>
-            <td align="left" width="80%">                
-                <a href="especialidad_arbol.php?id=<?php echo $id_especialidad;?>" title="Ver sub especialidades"><?php echo $nombre_especialidad;?></a>
-            </td>
-            <td  align="right" width="20%">                    
-                <a href="especialidad_arbol.php?id=<?php echo $id_especialidad;?>" title="Editar especialidad <?php echo $nombre_especialidad;?>">Editar</a>
-            </td>
-        </tr>
-        <?php                    
-    }                
+    if (count($especialidades_seleccionadas)>0){
+        foreach($especialidades_seleccionadas as $especialidad_reg) {
+            $id_especialidad     = $especialidad_reg['id'];
+            $nombre_especialidad = $especialidad_reg['especialidad'];
+            $estado = $especialidad_reg['estado'];
+            
+            if ($estado == 1){
+                $estado_mostrar = "Habilitado";
+            }else{
+                $estado_mostrar = "Deshabilitado";
+            }
+            
+            ?>
+            <tr>
+                <td align="left" width="70%">                
+                    <a href="especialidad_arbol.php?id=<?php echo $id_especialidad;?>" title="Ver sub especialidades"><?php echo $nombre_especialidad;?></a>
+                </td>
+                <td align="left" width="15%">                
+                    <?php echo $estado_mostrar;?>
+                </td>
+                <td  align="right" width="15%">                    
+                    <a href="especialidad_editar.php?id=<?php echo $id_especialidad;?>" title="Editar especialidad <?php echo $nombre_especialidad;?>">Editar</a>
+                </td>
+            </tr>
+            <?php                    
+        }      
+    }else{
+        echo '<tr>
+                <td>No existen</td>
+                <td></td>
+                <td></td>
+             </tr>';
+    }
+                  
     ?>                
 </table>    
     
