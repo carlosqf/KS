@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xml:lang="es" lang="es" style="height: 100%;">
 <head>
-<title>Detalle</title>
+<title>Especialidades</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/reset.css" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/main.css" />
@@ -16,11 +16,11 @@
 <script type="text/javascript" src="../../js/ui.core.js"></script>
 <script type="text/javascript" src="../../js/ui.tabs.js"></script>
 
-<script type="text/javascript" src="usuario.js"></script>
+<script type="text/javascript" src="especialidad.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".tabs > ul").tabs();
-                document.getElementById("caso_busqueda").focus();
+                document.getElementById("texto_busqueda").focus();
 	});
 	</script>
 </head>
@@ -43,14 +43,14 @@
     </ul>
     <ul class="box">
       <li><a href=""><span>Inicio</span></a></li>  
-        <li id="menu-active"><a href="usuario_lista.php" title="Lista de Usuarios"><span>Usuarios</span></a></li>
+      <li><a href="../usuario/index.php"><span>Usuarios</span></a></li>
       <!-- Active -->
+      <li id="menu-active"><a href="especialidad_arbol.php"><span>Especialidades</span></a></li>
       <li><a href=""><span>Voces</span></a></li>
-      <li><a href=""><span>Preceptos</span></a></li>
-      <li><a href=""><span>Especialidades</span></a></li>
+      <li><a href=""><span>Preceptos</span></a></li>      
       <li><a href=""><span>Libros</span></a></li>
       <li><a href=""><span>Documentos</span></a></li>
-      <li><a href=""><span>Casos</span></a></li>
+      <li><a href=""><span>Casos</span></a></li>      
     </ul>
   </div>
   <!-- /header -->
@@ -69,13 +69,20 @@
             <input type="submit" value="OK" class="input-submit-02" id="buscar" />
             <br />            
           </fieldset>
-        </form>                 
-        <!-- Create a new project -->
-        <p id="btn-create" class="box"><a href=""><span>Crear nuevo Caso</span></a></p>        
+        </form>
+        <form action="especialidad_busqueda.php" method="get" id="search">
+          <fieldset>
+          <legend>Buscar especialidad</legend>          
+            <input placeholder="Especialidad" type="text" name="texto" size="17" class="input-text" id="texto_busqueda" />
+            &nbsp;
+            <input type="submit" value="OK" class="input-submit-02" id="buscar" />
+            <br />            
+          </fieldset>
+        </form>
       </div>
       <!-- /padding -->
       <ul class="box">
-          <li><a href="usuario_lista.php">Usuarios</a></li>
+          <li><a href="especialidad_arbol.php">Especialidades</a></li>
       </ul>      
     </div>
     <!-- /aside -->
@@ -100,8 +107,18 @@ if (isset($_GET['id'])){
 $ruta = $especialidad->devolverRuta($id_nivel);
 $especialidades_seleccionadas =  $especialidad->consultarHijosTodos($id_nivel);
 ?>    
-    <h5><?php echo $ruta;?>  </h5>       
+<div style="max-width: 480px; float: left;">
+    <h5><?php echo $ruta;?>  </h5>
+</div>
     
+<div style="float: right;">
+  
+    <input placeholder="Especialidad" type="text" name="id" size="17" class="input-text" id="especialidad_registrar"/>
+    &nbsp;
+    <input title='Registrar en especialidad seleccionada' type="submit" value="Registrar" class="registrar_especialidad" id="<?php echo $id_nivel;?>" />
+ 
+</div>    
+
 <table width="100%">
     <tr>
         <th>Especialidad</th>
@@ -124,7 +141,7 @@ $especialidades_seleccionadas =  $especialidad->consultarHijosTodos($id_nivel);
             ?>
             <tr>
                 <td align="left" width="70%">                
-                    <a href="especialidad_arbol.php?id=<?php echo $id_especialidad;?>" title="Ver sub especialidades"><?php echo $nombre_especialidad;?></a>
+                    <a href="especialidad_arbol.php?id=<?php echo $id_especialidad;?>" title="Ver Subespecialidades"><?php echo $nombre_especialidad;?></a>
                 </td>
                 <td align="left" width="15%">                
                     <?php echo $estado_mostrar;?>
@@ -144,7 +161,9 @@ $especialidades_seleccionadas =  $especialidad->consultarHijosTodos($id_nivel);
     }
                   
     ?>                
-</table>    
+</table> 
+    <br /> 
+    Nota: las especialidades Deshabilitadas no seran vistas por los documentalistas ni clientes
     
 </div>
 

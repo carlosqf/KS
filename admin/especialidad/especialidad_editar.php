@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xml:lang="es" lang="es" style="height: 100%;">
 <head>
-<title>Especialidad</title>
+<title>Detalle de especialidad</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/reset.css" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/main.css" />
@@ -20,7 +20,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".tabs > ul").tabs();
-                document.getElementById("caso_busqueda").focus();
+                document.getElementById("editar").focus();
 	});
 	</script>
 </head>
@@ -43,11 +43,11 @@
     </ul>
     <ul class="box">
       <li><a href=""><span>Inicio</span></a></li>  
-      <li><a href=""><span>Usuarios</span></a></li>
+      <li><a href="../usuario/index.php"><span>Usuarios</span></a></li>
       <!-- Active -->
+      <li id="menu-active"><a href="especialidad_arbol.php"><span>Especialidades</span></a></li>
       <li><a href=""><span>Voces</span></a></li>
-      <li><a href=""><span>Preceptos</span></a></li>
-            <li id="menu-active"><a href="especialidad_arbol.php"><span>Especialidades</span></a></li>
+      <li><a href=""><span>Preceptos</span></a></li>      
       <li><a href=""><span>Libros</span></a></li>
       <li><a href=""><span>Documentos</span></a></li>
       <li><a href=""><span>Casos</span></a></li>
@@ -69,9 +69,16 @@
             <input type="submit" value="OK" class="input-submit-02" id="buscar" />
             <br />            
           </fieldset>
-        </form>        
-        <!-- Create a new project -->
-        <p id="btn-create" class="box"><a href="usuario_registrar.php"><span>Crear nueva especialidad</span></a></p>
+        </form>  
+        <form action="especialidad_busqueda.php" method="get" id="search">
+          <fieldset>
+          <legend>Buscar especialidad</legend>          
+            <input placeholder="Especialidad" type="text" name="texto" size="17" class="input-text" id="texto_busqueda" />
+            &nbsp;
+            <input type="submit" value="OK" class="input-submit-02" id="buscar" />
+            <br />            
+          </fieldset>
+        </form>
       </div>
       <!-- /padding -->
       <ul class="box">
@@ -82,13 +89,18 @@
     <hr class="noscreen" />
     <!-- Content (Right Column) -->
     <div id="content" class="box" style="min-height: 490px; height: 100%;">
-      <h2>Detalle de especialidad</h2>
+      
+        <div style="max-width: 600px;">
+              <div style="float: left;"><h2>Detalle de especialidad</h2></div>
+              <div style="float: right;"><br /><a href="javascript:history.back()">Volver</a> </div>
+        </div>
+              
+           
       
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_especialidad.php';
 
 $especialidad = new mod_especialidad();
-
 if (isset($_GET['id'])){
     $id_nivel = $_GET['id']; // id del usuario
 }else{
@@ -97,58 +109,64 @@ if (isset($_GET['id'])){
 
 $especialidad_reg = $especialidad->consultarPorCodigo($id_nivel);
 
-foreach ($especialidad_reg as $registro) {
-    $id_especialidad = $registro['id'];  
-    $especialidad_descripcion = $registro['especialidad'];
-    $estado = $registro['estado'];
-}
-        
-?>
+if ( count($especialidad_reg) > 0  ){
 
-<div style="max-width: 600px;">
+    foreach ($especialidad_reg as $registro) {
+        $id_especialidad = $registro['id'];  
+        $especialidad_descripcion = $registro['especialidad'];
+        $estado = $registro['estado'];
+    }        
+    ?>
+    <div style="max-width: 600px;">
 
-<table width="100%" cellpadding="7" style="border: none; ">
-    <tr>
-        <td style=" width: 35%;" align="left">
-            Especialidad <span style="float: right;">:</span>
-        </td>
-        <td style=" width: 65%;">
-            <input class="editable" type="text" name="texto" value="<?php echo $especialidad_descripcion;?>" disabled style="font-weight: bold; height: 35px; width: 97%;" id="especialidad_descripcion"></input>
-            <span class="asterisco" style="float: right; margin-top: 12px;">*</span>   
-        </td>
-    </tr>
-    <tr>
-        <td align="left">
-            Estado <span style="float: right;">:</span>
-        </td>
-        <td align="left">
-            <select class="editable" id="miselect_estado" style="width: 50%; height: 30px; font-weight: bold;" disabled>
-                <?php                            
-                if ($estado == 1){
-                    echo '<option value="1" selected>Habilitado</option>';
-                    echo '<option value="0" >Deshabilitado</option>';
-                }else{
-                    echo '<option value="0" selected>Deshabilitado</option>';
-                    echo '<option value="1" >Habilitado</option>';
-                }
-                ?>
-            </select>
-            <span class="asterisco" style="float: right; margin-top: 12px;">*</span>
-        </td>
-    </tr> 
-</table>
-    
-<div align="center" style="margin-top: 15px;">            
-    <input type="button" value="Editar" id="editar" style="width: 20%; height: 28px; margin-right: 10px;"></input>
-    <input type="button" value="Modificar" class="modificar" id="<?php echo $id_especialidad;?>" style="width: 20%; height: 28px; margin-right: 10px;" disabled></input>
-    <input type="button" value="Cancelar" class="cancelar_modificacion" id="<?php echo $id_especialidad;?>" style="width: 20%; height: 28px;  margin-right: 10px;" disabled></input>
-    <input type="button" value="Eliminar" class="eliminar_especialidad" id="<?php echo $id_especialidad;?>" style="width: 20%; height: 28px;"></input>
-</div>
-    
-    
-    
-</div>
+        <table width="100%" cellpadding="7" style="border: none; ">
+            <tr>
+                <td style=" width: 35%;" align="left">
+                    Especialidad <span style="float: right;">:</span>
+                </td>
+                <td style=" width: 65%;">
+                    <input class="editable" type="text" name="texto" value="<?php echo $especialidad_descripcion;?>" disabled style="font-weight: bold; height: 35px; width: 97%;" id="especialidad_descripcion"></input>
+                    <span class="asterisco" style="float: right; margin-top: 12px;">*</span>   
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    Estado <span style="float: right;">:</span>
+                </td>
+                <td align="left">
+                    <select class="editable" id="miselect_estado" style="width: 50%; height: 30px; font-weight: bold;" disabled>
+                        <?php                            
+                        if ($estado == 1){
+                            echo '<option value="1" selected>Habilitado</option>';
+                            echo '<option value="0" >Deshabilitado</option>';
+                        }else{
+                            echo '<option value="0" selected>Deshabilitado</option>';
+                            echo '<option value="1" >Habilitado</option>';
+                        }
+                        ?>
+                    </select>
+                    <span class="asterisco" style="float: right; margin-top: 12px;">*</span>
+                </td>
+            </tr> 
+        </table>
 
+        <div align="center" style="margin-top: 15px;">            
+            <input type="button" value="Editar" id="editar" style="width: 20%; height: 28px; margin-right: 10px;"></input>
+            <input type="button" value="Modificar" class="modificar" id="<?php echo $id_especialidad;?>" style="width: 20%; height: 28px; margin-right: 10px;" disabled></input>
+            <input type="button" value="Cancelar" class="cancelar_modificacion" id="<?php echo $id_especialidad;?>" style="width: 20%; height: 28px;  margin-right: 10px;" disabled></input>
+            <input type="button" value="Eliminar" class="eliminar_especialidad" id="<?php echo $id_especialidad;?>" style="width: 20%; height: 28px;"></input>
+        </div>   
+
+
+    </div><?php
+}else{
+    ?>
+    <br/><br/><br/><br/><div>
+        Especialidad Eliminada o no existe
+    </div>
+    <?php
+}?>
+      
             
 	</div>	
   <!-- /cols -->

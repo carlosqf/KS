@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xml:lang="es" lang="es" style="height: 100%;">
 <head>
-<title>Detalle</title>
+<title>Detalle de usuario</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/reset.css" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/main.css" />
@@ -20,7 +20,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".tabs > ul").tabs();
-                document.getElementById("caso_busqueda").focus();
+                document.getElementById("editar").focus();
 	});
 	</script>
 </head>
@@ -45,9 +45,9 @@
       <li><a href=""><span>Inicio</span></a></li>  
         <li id="menu-active"><a href="usuario_lista.php"><span>Usuarios</span></a></li>
       <!-- Active -->
+      <li><a href="../especialidad/index.php"><span>Especialidades</span></a></li>
       <li><a href=""><span>Voces</span></a></li>
-      <li><a href=""><span>Preceptos</span></a></li>
-      <li><a href=""><span>Especialidades</span></a></li>
+      <li><a href=""><span>Preceptos</span></a></li>      
       <li><a href=""><span>Libros</span></a></li>
       <li><a href=""><span>Documentos</span></a></li>
       <li><a href=""><span>Casos</span></a></li>
@@ -69,7 +69,17 @@
             <input type="submit" value="OK" class="input-submit-02" id="buscar" />
             <br />            
           </fieldset>
-        </form>        
+        </form>
+        <!-- Search -->
+        <form action="usuario_busqueda.php" method="get" id="search">
+          <fieldset>
+          <legend>Buscar usuario</legend>          
+            <input placeholder="Usuario" type="text" name="texto" size="17" class="input-text" id="texto_busqueda" />
+            &nbsp;
+            <input type="submit" value="OK" class="input-submit-02" id="buscar" />
+            <br />            
+          </fieldset>
+        </form>
         <!-- Create a new project -->
         <p id="btn-create" class="box"><a href="usuario_registrar.php"><span>Crear nuevo usuario</span></a></p>
       </div>
@@ -82,7 +92,10 @@
     <hr class="noscreen" />
     <!-- Content (Right Column) -->
     <div id="content" class="box" style="min-height: 490px; height: 100%;">
-      <h2>Detalle de usuario</h2>
+        <div style="max-width: 600px;">
+              <div style="float: left;"><h2>Detalle de usuario</h2></div>
+              <div style="float: right;"><br /><a href="javascript:history.back()">Volver</a> </div>
+        </div>
       
 <?php
 
@@ -171,7 +184,7 @@ $roles = $rol->consultarRoles();
     </tr>
     <tr>
         <td align="left">
-            Telefono <span style="float: right;">:</span>
+            Teléfono <span style="float: right;">:</span>
         </td>
         <td>
             <input class="editable" type="text" name="texto" value="<?php echo $telefono;?>" disabled style="font-weight: bold; height: 35px; width: 97%;" id="telefono_usuario">

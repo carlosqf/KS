@@ -45,9 +45,9 @@
       <li><a href=""><span>Inicio</span></a></li>  
         <li id="menu-active"><a href="usuario_lista.php"><span>Usuarios</span></a></li>
       <!-- Active -->
+      <li><a href="../especialidad/index.php"><span>Especialidades</span></a></li>
       <li><a href=""><span>Voces</span></a></li>
-      <li><a href=""><span>Preceptos</span></a></li>
-      <li><a href=""><span>Especialidades</span></a></li>
+      <li><a href=""><span>Preceptos</span></a></li>      
       <li><a href=""><span>Libros</span></a></li>
       <li><a href=""><span>Documentos</span></a></li>
       <li><a href=""><span>Casos</span></a></li>
@@ -69,7 +69,17 @@
             <input type="submit" value="OK" class="input-submit-02" id="buscar" />
             <br />            
           </fieldset>
-        </form>         
+        </form>  
+        <!-- Search -->
+        <form action="usuario_busqueda.php" method="get" id="search">
+          <fieldset>
+          <legend>Buscar usuario</legend>          
+            <input placeholder="Usuario" type="text" name="texto" size="17" class="input-text" id="texto_busqueda" />
+            &nbsp;
+            <input type="submit" value="OK" class="input-submit-02" id="buscar" />
+            <br />            
+          </fieldset>
+        </form>
         <!-- Create a new project -->
         <p id="btn-create" class="box"><a href=""><span>Crear nuevo usuario</span></a></p>
       </div>

@@ -20,7 +20,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".tabs > ul").tabs();
-                document.getElementById("caso_busqueda").focus();
+                document.getElementById("texto_busqueda").focus();
 	});
 	</script>
 </head>
@@ -45,9 +45,9 @@
       <li><a href=""><span>Inicio</span></a></li>  
         <li id="menu-active"><a href="usuario_lista.php"><span>Usuarios</span></a></li>
       <!-- Active -->
+      <li><a href="../especialidad/index.php"><span>Especialidades</span></a></li>
       <li><a href=""><span>Voces</span></a></li>
-      <li><a href=""><span>Preceptos</span></a></li>
-      <li><a href=""><span>Especialidades</span></a></li>
+      <li><a href=""><span>Preceptos</span></a></li>      
       <li><a href=""><span>Libros</span></a></li>
       <li><a href=""><span>Documentos</span></a></li>
       <li><a href=""><span>Casos</span></a></li>
@@ -74,7 +74,7 @@
         <form action="usuario_busqueda.php" method="get" id="search">
           <fieldset>
           <legend>Buscar usuario</legend>          
-            <input type="text" name="texto" size="17" class="input-text" id="texto_busqueda" />
+            <input placeholder="Usuario" type="text" name="texto" size="17" class="input-text" id="texto_busqueda" />
             &nbsp;
             <input type="submit" value="OK" class="input-submit-02" id="buscar" />
             <br />            
@@ -121,7 +121,7 @@ $total_usuarios = $usuario->numeroDeUsuariosPorRol($id_rol);
 <div style="max-width: 700px;" >    
             
     <div align="right" style="margin-bottom: 6px;">Usuarios
-        <div style="float: left;">Pagina <?php echo $pagina;?>/<?php echo $total_paginas;?> (Total <?php echo $total_usuarios;?> Usuarios)</div>
+        <div style="float: left;">Página <?php echo $pagina;?>/<?php echo $total_paginas;?> (Total <?php echo $total_usuarios;?> Usuarios)</div>
         <?php
         $rol = new mod_rol();
         $roles = $rol->consultarRoles();

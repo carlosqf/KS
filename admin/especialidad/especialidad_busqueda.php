@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xml:lang="es" lang="es" style="height: 100%;">
 <head>
-<title>Búsqueda de usuarios</title>
+<title>Búsqueda de especialidades</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/reset.css" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/main.css" />
@@ -16,7 +16,7 @@
 <script type="text/javascript" src="../../js/ui.core.js"></script>
 <script type="text/javascript" src="../../js/ui.tabs.js"></script>
 
-<script type="text/javascript" src="usuario.js"></script>
+<script type="text/javascript" src="especialidad.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".tabs > ul").tabs();
@@ -43,9 +43,9 @@
     </ul>
     <ul class="box">
       <li><a href=""><span>Inicio</span></a></li>  
-        <li id="menu-active"><a href="usuario_lista.php"><span>Usuarios</span></a></li>
+      <li><a href="../usuario/index.php"><span>Usuarios</span></a></li>
       <!-- Active -->
-      <li><a href="../especialidad/index.php"><span>Especialidades</span></a></li>
+      <li id="menu-active"><a href="especialidad_arbol.php"><span>Especialidades</span></a></li>
       <li><a href=""><span>Voces</span></a></li>
       <li><a href=""><span>Preceptos</span></a></li>      
       <li><a href=""><span>Libros</span></a></li>
@@ -60,7 +60,7 @@
     <!-- Aside (Left Column) -->
     <div id="aside" class="box">
       <div class="padding box">
-          <!-- Search caso -->
+        <!-- Search caso -->
         <form action="../caso/caso_edicion.php" method="get" id="search">
           <fieldset>
           <legend>Buscar caso</legend>          
@@ -69,101 +69,79 @@
             <input type="submit" value="OK" class="input-submit-02" id="buscar" />
             <br />            
           </fieldset>
-        </form>   
-        <!-- Search -->
-        <form action="usuario_busqueda.php" method="get" id="search">
+        </form>
+        <form action="especialidad_busqueda.php" method="get" id="search">
           <fieldset>
-          <legend>Buscar usuario</legend>          
-            <input placeholder="Usuario" type="text" name="texto" size="17" class="input-text" id="texto_busqueda" />
+          <legend>Buscar especialidad</legend>          
+            <input placeholder="Especialidad" type="text" name="texto" size="17" class="input-text" id="texto_busqueda" />
             &nbsp;
             <input type="submit" value="OK" class="input-submit-02" id="buscar" />
             <br />            
           </fieldset>
         </form>
-        <!-- Create a new project -->
-        <p id="btn-create" class="box"><a href="usuario_registrar.php"><span>Crear nuevo usuario</span></a></p>
       </div>
       <!-- /padding -->
       <ul class="box">
-        <li><a href="usuario_lista.php">Usuarios</a></li>
-      </ul>
+          <li><a href="especialidad_arbol.php">Especialidades</a></li>
+      </ul>      
     </div>
     <!-- /aside -->
     <hr class="noscreen" />
     <!-- Content (Right Column) -->
-    <div id="content" class="box" style="min-height: 490px;">
-      <h2>Búsqueda de usuarios</h2>
-      
+    <div id="content" class="box" style="min-height: 100%;">
+        <h2>Búsqueda de especialidades</h2>
+        
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_usuario.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_rol.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_especialidad.php';
 
-$usuario = new mod_usuario();
+$especialidad = new mod_especialidad();
 
 if (isset($_GET['texto'])) {  
-    $nombre_buscar = $_GET['texto'];
-    $lista_usuarios = $usuario->buscarUsuario($nombre_buscar);
-    $numero_usuarios = count($lista_usuarios);
+    $especialidad_buscar = $_GET['texto'];
+    $lista_especialidades = $especialidad->buscarEspecialidad($especialidad_buscar);
 }else{
-    $lista_usuarios = array();
-    $numero_usuarios = count($lista_usuarios);
+    $lista_especialidades = array();
 }
 ?>
-<div style="max-width: 700px;">
-      
-        <table width="100%">
+<div style="max-width: 850px;">    
+<?php
+if (count($lista_especialidades)>0){
+?>       
+<table width="100%">
+    <tr>
+        <th>Especialidad</th>
+        <th>Rúta</th>
+    </tr>
+    <?php    
+        foreach($lista_especialidades as $especialidad_reg) {
+            $id_especialidad     = $especialidad_reg['id'];
+            $nombre_especialidad = $especialidad_reg['especialidad'];            
+            $ruta = $especialidad->devolverRuta($id_especialidad);
+            ?>
             <tr>
-                <th>Nombre</th>
-                <th>Nro. de casos</th>
-                <th>Rol</th>
-                <th>Estado</th>
-                <th><div align="right">Espacio de casos</div></th>
+                <td align="left" width="33%">                
+                    <?php echo $nombre_especialidad;?>
+                </td>
+                <td align="left" width="67%">                
+                    <?php echo $ruta;?>
+                </td>
             </tr>
-            <?php  
-            $rol = new mod_rol();
-            foreach($lista_usuarios as $usuario_reg) {
-                $id_usuario     = $usuario_reg['id'];
-                $nombre_usuario = $usuario_reg['nombre'];
-                $estado_usuario = $usuario_reg['activo'];
-                $id_rol_usuario = $usuario_reg['id_rol'];
-                $rol_descripcion = $rol->getRolId($id_rol_usuario);
-                $numero_casos = $usuario->numeroCasos($id_usuario);
-                if (strcmp( trim($nombre_usuario) , "") == 0 ){
-                    $nombre_usuario = "SN";
-                }
-                if ( $estado_usuario == 1 || $estado_usuario == 2){
-                    $estado_mostrar = "Habilitado";
-                }
-                if ($estado_usuario == 0){
-                    $estado_mostrar = "Deshabilitado";
-                }
-                ?>
-                <tr>
-                    <td width="35%" align="left">
-                        <a href="usuario_detalle.php?id=<?php echo $id_usuario;?>"><?php echo $nombre_usuario;?></a>
-                    </td>
-                    <td width="15%">
-                        <?php echo $numero_casos;?>
-                    </td>
-                    <td width="17%">
-                        <?php echo $rol_descripcion;?>
-                    </td>
-                    <td width="15%">
-                        <?php echo $estado_mostrar;?>
-                    </td>
-                    <td width="18%" align="right">
-                        <a href="usuario_espacio.php?id=<?php echo $id_usuario;?>">ir a espacio</a>
-                    </td>
-                </tr>
-                <?php                    
-            }                
-            ?>                
-        </table>            
+            <?php                    
+        }         
+    ?>                
+</table>    
+<?php
+}else{
+    echo 'No se encontraron coincidencias';
+}
+?>
     
-</div>          
+</div>
 
-      
-	</div>	
+            
+	
+    
+    </div>	
   <!-- /cols -->
   <hr class="noscreen" />
   <!-- Footer -->
@@ -176,4 +154,4 @@ if (isset($_GET['texto'])) {
 
 </div>   
 </body>
-</html>    
+</html>

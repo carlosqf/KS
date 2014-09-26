@@ -14,7 +14,11 @@ class mod_especialidad {
         $this->dat_especialidad = new dat_especialidad();
     }
     
-    public function registrar() {
+    public function registrar($especialidad, $estado, $id_padre) {
+        $this->dat_especialidad->setEspecialidad($especialidad);
+        $this->dat_especialidad->setEstado($estado);
+        $this->dat_especialidad->setIdPadre($id_padre);
+        $this->dat_especialidad->registrar();
     }
     
     public function modificar($id,$especialidad, $estado){
@@ -34,13 +38,23 @@ class mod_especialidad {
         return $this->dat_especialidad->consultarHijosTodos();
     }
     
+    public function consultarNumeroHijosTodos($id_padre){
+        $this->dat_especialidad->setIdPadre($id_padre);
+        return $this->dat_especialidad->consultarNumeroHijosTodos();
+    }
+    
+    public function consultarNumeroCasos($id){
+        $this->dat_especialidad->setId($id);
+        return $this->dat_especialidad->consultarNumeroCasos();
+    }
+    
     public function consultarPadres(){
         return $this->dat_especialidad->consultarPadres();
     }
-    
-    
-    
-    public function eliminar(){ // cambia de estado       
+           
+    public function eliminar($id){ // elimina definitivamente
+        $this->dat_especialidad->setId($id);
+        return $this->dat_especialidad->eliminar();
     }
     
     public function devolverPadre($id){
@@ -51,7 +65,7 @@ class mod_especialidad {
     public function devolverRuta($id_nivel){
         $ruta = "";
         if ($id_nivel == 0){
-            $ruta = '/ ';
+            $ruta = 'Inicio ';
         }else{                
             $reg = $this->consultarPorCodigo($id_nivel);
             $especialidad = $reg[0][1];                
@@ -67,6 +81,11 @@ class mod_especialidad {
             $ruta = '<a href="especialidad_arbol.php">Inicio</a>'.$ruta;            
         }
         return $ruta;
+    }
+    
+    public function buscarEspecialidad($texto_buscar){
+        $this->dat_especialidad->setEspecialidad($texto_buscar);
+        return $this->dat_especialidad->buscarEspecialidad();
     }
     
 }

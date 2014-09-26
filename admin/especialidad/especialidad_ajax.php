@@ -16,5 +16,29 @@ switch ($accion) {
         
         $respuesta = "true";
         break;
+    
+    case "registrar-especialidad":
+        $especialidad        = new mod_especialidad();
+        $id_padre            = $_POST['id_padre'];
+        $especialidad_nombre = $_POST['especialidad'];
+        $estado              = 1;
+        
+        $especialidad->registrar($especialidad_nombre, $estado, $id_padre);
+        
+        $respuesta = "true";
+        break;
+    
+    case "eliminar_especialidad":
+        $especialidad  = new mod_especialidad();
+        $id            = $_POST['id_especialidad'];
+        $respuesta = "false";
+        if ( $especialidad->consultarNumeroHijosTodos($id) <= 0 ){            
+              if ( $especialidad->consultarNumeroCasos($id) <= 0 ){
+                  $especialidad->eliminar($id);
+                  $respuesta = "true";
+              }            
+        }
+        break;
+    
 }
 echo $respuesta;

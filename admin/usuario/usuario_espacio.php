@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xml:lang="es" lang="es" style="height: 100%;">
 <head>
-<title>Detalle</title>
+<title>Espacio de usuario</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/reset.css" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/main.css" />
@@ -20,7 +20,6 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".tabs > ul").tabs();
-                document.getElementById("caso_busqueda").focus();
 	});
 	</script>
 </head>
@@ -43,11 +42,11 @@
     </ul>
     <ul class="box">
       <li><a href=""><span>Inicio</span></a></li>  
-        <li id="menu-active"><a href="usuario_lista.php" title="Lista de Usuarios"><span>Usuarios</span></a></li>
+        <li id="menu-active"><a href="usuario_lista.php"><span>Usuarios</span></a></li>
       <!-- Active -->
+      <li><a href="../especialidad/index.php"><span>Especialidades</span></a></li>
       <li><a href=""><span>Voces</span></a></li>
-      <li><a href=""><span>Preceptos</span></a></li>
-      <li><a href=""><span>Especialidades</span></a></li>
+      <li><a href=""><span>Preceptos</span></a></li>      
       <li><a href=""><span>Libros</span></a></li>
       <li><a href=""><span>Documentos</span></a></li>
       <li><a href=""><span>Casos</span></a></li>
@@ -69,7 +68,17 @@
             <input type="submit" value="OK" class="input-submit-02" id="buscar" />
             <br />            
           </fieldset>
-        </form>                 
+        </form> 
+        <!-- Search -->
+        <form action="usuario_busqueda.php" method="get" id="search">
+          <fieldset>
+          <legend>Buscar usuario</legend>          
+            <input placeholder="Usuario" type="text" name="texto" size="17" class="input-text" id="texto_busqueda" />
+            &nbsp;
+            <input type="submit" value="OK" class="input-submit-02" id="buscar" />
+            <br />            
+          </fieldset>
+        </form>
         <!-- Create a new project -->
         <p id="btn-create" class="box"><a href=""><span>Crear nuevo Caso</span></a></p>        
       </div>
@@ -82,7 +91,11 @@
     <hr class="noscreen" />
     <!-- Content (Right Column) -->
     <div id="content" class="box" style="min-height: 100%;">
-        <h2>Espacio de Casos</h2>
+        
+        <div style="max-width: 600px;">
+              <div><h2>Espacio de Casos</h2></div>
+              <div style="float: right"><a href="javascript:history.back()">Volver</a> </div>
+        </div>
         
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_usuario.php';
@@ -219,7 +232,7 @@ if (isset($_GET['cm'])){
     <table width="100%">
         <tr>
             <th>Caso</th>
-            <th>Titulo</th>
+            <th>Título</th>
             <th>Tipo de Caso</th>
             <th><div align="right">Ver caso</div></th>
         </tr>
