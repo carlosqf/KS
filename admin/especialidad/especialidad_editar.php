@@ -92,11 +92,10 @@
       
         <div style="max-width: 600px;">
               <div style="float: left;"><h2>Detalle de especialidad</h2></div>
-              <div style="float: right;"><br /><a href="javascript:history.back()">Volver</a> </div>
+              <div style="float: right;"><br /><a href="javascript:window.history.go(-1);">Volver</a> </div>
         </div>
-              
-           
-      
+             
+                 
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_especialidad.php';
 
@@ -162,7 +161,7 @@ if ( count($especialidad_reg) > 0  ){
 }else{
     ?>
     <br/><br/><br/><br/><div>
-        Especialidad Eliminada o no existe
+        Especialidad eliminada (Vuelva atras y actualize la página)
     </div>
     <?php
 }?>

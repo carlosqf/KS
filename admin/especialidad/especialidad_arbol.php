@@ -104,19 +104,19 @@ if (isset($_GET['id'])){
 ?>
 <div style="max-width: 850px;">    
 <?php
-$ruta = $especialidad->devolverRuta($id_nivel);
 $especialidades_seleccionadas =  $especialidad->consultarHijosTodos($id_nivel);
-?>    
+
+if (count($especialidades_seleccionadas)>0){
+    $ruta = $especialidad->devolverRuta($id_nivel);
+?>  
 <div style="max-width: 480px; float: left;">
     <h5><?php echo $ruta;?>  </h5>
 </div>
     
 <div style="float: right;">
-  
     <input placeholder="Especialidad" type="text" name="id" size="17" class="input-text" id="especialidad_registrar"/>
     &nbsp;
     <input title='Registrar en especialidad seleccionada' type="submit" value="Registrar" class="registrar_especialidad" id="<?php echo $id_nivel;?>" />
- 
 </div>    
 
 <table width="100%">
@@ -126,7 +126,6 @@ $especialidades_seleccionadas =  $especialidad->consultarHijosTodos($id_nivel);
         <th><div align="right">Opcion</div></th>
     </tr>
     <?php
-    if (count($especialidades_seleccionadas)>0){
         foreach($especialidades_seleccionadas as $especialidad_reg) {
             $id_especialidad     = $especialidad_reg['id'];
             $nombre_especialidad = $especialidad_reg['especialidad'];
@@ -152,18 +151,16 @@ $especialidades_seleccionadas =  $especialidad->consultarHijosTodos($id_nivel);
             </tr>
             <?php                    
         }      
-    }else{
-        echo '<tr>
-                <td>No existen</td>
-                <td></td>
-                <td></td>
-             </tr>';
-    }
-                  
     ?>                
 </table> 
     <br /> 
     Nota: las especialidades Deshabilitadas no seran vistas por los documentalistas ni clientes
+<?php
+}else{
+    echo 'No existen especialidades';
+}
+       
+?>
     
 </div>
 

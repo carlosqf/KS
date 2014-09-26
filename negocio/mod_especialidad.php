@@ -68,17 +68,19 @@ class mod_especialidad {
             $ruta = 'Inicio ';
         }else{                
             $reg = $this->consultarPorCodigo($id_nivel);
-            $especialidad = $reg[0][1];                
-            $ruta = ' / '.$especialidad.$ruta;
-            $id_nivel = $this->devolverPadre($id_nivel);
-            while ($id_nivel != 0){                               
-                $reg = $this->consultarPorCodigo($id_nivel);
-                $id = $reg[0][0];
+            if (count($reg)>0){
                 $especialidad = $reg[0][1];                
-                $ruta = ' / <a href="especialidad_arbol.php?id='.$id.'">'.$especialidad.'</a>'.$ruta;
-                $id_nivel = $this->devolverPadre($id_nivel); 
-            }
-            $ruta = '<a href="especialidad_arbol.php">Inicio</a>'.$ruta;            
+                $ruta = ' / '.$especialidad.$ruta;
+                $id_nivel = $this->devolverPadre($id_nivel);
+                while ($id_nivel != 0){                               
+                    $reg = $this->consultarPorCodigo($id_nivel);
+                    $id = $reg[0][0];
+                    $especialidad = $reg[0][1];                
+                    $ruta = ' / <a href="especialidad_arbol.php?id='.$id.'">'.$especialidad.'</a>'.$ruta;
+                    $id_nivel = $this->devolverPadre($id_nivel); 
+                }
+                $ruta = '<a href="especialidad_arbol.php">Inicio</a>'.$ruta;    
+            }                        
         }
         return $ruta;
     }
