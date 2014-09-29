@@ -20,9 +20,9 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".tabs > ul").tabs();
-                document.getElementById("editar").focus();
+                document.getElementById("especialidad_descripcion").focus();
 	});
-	</script>
+	</script>   
 </head>
 <body style="height: 100%;">
 <div id="main" style="height: 85%;">
@@ -46,7 +46,7 @@
       <li><a href="../usuario/index.php"><span>Usuarios</span></a></li>
       <!-- Active -->
       <li id="menu-active"><a href="especialidad_arbol.php"><span>Especialidades</span></a></li>
-      <li><a href=""><span>Voces</span></a></li>
+      <li><a href="../voces/index.php"><span>Voces</span></a></li>
       <li><a href=""><span>Preceptos</span></a></li>      
       <li><a href=""><span>Libros</span></a></li>
       <li><a href=""><span>Documentos</span></a></li>
@@ -124,7 +124,7 @@ if ( count($especialidad_reg) > 0  ){
                     Especialidad <span style="float: right;">:</span>
                 </td>
                 <td style=" width: 65%;">
-                    <input class="editable" type="text" name="texto" value="<?php echo $especialidad_descripcion;?>" disabled style="font-weight: bold; height: 35px; width: 97%;" id="especialidad_descripcion"></input>
+                    <input type="text" name="texto" value="<?php echo $especialidad_descripcion;?>" style="height: 35px; width: 97%;" id="especialidad_descripcion"></input>
                     <span class="asterisco" style="float: right; margin-top: 12px;">*</span>   
                 </td>
             </tr>
@@ -133,7 +133,7 @@ if ( count($especialidad_reg) > 0  ){
                     Estado <span style="float: right;">:</span>
                 </td>
                 <td align="left">
-                    <select class="editable" id="miselect_estado" style="width: 50%; height: 30px; font-weight: bold;" disabled>
+                    <select id="miselect_estado" style="width: 50%; height: 30px;">
                         <?php                            
                         if ($estado == 1){
                             echo '<option value="1" selected>Habilitado</option>';
@@ -149,11 +149,9 @@ if ( count($especialidad_reg) > 0  ){
             </tr> 
         </table>
 
-        <div align="center" style="margin-top: 15px;">            
-            <input type="button" value="Editar" id="editar" style="width: 20%; height: 28px; margin-right: 10px;"></input>
-            <input type="button" value="Modificar" class="modificar" id="<?php echo $id_especialidad;?>" style="width: 20%; height: 28px; margin-right: 10px;" disabled></input>
-            <input type="button" value="Cancelar" class="cancelar_modificacion" id="<?php echo $id_especialidad;?>" style="width: 20%; height: 28px;  margin-right: 10px;" disabled></input>
-            <input type="button" value="Eliminar" class="eliminar_especialidad" id="<?php echo $id_especialidad;?>" style="width: 20%; height: 28px;"></input>
+        <div align="center" style="margin-top: 15px;">                        
+            <input type="button" value="Modificar" class="modificar" id="<?php echo $id_especialidad;?>" style="width: 20%; height: 28px; margin-right: 10px;" ></input>
+            <input type="button" value="Cancelar" class="cancelar_modificacion" id="<?php echo $id_especialidad;?>" style="width: 20%; height: 28px;  margin-right: 10px;" ></input>
         </div>   
 
 

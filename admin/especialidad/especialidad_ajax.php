@@ -14,7 +14,16 @@ switch ($accion) {
         
         $especialidad->modificar($id, $especialidad_nombre, $estado);
         
-        $respuesta = "true";
+        $id_padre = $especialidad->devolverPadre($id);
+        
+        $respuesta = $id_padre;
+        break;
+    
+    case "cancelar-modificacion-especialidad":
+        $especialidad       = new mod_especialidad();
+        $id                 = $_POST['id'];               
+        $id_padre = $especialidad->devolverPadre($id);        
+        $respuesta = $id_padre;
         break;
     
     case "registrar-especialidad":

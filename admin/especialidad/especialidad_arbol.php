@@ -46,7 +46,7 @@
       <li><a href="../usuario/index.php"><span>Usuarios</span></a></li>
       <!-- Active -->
       <li id="menu-active"><a href="especialidad_arbol.php"><span>Especialidades</span></a></li>
-      <li><a href=""><span>Voces</span></a></li>
+      <li><a href="../voces/index.php"><span>Voces</span></a></li>
       <li><a href=""><span>Preceptos</span></a></li>      
       <li><a href=""><span>Libros</span></a></li>
       <li><a href=""><span>Documentos</span></a></li>
@@ -105,19 +105,22 @@ if (isset($_GET['id'])){
 <div style="max-width: 850px;">    
 <?php
 $especialidades_seleccionadas =  $especialidad->consultarHijosTodos($id_nivel);
+$ruta = $especialidad->devolverRuta($id_nivel);
 
-if (count($especialidades_seleccionadas)>0){
-    $ruta = $especialidad->devolverRuta($id_nivel);
-?>  
-<div style="max-width: 480px; float: left;">
+?>
+<div style="max-width: 640px; float: left;">
     <h5><?php echo $ruta;?>  </h5>
-</div>
-    
+</div> 
 <div style="float: right;">
     <input placeholder="Especialidad" type="text" name="id" size="17" class="input-text" id="especialidad_registrar"/>
     &nbsp;
     <input title='Registrar en especialidad seleccionada' type="submit" value="Registrar" class="registrar_especialidad" id="<?php echo $id_nivel;?>" />
-</div>    
+</div>     
+<?php
+
+if (count($especialidades_seleccionadas)>0){    
+?> 
+   
 
 <table width="100%">
     <tr>
@@ -145,7 +148,10 @@ if (count($especialidades_seleccionadas)>0){
                 <td align="left" width="15%">                
                     <?php echo $estado_mostrar;?>
                 </td>
-                <td  align="right" width="15%">                    
+                <td  align="right" width="15%">
+                    <span onmouseover="javascript:this.style.color='red';" onmouseout="javascript:this.style.color='#0085cc';" 
+                        style="text-decoration: underline; cursor: pointer; color:#0085cc;" title="Eliminar especialidad <?php echo $nombre_especialidad;?>" class="eliminar-especialidad" id="<?php echo $id_especialidad;?>">
+                        Eliminar</span> / 
                     <a href="especialidad_editar.php?id=<?php echo $id_especialidad;?>" title="Editar especialidad <?php echo $nombre_especialidad;?>">Editar</a>
                 </td>
             </tr>
@@ -157,9 +163,17 @@ if (count($especialidades_seleccionadas)>0){
     Nota: las especialidades Deshabilitadas no seran vistas por los documentalistas ni clientes
 <?php
 }else{
-    echo 'No existen especialidades';
-}
-       
+    ?>
+    <table width="100%">
+        <tr>
+            <th>Especialidad</th>
+            <th>Estado</th>
+            <th><div align="right">Opcion</div></th>
+        </tr>
+    </table>
+    No existen especialidades    
+    <?php
+}       
 ?>
     
 </div>

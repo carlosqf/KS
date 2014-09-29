@@ -52,4 +52,12 @@ class dat_voces_sin {
         return $result; 
     }
     
+    public function consultarPorCodigo(){
+        $this->con->Conectar();
+        $consulta = "select id, id_voz, sinonimo from to_voces_sin where id = $this->id;";        
+        $result = $this->con->getArrayModoColumna($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
 }

@@ -43,10 +43,10 @@
     </ul>
     <ul class="box">
       <li><a href=""><span>Inicio</span></a></li>  
-        <li id="menu-active"><a href="usuario_lista.php"><span>Usuarios</span></a></li>
+        <li id="menu-active"><a href="../usuario/index.php"><span>Usuarios</span></a></li>
       <!-- Active -->
       <li><a href="../especialidad/index.php"><span>Especialidades</span></a></li>
-      <li><a href=""><span>Voces</span></a></li>
+      <li><a href="../voces/index.php"><span>Voces</span></a></li>
       <li><a href=""><span>Preceptos</span></a></li>      
       <li><a href=""><span>Libros</span></a></li>
       <li><a href=""><span>Documentos</span></a></li>

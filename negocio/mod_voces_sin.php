@@ -30,4 +30,9 @@ class mod_voces_sin {
         return $this->dat_voces_sin->eliminarVozSin(); 
     }
     
+    public function consultarPorCodigo($id){
+        $this->dat_voces_sin->setId($id);
+        return $this->dat_voces_sin->consultarPorCodigo();
+    }
+    
 }

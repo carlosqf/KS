@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xml:lang="es" lang="es" style="height: 100%;">
 <head>
-<title>Voces</title>
+<title>Editar voces</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/reset.css" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/main.css" />
@@ -43,7 +43,7 @@
     </ul>
     <ul class="box">
       <li><a href=""><span>Inicio</span></a></li>  
-      <li><a href="../usuario/index.php"><span>Usuarios</span></a></li>      
+      <li><a href="../usuario/index.php"><span>Usuarios</span></a></li> 
       <li><a href="../especialidad/index.php"><span>Especialidades</span></a></li>
       <li id="menu-active"><a href="../voces/index.php"><span>Voces</span></a></li>
       <li><a href=""><span>Preceptos</span></a></li>      
@@ -90,124 +90,113 @@
     <!-- /aside -->
     <hr class="noscreen" />
     <!-- Content (Right Column) -->
-    <div id="content" class="box" style="min-height: 490px; min-height: 490px;">
-      <h2>Lista de voces</h2>
-
+    <div id="content" class="box" style="min-height: 490px;">
+      
+      <div style="max-width: 700px;">
+          <div style="float: left;"><h2>Editar voz</h2></div>
+          <div style="float: right;"><br /><a href="javascript:history.back()">Volver</a> </div>
+      </div>
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_voces.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_voces_sin.php';
 
-if (isset($_GET['pag'])) {  
-    $pagina = $_GET['pag'];
-}else{
-    $pagina = 1;
+if (isset($_GET['id'])){
+    $id_voz = $_GET['id']; // id del voz
 }
+$voces = new mod_voces();    
+$voz_registro = $voces->consultarPorCodigo($id_voz);
 
-$voces = new mod_voces();            
-$lista_voces = $voces->consultarVoces($pagina);
-$numero_voces = $voces->numeroDeVoces();
-
-$voces_por_pagina = 20;
-$total_paginas = ceil($numero_voces / $voces_por_pagina);
-?>
+if ( count($voz_registro) > 0 ){
+    foreach ($voz_registro as $registro) {
+        $voz = $registro['voces'];
+        $estado = $registro['estado'];    
+    }
+?>    
 <div style="max-width: 700px;" >    
-    <div align="left" style="margin-bottom: 6px;">
-        <div>Página <?php echo $pagina;?>/<?php echo $total_paginas;?> (Total <?php echo $numero_voces;?> voces)</div>
-    </div> 
+    
+    <table width="100%" cellpadding="7" style="border: none; ">
+    <tr>
+        <td style=" width: 35%;" align="left">
+            Voz <span style="float: right;">:</span>
+        </td>
+        <td style=" width: 65%;">
+            <input onKeyUp="this.value=this.value.toUpperCase();" class="editable" type="text" name="texto" value="<?php echo $voz;?>" disabled style="font-weight: bold; height: 35px; width: 97%;" id="nombre_voz"></input>
+            <span class="asterisco" style="float: right; margin-top: 12px;">*</span>    
+        </td>
+    </tr>
+    <tr>
+        <td align="left">
+            Estado <span style="float: right;">:</span>
+        </td>
+        <td  align="left">
+            <select class="editable" id="miselectestado_voz" style="width: 50%; height: 30px; font-weight: bold;" disabled>
+                <?php
+                if ( $estado == 1 ){
+                    echo '<option value="1" selected>Habilitado</option>';
+                    echo '<option value="0" >Deshabilitado</option>';
+                }
+                if ( $estado == 0 ){
+                    echo '<option value="0" selected>Deshabilitado</option>';
+                    echo '<option value="1" >Habilitado</option>';
+                }
+                ?>
+            </select>
+            <span class="asterisco" style="float: right; margin-top: 12px;">*</span>
+        </td>
+    </tr>  
+</table>
+    
+<div align="center" style="margin-top: 15px;">            
+    <input type="button" value="Editar" id="editar_voz" style="width: 20%; height: 28px; margin-right: 10px;"></input>
+    <input type="button" value="Modificar" class="modificar_voz" id="<?php echo $id_voz;?>" style="width: 20%; height: 28px; margin-right: 10px;" disabled></input>
+    <input type="button" value="Cancelar" class="cancelar_modificacion_voz" id="<?php echo $id_voz;?>" style="width: 20%; height: 28px;  margin-right: 10px;" disabled></input>
+    <input type="button" value="Eliminar" class="eliminar_voz" id="<?php echo $id_voz;?>" style="width: 20%; height: 28px;"></input>
+</div>
+    
+    <h2>Sinonimos</h2>
+<?php
+$sinonimos = $voces->consultarSinonimos($id_voz);
+if ( count($sinonimos)>0 ){
+    ?>
     <table width="100%">
-        <tr>
-            <th>Voces</th>
-            <th>Estado</th>
-            <th>Sinónimos</th>
-            <th><div align="right">Opcion</div></th>
-        </tr>
         <?php
-        $voces_sin = new mod_voces_sin();
-        
-        foreach($lista_voces as $voces_reg) {
-            $id_voz     = $voces_reg['id'];
-            $voces_voz  = $voces_reg['voces'];
-            $estado_voz = $voces_reg['estado'];
-            
-            $sinonimos = $voces->consultarSinonimos($id_voz);
-            
-            $sinonimos_mostrar = "";
-            $last = end($sinonimos);
-            foreach ($sinonimos as $sin_reg){
-                $sinonimo_voz = $sin_reg['sinonimo'];
-                if ( $last == $sin_reg ){
-                    $sinonimos_mostrar = $sinonimos_mostrar.$sinonimo_voz."";
-                }else{
-                    $sinonimos_mostrar = $sinonimos_mostrar.$sinonimo_voz.' <span style="font-weight: bold; color: red; font-size: 16px;">;</span> ';
-                }                
-            }
-            if (count($sinonimos) > 0 ){
-                $sinonimos_mostrar = '<span style="font-weight: bold; color: red; font-size: 12px;">[</span>'.$sinonimos_mostrar.'<span style="font-weight: bold; color: red; font-size: 12px;">]</span>';
-            }
-            
-            if ( $estado_voz == 1 ){
-                $estado_mostrar = "Habilitado";
-            }
-            if ($estado_voz == 0){
-                $estado_mostrar = "Deshabilitado";
-            }
+        foreach($sinonimos as $sin_reg) {
+            $id_sin     = $sin_reg['id'];
+            $sinonimo  = $sin_reg['sinonimo'];        
             ?>
-        
             <tr>
-                <td width="38%" align="left">
-                    <?php echo $voces_voz;?></a>
+                <td width="70%" align="left">
+                    <?php echo $sinonimo;?></a>
                 </td>
-                <td width="10%">
-                    <?php echo $estado_mostrar;?>
-                </td>
-                <td width="45%">
-                    <?php echo $sinonimos_mostrar;?>
-                </td>
-                <td width="7%" align="right">                    
-                    <a href="voces_editar.php?id=<?php echo $id_voz;?>">Editar</a>
+                <td width="30%" align="right">                    
+                    <a title="Editar <?php echo $sinonimo;?>" href="sinonimo_editar.php?id=<?php echo $id_sin;?>">Editar</a> /
+                    <span onmouseover="javascript:this.style.color='red';" onmouseout="javascript:this.style.color='#0085cc';" 
+                        style="text-decoration: underline; cursor: pointer; color:#0085cc;" title="Eliminar <?php echo $sinonimo;?>" class="eliminar-sinonimo" id="<?php echo $id_sin;?>">
+                        Eliminar
+                    </span>
                 </td>
             </tr>
             <?php                    
         }                
         ?>                
-    </table> 
+    </table>
+<?php
+}else{
+    echo 'No existen sinonimos';    
+}
+?>   
+<br />    
     
-    <div align="center" style="margin-top: 15px;">            
-    <?php        
-    if ($total_paginas > 1) {
-        echo '<table cellpadding="5">
-            <tr>';
-        if ($pagina != 1){
-            echo '<td><a href="voces_lista.php?pag='.($pagina - 1).'" >Anterior</a></td>';
-        }else{
-            echo '<td><a href="" class="paginate_disabled">Anterior</a></td>';
-        }
-        $inicio = $pagina - 4;
-        if ( $inicio <= 0 ){
-            $inicio = 1;
-        }		
-        $fin    = $inicio + 8;
-        if ($fin > $total_paginas){
-            $fin = $total_paginas;
-        }
-        for ($i=$inicio;$i<=$fin;$i++) {
-            if ($pagina == $i){
-                echo '<td class="active">'.$i.'</td>';
-            }else{
-                echo '<td><a href="voces_lista.php?pag='.($i).'" >'.$i.'</a></td>';
-            }    
-        }
-        if ($pagina != $total_paginas){
-            echo '<td><a href="voces_lista.php?pag='.($pagina + 1).'">Siguiente</a></td>';
-        }else{
-            echo '<td><a href="" class="paginate_disabled">Siguiente</a></td>';
-        }   
-        echo '</tr>
-        </table>';
-    }            
-    ?>
-    </div>
-        
+<div align="center">
+    <input style="width: 200px;" onKeyUp="this.value=this.value.toUpperCase();" placeholder="Sinonimo" type="text" name="id" size="17" class="input-text" id="sinonimo_registrar"/>
+    &nbsp;
+    <input style="width: 100px; height: 28px;" title='Registrar sinonimo para la voz' type="button" value="Registrar" class="registrar_sinonimo" id="<?php echo $id_voz;?>" />
+</div>     
+<?php    
+}else{
+    echo "Voz eliminada o no existe";
+}
+?>     
 </div>  
       
             

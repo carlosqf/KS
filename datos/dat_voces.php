@@ -72,6 +72,14 @@ class dat_voces {
         return $result;
     }
     
+    public function consultarNumeroSinonimos(){
+        $this->con->Conectar();
+        $consulta = "select count(id) from to_voces_sin where id_voz = $this->id;";        
+        $result = $this->con->getArrayModoRegistro($consulta);
+        $this->con->desconectar();
+        return $result[0][0];
+    }
+    
     public function eliminar(){
         $this->con->conectar();
         $consulta = "delete from to_voces where id=$this->id;";
@@ -83,17 +91,33 @@ class dat_voces {
     public function consultarNumeroCasosRelacionados(){
         $this->con->conectar();
         $consulta = "select count(id) from to_caso_voces where id_voces = $this->id;";
-        $result = $this->con->ejecutarConsulta($consulta);
+        $result = $this->con->getArrayModoRegistro($consulta);
         $this->con->desconectar();
         return $result[0][0];
     }
     
     public function buscarVoces() {
         $this->con->Conectar();
-        $consulta = "";
+        $consulta = "select id, voces, estado from to_voces where voces like '%$this->voces%' order by voces;";
         $result = $this->con->getArrayModoColumna($consulta);
         $this->con->desconectar();
         return $result;
+    }
+    
+    public function consultarPorCodigo(){
+        $this->con->Conectar();
+        $consulta = "select id, voces, estado from to_voces where id = $this->id;";        
+        $result = $this->con->getArrayModoColumna($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
+    public function consultarUltimoID(){
+        $this->con->Conectar();        
+        $consulta = "select max(id) as id from to_voces;";        
+        $result = $this->con->getArrayModoRegistro($consulta);        
+        $this->con->desconectar();
+        return $result[0][0];
     }
     
 }

@@ -5,19 +5,24 @@ $(document).ready(function() {
             var id_rol = document.getElementById("miselectrol").value;
             document.location.href = 'usuario_lista.php?rol='+id_rol;
         });
-            
-        $('#editar').click(function(){
-            $('.editable').removeAttr('disabled');
-            $('.editable').css("font-weight","normal");
-            $('#editar').attr("disabled","true");
-            $('.eliminar_especialidad').attr("disabled","true");
-            document.getElementById("especialidad_descripcion").focus(); 
-            $('.modificar').removeAttr('disabled');
-            $('.cancelar_modificacion').removeAttr('disabled');
-        });
-        
+              
         $('.cancelar_modificacion').click(function(event){
-            location.reload();
+            var id = event.target.id;            
+            var valores = {    
+                "accion" : "cancelar-modificacion-especialidad",
+                "id" : id
+            };
+            $.ajax({
+                    data:  valores,
+                    url:   'especialidad_ajax.php',
+                    type:  'post',
+                    beforeSend: function () {
+                    },
+                    success:  function (respuesta) {
+                        location.href = "especialidad_arbol.php?id="+respuesta;
+                    }
+            });
+            
         });
         
         $('.modificar').click(function(event){
@@ -40,7 +45,7 @@ $(document).ready(function() {
                         beforeSend: function () {
                         },
                         success:  function (respuesta) {
-                            location.reload();
+                            location.href = "especialidad_arbol.php?id="+respuesta;
                         }
                 });
             }else{
@@ -78,7 +83,7 @@ $(document).ready(function() {
             }
         });
         
-        $('.eliminar_especialidad').click(function(event){
+        $('.eliminar-especialidad').click(function(event){
             var id_especialidad = event.target.id;            
             if ( confirm("Esta seguro de eliminar la especialidad") ){
                 //$('#carga1').html('<div><img src="../imagenes/pagina/ajax-loader.gif"/></div>');

@@ -43,10 +43,10 @@
     </ul>
     <ul class="box">
       <li><a href=""><span>Inicio</span></a></li>  
-        <li id="menu-active"><a href="usuario_lista.php"><span>Usuarios</span></a></li>
+        <li id="menu-active"><a href="../usuario/index.php"><span>Usuarios</span></a></li>
       <!-- Active -->
       <li><a href="../especialidad/index.php"><span>Especialidades</span></a></li>
-      <li><a href=""><span>Voces</span></a></li>
+      <li><a href="../voces/index.php"><span>Voces</span></a></li>
       <li><a href=""><span>Preceptos</span></a></li>      
       <li><a href=""><span>Libros</span></a></li>
       <li><a href=""><span>Documentos</span></a></li>
@@ -92,7 +92,11 @@
     <hr class="noscreen" />
     <!-- Content (Right Column) -->
     <div id="content" class="box" style="min-height: 490px; height: 100%;">
-      <h2>Registro de usuarios</h2>
+      
+        <div style="max-width: 600px;">
+            <div style="float: left;"><h2>Registro de usuarios</h2></div>
+            <div style="float: right;"><br /><a href="javascript:history.back()">Volver</a> </div>
+        </div>
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_usuario.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_rol.php';

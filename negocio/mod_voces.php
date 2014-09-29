@@ -40,6 +40,11 @@ class mod_voces {
         return $this->dat_voces->consultarSinonimos();
     }
     
+    public function consultarNumeroSinonimos($id){
+        $this->dat_voces->setId($id);
+        return $this->dat_voces->consultarNumeroSinonimos();
+    }
+    
     public function eliminar($id){
         $this->dat_voces->setId($id);
         return $this->dat_voces->eliminar();
@@ -50,6 +55,18 @@ class mod_voces {
         return $this->dat_voces->consultarNumeroCasosRelacionados();
     }
     
+    public function buscarVoces($texto) {
+        $this->dat_voces->setVoces($texto);
+        return $this->dat_voces->buscarVoces();
+    }
     
+    public function consultarPorCodigo($id){
+        $this->dat_voces->setId($id);
+        return $this->dat_voces->consultarPorCodigo();
+    }
+    
+    public function consultarUltimoID(){
+        return $this->dat_voces->consultarUltimoID();
+    }
     
 }
