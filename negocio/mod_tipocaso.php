@@ -18,6 +18,11 @@ class mod_tipocaso {
         $this->dat_tipocaso->setId($id);
         return $this->dat_tipocaso->getTipoCasoId();
     }
+    
+    public function consultar(){        
+        return $this->dat_tipocaso->consultar();
+    }
+    
 }
 
 ?>

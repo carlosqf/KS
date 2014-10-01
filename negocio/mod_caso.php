@@ -103,6 +103,73 @@ class mod_caso {
     }
     
     
+    
+    // todos los casos
+    
+    public function totalCasosTodos(){        
+        return $this->dat_caso->totalCasosTodos();
+    }
+    
+    public function totalCasosJudicialesTodos(){        
+        return $this->dat_caso->totalCasosJudicialesTodos();
+    }
+    
+    public function totalCasosExtrajudicialesTodos(){        
+        return $this->dat_caso->totalCasosExtrajudicialesTodos();
+    }
+    
+    public function totalCasosConsultasTodos(){        
+        return $this->dat_caso->totalCasosConsultasTodos();
+    }
+    
+    public function totalCasosFinalizadosTodos(){        
+        return $this->dat_caso->totalCasosFinalizadosTodos();
+    }
+    
+    public function totalCasosEmpezadosTodos(){        
+        return $this->dat_caso->totalCasosEmpezadosTodos();
+    }
+    
+    public function totalCasosParaRevisarTodos(){
+        return $this->dat_caso->totalCasosParaRevisarTodos();
+    }
+    
+    public function totalCasosRealizarCambiosTodos(){
+        return $this->dat_caso->totalCasosRealizarCambiosTodos();
+    } 
+    
+    public function consultarTodos($pagina){        
+        return $this->dat_caso->consultarTodos($pagina);
+    }
+    
+    public function consultarJudicialesTodos($pagina){
+        return $this->dat_caso->consultarJudicialesTodos($pagina);
+    }
+    
+    public function consultarExtrajudicialesTodos($pagina){        
+        return $this->dat_caso->consultarExtrajudicialesTodos($pagina);
+    }
+    
+    public function consultarConsultasTodos($pagina){        
+        return $this->dat_caso->consultarConsultasTodos($pagina);
+    }
+    
+    public function consultarFinalizadosTodos($pagina){        
+        return $this->dat_caso->consultarFinalizadosTodos($pagina);
+    }   
+    
+    public function consultarEmpezadosTodos($pagina){
+        return $this->dat_caso->consultarEmpezadosTodos($pagina);
+    }
+    
+    public function consultarRevisadosTodos($pagina){        
+        return $this->dat_caso->consultarRevisadosTodos($pagina);
+    }
+    
+    public function consultarCambiosRealizarTodos($pagina){
+        return $this->dat_caso->consultarCambiosRealizarTodos($pagina);
+    }
+    
+    
 }
-
 ?>

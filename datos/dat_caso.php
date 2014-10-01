@@ -238,6 +238,194 @@ where id = $this->id;";
     }
     
     
+    // TODOS LOS TODOS    
+        
+    public function totalCasosTodos(){
+        $this->con->Conectar();
+        $consulta = "select COUNT(*) as total
+                     from to_casos;";
+        $result = $this->con->getArrayModoRegistro($consulta);
+        $this->con->desconectar();
+        return $result[0][0];
+    }
+    
+    public function totalCasosJudicialesTodos(){
+        $this->con->Conectar();
+        $consulta = "select COUNT(*) as total
+                     from to_casos
+                     where id_tipocaso=1;";        
+        $result = $this->con->getArrayModoRegistro($consulta);
+        $this->con->desconectar();
+        return $result[0][0];
+    }
+    
+    public function totalCasosExtrajudicialesTodos(){
+        $this->con->Conectar();
+        $consulta = "select COUNT(*) as total
+                     from to_casos
+                     where id_tipocaso=2;";        
+        $result = $this->con->getArrayModoRegistro($consulta);
+        $this->con->desconectar();
+        return $result[0][0];
+    }
+    
+    public function totalCasosConsultasTodos(){
+        $this->con->Conectar();
+        $consulta = "select COUNT(*) as total
+                     from to_casos
+                     where id_tipocaso=9;";        
+        $result = $this->con->getArrayModoRegistro($consulta);
+        $this->con->desconectar();
+        return $result[0][0];
+    }
+    
+    public function totalCasosFinalizadosTodos(){
+        $this->con->Conectar();
+        $consulta = "select COUNT(*) as total
+                     from to_casos
+                     where id_estado=3;";        
+        $result = $this->con->getArrayModoRegistro($consulta);
+        $this->con->desconectar();
+        return $result[0][0];
+    }
+    
+    public function totalCasosEmpezadosTodos(){
+        $this->con->Conectar();
+        $consulta = "select COUNT(*) as total
+                     from to_casos
+                     where id_estado=1;";        
+        $result = $this->con->getArrayModoRegistro($consulta);
+        $this->con->desconectar();
+        return $result[0][0];
+    }
+    
+    public function totalCasosParaRevisarTodos(){
+        $this->con->Conectar();
+        $consulta = "select COUNT(*) as total
+                     from to_casos
+                     where id_estado=2;";
+        $result = $this->con->getArrayModoRegistro($consulta);
+        $this->con->desconectar();
+        return $result[0][0];
+    }
+    
+    public function totalCasosRealizarCambiosTodos(){
+        $this->con->Conectar();
+        $consulta = "select COUNT(*) as total
+                     from to_casos
+                     where id_estado=4;";        
+        $result = $this->con->getArrayModoRegistro($consulta);
+        $this->con->desconectar();
+        return $result[0][0];
+    } 
+    
+    public function consultarTodos($pagina){
+        $this->con->Conectar();
+        $pagina = ($pagina - 1) * 20;
+        $consulta = "SELECT id, titulo, id_tipocaso, id_estado 
+                     FROM to_casos
+		     order by id desc
+                     limit $pagina,20";        
+        $result = $this->con->getArrayModoColumna($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
+    public function consultarJudicialesTodos($pagina){
+        $this->con->Conectar();
+        $pagina = ($pagina - 1) * 20;
+        $consulta = "SELECT id, titulo, id_tipocaso, id_estado 
+                     FROM to_casos
+                     where id_tipocaso=1
+		     order by id desc
+                     limit $pagina,20";        
+        $result = $this->con->getArrayModoColumna($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
+    public function consultarExtrajudicialesTodos($pagina){
+        $this->con->Conectar();
+        $pagina = ($pagina - 1) * 20;
+        $consulta = "SELECT id, titulo, id_tipocaso, id_estado 
+                     FROM to_casos
+                     where id_tipocaso=2
+		     order by id desc
+                     limit $pagina,20";        
+        $result = $this->con->getArrayModoColumna($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
+    public function consultarConsultasTodos($pagina){
+        $this->con->Conectar();
+        $pagina = ($pagina - 1) * 20;
+        $consulta = "SELECT id, titulo, id_tipocaso, id_estado 
+                     FROM to_casos
+                     where id_tipocaso=9
+		     order by id desc
+                     limit $pagina,20";        
+        $result = $this->con->getArrayModoColumna($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
+    public function consultarFinalizadosTodos($pagina){
+        $this->con->Conectar();
+        $pagina = ($pagina - 1) * 20;
+        $consulta = "SELECT id, titulo, id_tipocaso, id_estado 
+                     FROM to_casos
+                     where id_estado=3
+		     order by id desc
+                     limit $pagina,20";        
+        $result = $this->con->getArrayModoColumna($consulta);
+        $this->con->desconectar();
+        return $result;
+    }   
+    
+    public function consultarEmpezadosTodos($pagina){
+        $this->con->Conectar();
+        $pagina = ($pagina - 1) * 20;
+        $consulta = "SELECT id, titulo, id_tipocaso, id_estado 
+                     FROM to_casos
+                     where id_estado=1
+		     order by id desc
+                     limit $pagina,20";        
+        $result = $this->con->getArrayModoColumna($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
+    public function consultarRevisadosTodos($pagina){
+        $this->con->Conectar();
+        $pagina = ($pagina - 1) * 20;
+        $consulta = "SELECT id, titulo, id_tipocaso, id_estado 
+                     FROM to_casos
+                     where id_estado=2
+		     order by id desc
+                     limit $pagina,20";        
+        $result = $this->con->getArrayModoColumna($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
+    public function consultarCambiosRealizarTodos($pagina){
+        $this->con->Conectar();
+        $pagina = ($pagina - 1) * 20;
+        $consulta = "SELECT id, titulo, id_tipocaso, id_estado 
+                     FROM to_casos
+                     where id_estado=4
+		     order by id desc
+                     limit $pagina,20";        
+        $result = $this->con->getArrayModoColumna($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
+    
+    
+    
+    
 }
 
 ?>

@@ -26,6 +26,14 @@ class dat_tipocaso {
         return $result[0][0];
     }
     
+    public function consultar(){
+        $this->con->Conectar();
+        $consulta = "select id, caso from to_tipocaso order by caso asc;";
+        $result = $this->con->getArrayModoColumna($consulta);        
+        $this->con->desconectar();
+        return $result;
+    }
+    
 }
 
 ?>
