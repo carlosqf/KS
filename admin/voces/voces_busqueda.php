@@ -90,7 +90,7 @@
     <!-- /aside -->
     <hr class="noscreen" />
     <!-- Content (Right Column) -->
-    <div id="content" class="box" style="min-height: 490px;">
+    <div id="content" class="box" style="min-height: 490px; height: 100%;">
       <h2>Búsqueda de voces</h2>
       
 <?php

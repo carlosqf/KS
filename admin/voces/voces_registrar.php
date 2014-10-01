@@ -90,7 +90,7 @@
     <!-- /aside -->
     <hr class="noscreen" />
     <!-- Content (Right Column) -->
-    <div id="content" class="box" style="min-height: 490px; min-height: 490px;">         
+    <div id="content" class="box" style="min-height: 490px; height: 100%;">         
         <div style="max-width: 600px;">
             <div style="float: left;"><h2>Registro de voz</h2></div>
             <div style="float: right;"><br /><a href="javascript:history.back()">Volver</a> </div>

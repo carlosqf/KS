@@ -90,7 +90,7 @@
     <!-- /aside -->
     <hr class="noscreen" />
     <!-- Content (Right Column) -->
-    <div id="content" class="box" style="min-height: 490px;">
+    <div id="content" class="box" style="min-height: 490px; height: 100%;">
       
       <div style="max-width: 700px;">
           <div style="float: left;"><h2>Editar voz</h2></div>
