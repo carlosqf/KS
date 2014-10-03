@@ -70,7 +70,7 @@
           </fieldset>
         </form>
         <!-- Create a new project -->
-        <p id="btn-create" class="box"><a href=""><span>Crear nuevo Caso</span></a></p>        
+        <p id="btn-create" class="box"><a href="../caso/caso_nuevo.php"><span>Crear nuevo Caso</span></a></p>        
       </div>
       <!-- /padding -->
       <ul class="box">
@@ -94,6 +94,8 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_tipocaso.php';
 
 if (isset($_GET['id'])){
     $id_usuario = $_GET['id']; // id del usuario
+}else{
+    $id_usuario = 1;
 }
 
 $usuario = new mod_usuario();
@@ -160,11 +162,10 @@ $casos_realizar_Cambios = $caso->totalCasosRealizarCambios($id_usuario);
 if (isset($_GET['cm'])){
     $casos_a_mostrar = $_GET['cm'];
     
+    $pagina = 1;
     if (isset($_GET['pag'])){
         $pagina = $_GET['pag'];
-    }else{
-        $pagina = 1;
-    }         
+    }       
     switch ($casos_a_mostrar) {
         case "to":            
             $registros = $caso->consultarTodosPorUsuario($pagina,$id_usuario);
@@ -208,13 +209,14 @@ if (isset($_GET['cm'])){
             break;
     }    
     $total_paginas = ceil($numero_registros_total / 10); 
-    if ($total_paginas == 0)
+    if ($total_paginas == 0) {
         $pagina = 0;
-    ?>
+    }
+?>
     <div style="display: table; text-align: left;">
         <div style="display: table-row;">
             <div style="display: table-cell;"><h3><?php echo $seleccionado;?></h3></div>
-            <div style="display: table-cell;">&nbsp;&nbsp;&nbsp;Pagina <?php echo $pagina;?>/<?php echo $total_paginas;?></div>
+            <div style="display: table-cell;">&nbsp;&nbsp;&nbsp;Pagina <?php echo $pagina;?>/<?php echo $total_paginas."  (Total ".$numero_registros_total." casos)";?></div>
         </div>
     </div>
     
@@ -259,7 +261,7 @@ if (isset($_GET['cm'])){
         echo '<table cellpadding="5">
             <tr>';
         if ($pagina != 1){
-            echo '<td><a href="usuario_espacio.php?id='.$id_usuario.'&cm='.$casos_a_mostrar.'&pag='.($pagina - 1).'">Anterior</a></td>';
+            echo '<td><a href="miscasos.php?id='.$id_usuario.'&cm='.$casos_a_mostrar.'&pag='.($pagina - 1).'">Anterior</a></td>';
         }else{
             echo '<td><a href="" class="paginate_disabled">Anterior</a></td>';
         }
@@ -275,11 +277,11 @@ if (isset($_GET['cm'])){
             if ($pagina == $i){
                 echo '<td class="active">'.$i.'</td>';
             }else{
-                echo '<td><a href="usuario_espacio.php?id='.$id_usuario.'&cm='.$casos_a_mostrar.'&pag='.($i).'">'.$i.'</a></td>';
+                echo '<td><a href="miscasos.php?id='.$id_usuario.'&cm='.$casos_a_mostrar.'&pag='.($i).'">'.$i.'</a></td>';
             }    
         }
         if ($pagina != $total_paginas){
-            echo '<td><a href="usuario_espacio.php?id='.$id_usuario.'&cm='.$casos_a_mostrar.'&pag='.($pagina + 1).'">Siguiente</a></td>';
+            echo '<td><a href="miscasos.php?id='.$id_usuario.'&cm='.$casos_a_mostrar.'&pag='.($pagina + 1).'">Siguiente</a></td>';
         }else{
             echo '<td><a href="" class="paginate_disabled">Siguiente</a></td>';
         }   

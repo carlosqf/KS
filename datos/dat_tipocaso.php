@@ -21,9 +21,14 @@ class dat_tipocaso {
     public function getTipoCasoId(){
         $this->con->Conectar();
         $consulta = "SELECT caso FROM to_tipocaso where id = $this->id;";
-        $result = $this->con->getArrayModoRegistro($consulta);        
+        $result = $this->con->getArrayModoRegistro($consulta);
         $this->con->desconectar();
-        return $result[0][0];
+        
+        if (count($result) > 0) {
+            return $result[0][0];
+        } else {
+            return "";
+        }
     }
     
     public function consultar(){

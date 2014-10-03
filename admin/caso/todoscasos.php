@@ -46,8 +46,8 @@
       <!-- Active -->
       <li><a href="../especialidad/index.php"><span>Especialidades</span></a></li>
       <li><a href="../voces/index.php"><span>Voces</span></a></li>
-      <li><a href=""><span>Preceptos</span></a></li>      
-      <li><a href=""><span>Libros</span></a></li>
+      <li><a href="../caso/miscasos.php"><span>Mis casos</span></a></li>
+      <li><a href="../caso/todoscasos.php"><span>Todos los casos</span></a></li>
       <li><a href=""><span>Documentos</span></a></li>
       <li><a href=""><span>Casos</span></a></li>
     </ul>
@@ -198,7 +198,7 @@ if (isset($_GET['cm'])){
     <div style="display: table; text-align: left;">
         <div style="display: table-row;">
             <div style="display: table-cell;"><h3><?php echo $seleccionado;?></h3></div>
-            <div style="display: table-cell;">&nbsp;&nbsp;&nbsp;Pagina <?php echo $pagina;?>/<?php echo $total_paginas;?></div>
+            <div style="display: table-cell;">&nbsp;&nbsp;&nbsp;Pagina <?php echo $pagina;?>/<?php echo $total_paginas."  (Total ".$numero_registros_total." casos)";?></div>
         </div>
     </div>
     
