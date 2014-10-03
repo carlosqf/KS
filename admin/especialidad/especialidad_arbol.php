@@ -19,8 +19,7 @@
 <script type="text/javascript" src="especialidad.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$(".tabs > ul").tabs();
-                document.getElementById("texto_busqueda").focus();
+		$(".tabs > ul").tabs();                
 	});
 	</script>
 </head>
@@ -43,14 +42,13 @@
     </ul>
     <ul class="box">
       <li><a href=""><span>Inicio</span></a></li>  
-      <li><a href="../usuario/index.php"><span>Usuarios</span></a></li>
-      <!-- Active -->
-      <li id="menu-active"><a href="especialidad_arbol.php"><span>Especialidades</span></a></li>
+      <li ><a href="../usuario/index.php"><span>Usuarios</span></a></li>      
+            <li id="menu-active"><a href="../especialidad/index.php"><span>Especialidades</span></a></li>
       <li><a href="../voces/index.php"><span>Voces</span></a></li>
-      <li><a href=""><span>Preceptos</span></a></li>      
-      <li><a href=""><span>Libros</span></a></li>
+      <li><a href="../caso/miscasos.php"><span>Mis casos</span></a></li>
+      <li><a href="../caso/todoscasos.php"><span>Todos los casos</span></a></li>
       <li><a href=""><span>Documentos</span></a></li>
-      <li><a href=""><span>Casos</span></a></li>      
+      <li><a href=""><span>Casos</span></a></li>     
     </ul>
   </div>
   <!-- /header -->
@@ -97,7 +95,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_especialidad.php';
 $especialidad = new mod_especialidad();
 
 if (isset($_GET['id'])){
-    $id_nivel = $_GET['id']; // id del usuario
+    $id_nivel = $_GET['id']; // id de la especialidad
 }else{
     $id_nivel = 0;
 }
@@ -105,7 +103,7 @@ if (isset($_GET['id'])){
 <div style="max-width: 850px;">    
 <?php
 $especialidades_seleccionadas =  $especialidad->consultarHijosTodos($id_nivel);
-$ruta = $especialidad->devolverRuta($id_nivel);
+$ruta = $especialidad->devolverRuta($id_nivel,"especialidad_arbol.php");
 
 ?>
 <div style="max-width: 640px; float: left;">

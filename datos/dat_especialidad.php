@@ -50,6 +50,14 @@ class dat_especialidad {
         return $result;
     }
     
+    public function getEspecialidadPorCodigo() {
+        $this->con->Conectar();
+        $consulta = "select especialidad from to_especialidad where id = $this->id;";
+        $result = $this->con->getArrayModoRegistro($consulta);
+        $this->con->desconectar();
+        return $result[0][0];
+    }
+    
     public function consultarHijosTodos(){// habilitados 1 e inhablitados 0
         $this->con->Conectar();
         $consulta = "select id, especialidad, id_padre, estado

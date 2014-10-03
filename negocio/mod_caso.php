@@ -19,6 +19,29 @@ class mod_caso {
         return $this->dat_caso->consultarPorCodigo();
     }
     
+    public function consultarCasosPorEspecialidad($id_especialidad, $pagina){
+        $this->dat_caso->setIdEspecialidad($id_especialidad);
+        return $this->dat_caso->consultarCasosPorEspecialidad($pagina);
+    }
+    
+    public function consultarNumeroCasosPorEspecialidad($id_especialidad){
+        $this->dat_caso->setIdEspecialidad($id_especialidad);
+        return $this->dat_caso->consultarNumeroCasosPorEspecialidad();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // estos metodos son muy vuelteros dejarlos al ultimo separados de los metodos principales
+    
     public function totalCasos($id_admin){
         $this->dat_caso->setIdAdmin($id_admin);
         return $this->dat_caso->totalCasos();

@@ -43,12 +43,11 @@
     </ul>
     <ul class="box">
       <li><a href=""><span>Inicio</span></a></li>  
-      <li><a href="../usuario/index.php"><span>Usuarios</span></a></li>
-      <!-- Active -->
-      <li id="menu-active"><a href="especialidad_arbol.php"><span>Especialidades</span></a></li>
+      <li ><a href="../usuario/index.php"><span>Usuarios</span></a></li>      
+            <li id="menu-active"><a href="../especialidad/index.php"><span>Especialidades</span></a></li>
       <li><a href="../voces/index.php"><span>Voces</span></a></li>
-      <li><a href=""><span>Preceptos</span></a></li>      
-      <li><a href=""><span>Libros</span></a></li>
+      <li><a href="../caso/miscasos.php"><span>Mis casos</span></a></li>
+      <li><a href="../caso/todoscasos.php"><span>Todos los casos</span></a></li>
       <li><a href=""><span>Documentos</span></a></li>
       <li><a href=""><span>Casos</span></a></li>
     </ul>
@@ -116,7 +115,7 @@ if (count($lista_especialidades)>0){
         foreach($lista_especialidades as $especialidad_reg) {
             $id_especialidad     = $especialidad_reg['id'];
             $nombre_especialidad = $especialidad_reg['especialidad'];            
-            $ruta = $especialidad->devolverRuta($id_especialidad);
+            $ruta = $especialidad->devolverRuta($id_especialidad,"especialidad_arbol.php");
             ?>
             <tr>
                 <td align="left" width="33%">                

@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xml:lang="es" lang="es" style="height: 100%;">
 <head>
-<title>Todos los casos</title>
+<title>Busqueda por especialidad</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/reset.css" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/main.css" />
@@ -82,7 +82,7 @@
     <div id="content" class="box" style="min-height: 100%;">
         
         <div style="max-width: 600px;">
-              <div><h2>Todos los casos</h2></div>              
+              <div><h2>Busqueda por especialidad</h2></div>              
         </div>
         
 <?php
@@ -90,106 +90,87 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_usuario.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_rol.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_caso.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_tipocaso.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_especialidad.php';
 
-$caso = new mod_caso();
-$total_casos = $caso->totalCasosTodos();
-$casos_judiciales = $caso->totalCasosJudicialesTodos();
-$casos_extrajudiciales = $caso->totalCasosExtrajudicialesTodos();
-$casos_consultas = $caso->totalCasosConsultasTodos();
-$casos_finalizados = $caso->totalCasosFinalizadosTodos();
-$casos_empezados = $caso->totalCasosEmpezadosTodos();
-$casos_revisar = $caso->totalCasosParaRevisarTodos();
-$casos_realizar_Cambios = $caso->totalCasosRealizarCambiosTodos();
+$especialidad = new mod_especialidad();
 
+if (isset($_GET['id'])){
+    $id_nivel = $_GET['id']; // id de la especialidad
+}else{
+    $id_nivel = 0;
+}
 ?>
-
 <div style="max-width: 850px;">    
-        
-<table border="0" style="width: 600px;">              
-      <tr>
-          <td width="200">Total Casos: <div style="float: right; margin-right: 25px;"><?php echo $total_casos;?> 
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="todoscasos.php?&cm=to">ver</a>  </div>
-          </td>
-        <td width="200">Total Casos Finalizados: <div style="float: right; margin-right: 25px;"><?php echo $casos_finalizados;?>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="todoscasos.php?cm=fi">ver</a>  </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Total Casos Judiciales: <div style="float: right; margin-right: 25px;"><?php echo $casos_judiciales;?>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="todoscasos.php?cm=ju">ver</a>  </div>
-        </td>
-        <td>Total Casos Empezados: <div style="float: right; margin-right: 25px;"><?php echo $casos_empezados;?>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="todoscasos.php?cm=em">ver</a>  </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Total Casos Extrajudiciales: <div style="float: right; margin-right: 25px;"><?php echo $casos_extrajudiciales;?>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="todoscasos.php?cm=ex">ver</a>  </div>
-        </td>
-        <td>Total Casos para Revisar: <div style="float: right; margin-right: 25px;"><?php echo $casos_revisar;?>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="todoscasos.php?cm=re">ver</a>  </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Total Casos Consultas: <div style="float: right; margin-right: 25px;"><?php echo $casos_consultas;?>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="todoscasos.php?cm=co">ver</a>  </div>
-        </td>
-        <td>Total Casos Realizar Cambios: <div style="float: right; margin-right: 25px;"><?php echo $casos_realizar_Cambios;?>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="todoscasos.php?cm=ca">ver</a>  </div>
-        </td>
-      </tr>
-</table>   
+     
+<?php
+$especialidades_seleccionadas =  $especialidad->consultarHijosTodos($id_nivel);
+$ruta = $especialidad->devolverRuta($id_nivel,"busquedaespecialidad.php");
+?>
+<div style="max-width: 640px;">
+    <h5><?php echo $ruta;?>  </h5>
+</div>    
+<?php
+
+if (count($especialidades_seleccionadas)>0){    
+?> 
+   
+
+<table style="width: 600px;">
+    <tr>
+        <th>Especialidad</th>
+        <th><div align="right">Nro casos</div></th>
+        <th><div align="right">Opcion</div></th>
+    </tr>
+    <?php
+        $caso = new mod_caso();
     
-<?php 
-if (isset($_GET['cm'])){
-    $casos_a_mostrar = $_GET['cm'];
+        foreach($especialidades_seleccionadas as $especialidad_reg) {
+            $id_especialidad     = $especialidad_reg['id'];
+            $nombre_especialidad = $especialidad_reg['especialidad'];
+                        
+            $numero_casos_especialidad = $caso->consultarNumeroCasosPorEspecialidad($id_especialidad);            
+            ?>
+            <tr>
+                <td align="left" width="72%">                
+                    <a href="busquedaespecialidad.php?id=<?php echo $id_especialidad;?>" title="Ver Subespecialidades"><?php echo $nombre_especialidad;?></a>
+                </td>
+                <td align="right" width="13%">                
+                    <?php echo $numero_casos_especialidad;?>
+                </td>
+                <td align="right" width="15%">                    
+                    <a title="Ver casos casos de<?php echo $nombre_especialidad;?>" href="busquedaespecialidad.php?id=<?php echo $id_nivel;?>&selec=<?php echo $id_especialidad;?>" title="Editar especialidad <?php echo $nombre_especialidad;?>">ver casos</a>
+                </td>
+            </tr>
+            <?php                    
+        }      
+    ?>                
+</table> 
+    
+<?php
+}else{
+    ?>
+    <table style="width: 600px;">
+        <tr>
+            <th>Especialidad</th>
+            <th>Estado</th>
+            <th><div align="right">Opcion</div></th>
+        </tr>
+    </table>
+    No existen especialidades    
+    <?php
+}  
+
+if (isset($_GET['selec'])){
+    $especialidad_seleccionada = $_GET['selec']; 
+    $especialidad_descripcion = $especialidad->getEspecialidadPorCodigo($especialidad_seleccionada);
     
     $pagina = 1;
     if (isset($_GET['pag'])){
         $pagina = $_GET['pag'];
-    }       
-    switch ($casos_a_mostrar) {
-        case "to":            
-            $registros = $caso->consultarTodos($pagina);
-            $numero_registros_total = ($total_casos);
-            $seleccionado = "Total Casos";
-            break;
-        case "ju":
-            $registros = $caso->consultarJudicialesTodos($pagina);
-            $numero_registros_total = ($casos_judiciales);
-            $seleccionado = "Total Casos Judiciales";
-            break;
-        case "ex":
-            $registros = $caso->consultarExtrajudicialesTodos($pagina);
-            $numero_registros_total = ($casos_extrajudiciales);
-            $seleccionado = "Total Casos Extrajudiciales";
-            break;
-        case "co":
-            $registros = $caso->consultarConsultasTodos($pagina);
-            $numero_registros_total = ($casos_consultas);
-            $seleccionado = "Total Casos Consultas";
-            break;
-        case "fi":
-            $registros = $caso->consultarFinalizadosTodos($pagina);
-            $numero_registros_total = ($casos_finalizados);
-            $seleccionado = "Total Casos Finalizados";
-            break;
-        case "em":
-            $registros = $caso->consultarEmpezadosTodos($pagina);
-            $numero_registros_total = ($casos_empezados);
-            $seleccionado = "Total Casos Empezados";
-            break;
-        case "re":
-            $registros = $caso->consultarRevisadosTodos($pagina);
-            $numero_registros_total = ($casos_revisar);
-            $seleccionado = "Total Casos para Revisar";
-            break;
-        case "ca":
-            $registros = $caso->consultarCambiosRealizarTodos($pagina);
-            $numero_registros_total = ($casos_realizar_Cambios);
-            $seleccionado = "Total Casos Realizar Cambios";
-            break;
-    }    
+    }   
+    $registros = $caso->consultarCasosPorEspecialidad($especialidad_seleccionada, $pagina);
+    $numero_registros_total = $caso->consultarNumeroCasosPorEspecialidad($especialidad_seleccionada);
+    
     $total_paginas = ceil($numero_registros_total / 20); 
     if ($total_paginas == 0) {
         $pagina = 0;
@@ -197,7 +178,7 @@ if (isset($_GET['cm'])){
     ?>
     <div style="display: table; text-align: left;">
         <div style="display: table-row;">
-            <div style="display: table-cell;"><h3><?php echo $seleccionado;?></h3></div>
+            <div style="display: table-cell;"><h3><?php echo "Especialidad ( ".$especialidad_descripcion." )";?></h3></div>
             <div style="display: table-cell;">&nbsp;&nbsp;&nbsp;Pagina <?php echo $pagina;?>/<?php echo $total_paginas."  (Total ".$numero_registros_total." casos)";?></div>
         </div>
     </div>
@@ -243,7 +224,7 @@ if (isset($_GET['cm'])){
         echo '<table cellpadding="5">
             <tr>';
         if ($pagina != 1){
-            echo '<td><a href="todoscasos.php?cm='.$casos_a_mostrar.'&pag='.($pagina - 1).'">Anterior</a></td>';
+            echo '<td><a href="busquedaespecialidad.php?id='.$id_nivel.'selec='.$especialidad_seleccionada.'&pag='.($pagina - 1).'">Anterior</a></td>';
         }else{
             echo '<td><a href="" class="paginate_disabled">Anterior</a></td>';
         }
@@ -259,11 +240,11 @@ if (isset($_GET['cm'])){
             if ($pagina == $i){
                 echo '<td class="active">'.$i.'</td>';
             }else{
-                echo '<td><a href="todoscasos.php?cm='.$casos_a_mostrar.'&pag='.($i).'">'.$i.'</a></td>';
+                echo '<td><a href="busquedaespecialidad.php?id='.$id_nivel.'&selec='.$especialidad_seleccionada.'&pag='.($i).'">'.$i.'</a></td>';
             }    
         }
         if ($pagina != $total_paginas){
-            echo '<td><a href="todoscasos.php?cm='.$casos_a_mostrar.'&pag='.($pagina + 1).'">Siguiente</a></td>';
+            echo '<td><a href="busquedaespecialidad.php?id='.$id_nivel.'&selec='.$especialidad_seleccionada.'&pag='.($pagina + 1).'">Siguiente</a></td>';
         }else{
             echo '<td><a href="" class="paginate_disabled">Siguiente</a></td>';
         }   
@@ -274,7 +255,7 @@ if (isset($_GET['cm'])){
     </div>
     <?php    
 }
-?>   
+?>
     
 </div>
 

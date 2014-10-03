@@ -11,6 +11,7 @@ class dat_caso {
     private $id;
     
     private $id_admin;
+    private $id_especialidad;
     private $id_estado;
     private $id_tipocaso;
     
@@ -26,6 +27,10 @@ class dat_caso {
     
     public function setIdAdmin($id_admin) {
         $this->id_admin = $id_admin;
+    }
+    
+    public function setIdEspecialidad($id_especialidad) {
+        $this->id_especialidad = $id_especialidad;
     }
 
     public function setIdEstado($id_estado) {
@@ -45,6 +50,39 @@ where id = $this->id;";
         $this->con->desconectar();
         return $result;
     }
+    
+    public function consultarCasosPorEspecialidad($pagina){
+        $this->con->Conectar();
+        $pagina = ($pagina - 1) * 20;
+        $consulta = "SELECT id, titulo, id_tipocaso, id_estado 
+                     FROM to_casos
+                     where id_especialidad = $this->id_especialidad
+		     order by id desc
+                     limit $pagina,20";
+        $result = $this->con->getArrayModoColumna($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
+    public function consultarNumeroCasosPorEspecialidad(){
+        $this->con->Conectar();
+        $consulta = "select COUNT(*) as total
+                     from to_casos
+                     where id_especialidad= $this->id_especialidad;";
+        $result = $this->con->getArrayModoRegistro($consulta);
+        $this->con->desconectar();
+        return $result[0][0];
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // estos metodos son muy vuelteros dejarlos al ultimo separados de los metodos principales
     
     public function totalCasos(){
         $this->con->Conectar();

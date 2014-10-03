@@ -33,6 +33,11 @@ class mod_especialidad {
         return $this->dat_especialidad->consultarPorCodigo();
     }
     
+    public function getEspecialidadPorCodigo($id) {
+        $this->dat_especialidad->setId($id);
+        return $this->dat_especialidad->getEspecialidadPorCodigo();
+    }
+    
     public function consultarHijosTodos($id_padre){
         $this->dat_especialidad->setIdPadre($id_padre);
         return $this->dat_especialidad->consultarHijosTodos();
@@ -62,7 +67,7 @@ class mod_especialidad {
         return $this->dat_especialidad->devolverPadre();
     }
     
-    public function devolverRuta($id_nivel){
+    public function devolverRuta($id_nivel, $archivo_ruta){ // archivo_ruta -> a que archivo se redireccionara
         $ruta = "";
         if ($id_nivel == 0){
             $ruta = 'Inicio ';
@@ -76,10 +81,10 @@ class mod_especialidad {
                     $reg = $this->consultarPorCodigo($id_nivel);
                     $id = $reg[0][0];
                     $especialidad = $reg[0][1];                
-                    $ruta = ' / <a href="especialidad_arbol.php?id='.$id.'">'.$especialidad.'</a>'.$ruta;
+                    $ruta = ' / <a href="'.$archivo_ruta.'?id='.$id.'">'.$especialidad.'</a>'.$ruta;
                     $id_nivel = $this->devolverPadre($id_nivel); 
                 }
-                $ruta = '<a href="especialidad_arbol.php">Inicio</a>'.$ruta;    
+                $ruta = '<a href="'.$archivo_ruta.'">Inicio</a>'.$ruta;    
             }                        
         }
         return $ruta;
