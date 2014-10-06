@@ -16,7 +16,7 @@
 <script type="text/javascript" src="../../js/ui.core.js"></script>
 <script type="text/javascript" src="../../js/ui.tabs.js"></script>
 
-<script type="text/javascript" src="voces.js"></script>
+<script type="text/javascript" src="caso.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".tabs > ul").tabs();
@@ -44,10 +44,10 @@
     <ul class="box">
       <li><a href=""><span>Inicio</span></a></li>  
       <li ><a href="../usuario/index.php"><span>Usuarios</span></a></li>      
-      <li><a href="../especialidad/index.php"><span>Especialidades</span></a></li>
+      <li><a href="../esp   ecialidad/index.php"><span>Especialidades</span></a></li>
       <li><a href="../voces/index.php"><span>Voces</span></a></li>
-      <li id="menu-active"><a href="../caso/miscasos.php"><span>Mis casos</span></a></li>
-      <li><a href="../caso/todoscasos.php"><span>Todos los casos</span></a></li>
+      <li id="menu-active"><a href="../miscasos/miscasos.php"><span>Mis casos</span></a></li>
+      <li><a href="../miscasos/todoscasos.php"><span>Todos los casos</span></a></li>
       <li><a href=""><span>Documentos</span></a></li>
       <li><a href=""><span>Casos</span></a></li>
     </ul>
@@ -105,7 +105,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_tipocaso.php';
         ?>
     </select><br /><br /><br />
     
-    <input style="width: 200px; height: 25px;" type="button" class="" onClick="SaveHTMLPage()" value="Guardar y comenzar edicion"></input>
+    <input style="width: 200px; height: 25px;" type="button" id="registrar" value="Guardar y comenzar edicion"></input>
     
 </div>  
       

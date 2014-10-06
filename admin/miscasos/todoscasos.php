@@ -16,7 +16,7 @@
 <script type="text/javascript" src="../../js/ui.core.js"></script>
 <script type="text/javascript" src="../../js/ui.tabs.js"></script>
 
-<script type="text/javascript" src="usuario.js"></script>
+<script type="text/javascript" src=""></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".tabs > ul").tabs();
@@ -45,8 +45,8 @@
       <li ><a href="../usuario/index.php"><span>Usuarios</span></a></li>      
       <li><a href="../especialidad/index.php"><span>Especialidades</span></a></li>
       <li><a href="../voces/index.php"><span>Voces</span></a></li>
-      <li><a href="../caso/miscasos.php"><span>Mis casos</span></a></li>
-            <li id="menu-active"><a href="../caso/todoscasos.php"><span>Todos los casos</span></a></li>
+      <li><a href="../miscasos/miscasos.php"><span>Mis casos</span></a></li>
+            <li id="menu-active"><a href="../miscasos/todoscasos.php"><span>Todos los casos</span></a></li>
       <li><a href=""><span>Documentos</span></a></li>
       <li><a href=""><span>Casos</span></a></li>
     </ul>
@@ -72,8 +72,8 @@
       </div>
       <!-- /padding -->
       <ul class="box">
-          <li><a href="../caso/todoscasos.php">Todos los casos</a></li>
-          <li><a href="../caso/busquedaespecialidad.php">Busqueda por especialidad</a></li>
+          <li><a href="../miscasos/todoscasos.php">Todos los casos</a></li>
+          <li><a href="../miscasos/busquedaespecialidad.php">Busqueda por especialidad</a></li>
       </ul>      
     </div>
     <!-- /aside -->

@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xml:lang="es" lang="es" style="height: 100%;">
 <head>
-<title>Mis casos</title>
+<title>Busqueda por especialidad</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/reset.css" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/main.css" />
@@ -45,8 +45,8 @@
       <li ><a href="../usuario/index.php"><span>Usuarios</span></a></li>      
       <li><a href="../especialidad/index.php"><span>Especialidades</span></a></li>
       <li><a href="../voces/index.php"><span>Voces</span></a></li>
-            <li id="menu-active"><a href="../caso/miscasos.php"><span>Mis casos</span></a></li>
-      <li><a href="../caso/todoscasos.php"><span>Todos los casos</span></a></li>
+      <li><a href="../miscasos/miscasos.php"><span>Mis casos</span></a></li>
+            <li id="menu-active"><a href="../caso/todoscasos.php"><span>Todos los casos</span></a></li>
       <li><a href=""><span>Documentos</span></a></li>
       <li><a href=""><span>Casos</span></a></li>
     </ul>
@@ -68,12 +68,12 @@
             <br />            
           </fieldset>
         </form>
-        <!-- Create a new project -->
-        <p id="btn-create" class="box"><a href="../caso/caso_nuevo.php"><span>Crear nuevo Caso</span></a></p>        
+                
       </div>
       <!-- /padding -->
       <ul class="box">
-          
+          <li><a href="../miscasos/todoscasos.php">Todos los casos</a></li>
+          <li><a href="../miscasos/busquedaespecialidad.php">Busqueda por especialidad</a></li>
       </ul>      
     </div>
     <!-- /aside -->
@@ -82,7 +82,7 @@
     <div id="content" class="box" style="min-height: 100%;">
         
         <div style="max-width: 600px;">
-              <div><h2>Mis casos</h2></div>              
+              <div><h2>Busqueda por especialidad</h2></div>              
         </div>
         
 <?php
@@ -90,131 +90,95 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_usuario.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_rol.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_caso.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_tipocaso.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_especialidad.php';
+
+$especialidad = new mod_especialidad();
 
 if (isset($_GET['id'])){
-    $id_usuario = $_GET['id']; // id del usuario
+    $id_nivel = $_GET['id']; // id de la especialidad
 }else{
-    $id_usuario = 1;
+    $id_nivel = 0;
 }
-
-$usuario = new mod_usuario();
-$usuario_reg = $usuario->consultarPorCodigo($id_usuario);
-foreach ($usuario_reg as $registro) {
-    $nombre = $registro['nombre'];
-    $id_rol = $registro['id_rol'];     
-}
-$rol = new mod_rol();
-
-$rol_descripcion = $rol->getRolId($id_rol);
-
-$caso = new mod_caso();
-$total_casos = $caso->totalCasos($id_usuario);
-$casos_judiciales = $caso->totalCasosJudiciales($id_usuario);
-$casos_extrajudiciales = $caso->totalCasosExtrajudiciales($id_usuario);
-$casos_consultas = $caso->totalCasosConsultas($id_usuario);
-$casos_finalizados = $caso->totalCasosFinalizados($id_usuario);
-$casos_empezados = $caso->totalCasosEmpezados($id_usuario);
-$casos_revisar = $caso->totalCasosParaRevisar($id_usuario);
-$casos_realizar_Cambios = $caso->totalCasosRealizarCambios($id_usuario);
-
 ?>
-
 <div style="max-width: 850px;">    
-    <h5> <?php echo $nombre;?> (<?php echo $rol_descripcion;?>)</h5>
+     
+<?php
+$especialidades_seleccionadas =  $especialidad->consultarHijosTodos($id_nivel);
+$ruta = $especialidad->devolverRuta($id_nivel,"busquedaespecialidad.php");
+?>
+<div style="max-width: 640px;">
+    <h5><?php echo $ruta;?>  </h5>
+</div>    
+<?php
+
+if (count($especialidades_seleccionadas)>0){    
+?> 
+   
+
+<table style="width: 600px;">
+    <tr>
+        <th>Especialidad</th>
+        <th><div align="right">Nro casos</div></th>
+        <th><div align="right">Opcion</div></th>
+    </tr>
+    <?php
+        $caso = new mod_caso();
     
-<table border="0" style="width: 600px;">              
-      <tr>
-          <td width="200">Total Casos: <div style="float: right; margin-right: 25px;"><?php echo $total_casos;?> 
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="miscasos.php?id=<?php echo $id_usuario.'&cm=to';?>">ver</a>  </div>
-          </td>
-        <td width="200">Total Casos Finalizados: <div style="float: right; margin-right: 25px;"><?php echo $casos_finalizados;?>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="miscasos.php?id=<?php echo $id_usuario.'&cm=fi';?>">ver</a>  </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Total Casos Judiciales: <div style="float: right; margin-right: 25px;"><?php echo $casos_judiciales;?>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="miscasos.php?id=<?php echo $id_usuario.'&cm=ju';?>">ver</a>  </div>
-        </td>
-        <td>Total Casos Empezados: <div style="float: right; margin-right: 25px;"><?php echo $casos_empezados;?>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="miscasos.php?id=<?php echo $id_usuario.'&cm=em';?>">ver</a>  </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Total Casos Extrajudiciales: <div style="float: right; margin-right: 25px;"><?php echo $casos_extrajudiciales;?>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="miscasos.php?id=<?php echo $id_usuario.'&cm=ex';?>">ver</a>  </div>
-        </td>
-        <td>Total Casos para Revisar: <div style="float: right; margin-right: 25px;"><?php echo $casos_revisar;?>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="miscasos.php?id=<?php echo $id_usuario.'&cm=re';?>">ver</a>  </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Total Casos Consultas: <div style="float: right; margin-right: 25px;"><?php echo $casos_consultas;?>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="miscasos.php?id=<?php echo $id_usuario.'&cm=co';?>">ver</a>  </div>
-        </td>
-        <td>Total Casos Realizar Cambios: <div style="float: right; margin-right: 25px;"><?php echo $casos_realizar_Cambios;?>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="miscasos.php?id=<?php echo $id_usuario.'&cm=ca';?>">ver</a>  </div>
-        </td>
-      </tr>
-</table>   
+        foreach($especialidades_seleccionadas as $especialidad_reg) {
+            $id_especialidad     = $especialidad_reg['id'];
+            $nombre_especialidad = $especialidad_reg['especialidad'];
+                        
+            $numero_casos_especialidad = $caso->consultarNumeroCasosPorEspecialidad($id_especialidad);            
+            ?>
+            <tr>
+                <td align="left" width="72%">                
+                    <a href="busquedaespecialidad.php?id=<?php echo $id_especialidad;?>" title="Ver Subespecialidades"><?php echo $nombre_especialidad;?></a>
+                </td>
+                <td align="right" width="13%">                
+                    <?php echo $numero_casos_especialidad;?>
+                </td>
+                <td align="right" width="15%">                    
+                    <a title="Ver casos casos de<?php echo $nombre_especialidad;?>" href="busquedaespecialidad.php?id=<?php echo $id_nivel;?>&selec=<?php echo $id_especialidad;?>" title="Editar especialidad <?php echo $nombre_especialidad;?>">ver casos</a>
+                </td>
+            </tr>
+            <?php                    
+        }      
+    ?>                
+</table> 
     
-<?php 
-if (isset($_GET['cm'])){
-    $casos_a_mostrar = $_GET['cm'];
+<?php
+}else{
+    ?>
+    <table style="width: 600px;">
+        <tr>
+            <th>Especialidad</th>
+            <th>Estado</th>
+            <th><div align="right">Opcion</div></th>
+        </tr>
+    </table>
+    No existen especialidades    
+    <?php
+}  
+
+if (isset($_GET['selec'])){
+    $especialidad_seleccionada = $_GET['selec']; 
+    $especialidad_descripcion = $especialidad->getEspecialidadPorCodigo($especialidad_seleccionada);
     
     $pagina = 1;
     if (isset($_GET['pag'])){
         $pagina = $_GET['pag'];
-    }       
-    switch ($casos_a_mostrar) {
-        case "to":            
-            $registros = $caso->consultarTodosPorUsuario($pagina,$id_usuario);
-            $numero_registros_total = ($total_casos);
-            $seleccionado = "Total Casos";
-            break;
-        case "ju":
-            $registros = $caso->consultarJudicialesPorUsuario($pagina,$id_usuario);
-            $numero_registros_total = ($casos_judiciales);
-            $seleccionado = "Total Casos Judiciales";
-            break;
-        case "ex":
-            $registros = $caso->consultarExtrajudicialesPorUsuario($pagina,$id_usuario);
-            $numero_registros_total = ($casos_extrajudiciales);
-            $seleccionado = "Total Casos Extrajudiciales";
-            break;
-        case "co":
-            $registros = $caso->consultarConsultasPorUsuario($pagina,$id_usuario);
-            $numero_registros_total = ($casos_consultas);
-            $seleccionado = "Total Casos Consultas";
-            break;
-        case "fi":
-            $registros = $caso->consultarFinalizadosPorUsuario($pagina,$id_usuario);
-            $numero_registros_total = ($casos_finalizados);
-            $seleccionado = "Total Casos Finalizados";
-            break;
-        case "em":
-            $registros = $caso->consultarEmpezadosPorUsuario($pagina,$id_usuario);
-            $numero_registros_total = ($casos_empezados);
-            $seleccionado = "Total Casos Empezados";
-            break;
-        case "re":
-            $registros = $caso->consultarRevisadosPorUsuario($pagina,$id_usuario);
-            $numero_registros_total = ($casos_revisar);
-            $seleccionado = "Total Casos para Revisar";
-            break;
-        case "ca":
-            $registros = $caso->consultarCambiosRealizarPorUsuario($pagina,$id_usuario);
-            $numero_registros_total = ($casos_realizar_Cambios);
-            $seleccionado = "Total Casos Realizar Cambios";
-            break;
-    }    
-    $total_paginas = ceil($numero_registros_total / 10); 
+    }   
+    $registros = $caso->consultarCasosPorEspecialidad($especialidad_seleccionada, $pagina);
+    $numero_registros_total = $caso->consultarNumeroCasosPorEspecialidad($especialidad_seleccionada);
+    
+    $total_paginas = ceil($numero_registros_total / 20); 
     if ($total_paginas == 0) {
         $pagina = 0;
     }
-?>
+    ?>
     <div style="display: table; text-align: left;">
         <div style="display: table-row;">
-            <div style="display: table-cell;"><h3><?php echo $seleccionado;?></h3></div>
+            <div style="display: table-cell;"><h3><?php echo "Especialidad ( ".$especialidad_descripcion." )";?></h3></div>
             <div style="display: table-cell;">&nbsp;&nbsp;&nbsp;Pagina <?php echo $pagina;?>/<?php echo $total_paginas."  (Total ".$numero_registros_total." casos)";?></div>
         </div>
     </div>
@@ -260,15 +224,15 @@ if (isset($_GET['cm'])){
         echo '<table cellpadding="5">
             <tr>';
         if ($pagina != 1){
-            echo '<td><a href="miscasos.php?id='.$id_usuario.'&cm='.$casos_a_mostrar.'&pag='.($pagina - 1).'">Anterior</a></td>';
+            echo '<td><a href="busquedaespecialidad.php?id='.$id_nivel.'selec='.$especialidad_seleccionada.'&pag='.($pagina - 1).'">Anterior</a></td>';
         }else{
             echo '<td><a href="" class="paginate_disabled">Anterior</a></td>';
         }
-        $inicio = $pagina - 4;
+        $inicio = $pagina - 7;
         if ( $inicio <= 0 ){
             $inicio = 1;
         }		
-        $fin    = $inicio + 8;
+        $fin    = $inicio + 14;
         if ($fin > $total_paginas){
             $fin = $total_paginas;
         }
@@ -276,11 +240,11 @@ if (isset($_GET['cm'])){
             if ($pagina == $i){
                 echo '<td class="active">'.$i.'</td>';
             }else{
-                echo '<td><a href="miscasos.php?id='.$id_usuario.'&cm='.$casos_a_mostrar.'&pag='.($i).'">'.$i.'</a></td>';
+                echo '<td><a href="busquedaespecialidad.php?id='.$id_nivel.'&selec='.$especialidad_seleccionada.'&pag='.($i).'">'.$i.'</a></td>';
             }    
         }
         if ($pagina != $total_paginas){
-            echo '<td><a href="miscasos.php?id='.$id_usuario.'&cm='.$casos_a_mostrar.'&pag='.($pagina + 1).'">Siguiente</a></td>';
+            echo '<td><a href="busquedaespecialidad.php?id='.$id_nivel.'&selec='.$especialidad_seleccionada.'&pag='.($pagina + 1).'">Siguiente</a></td>';
         }else{
             echo '<td><a href="" class="paginate_disabled">Siguiente</a></td>';
         }   
@@ -291,7 +255,7 @@ if (isset($_GET['cm'])){
     </div>
     <?php    
 }
-?>   
+?>
     
 </div>
 

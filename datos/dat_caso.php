@@ -14,6 +14,7 @@ class dat_caso {
     private $id_especialidad;
     private $id_estado;
     private $id_tipocaso;
+    private $titulo;
     
     //completar los demas atributos
 
@@ -39,6 +40,32 @@ class dat_caso {
     
     public function setIdTipoCaso($id_tipocaso) {
         $this->id_tipocaso = $id_tipocaso;
+    }
+    
+    public function setTitulo($titulo) {
+        $this->titulo = $titulo;
+    }
+    
+    public function registrar(){
+        $this->con->conectar();
+        $consulta = "INSERT INTO to_casos (id_admin,id_tipocaso,id_estado,titulo,voces,articulos,fecha) VALUES ('".
+                         $this->id_admin."', '".
+			 $this->id_tipocaso."', '".
+			 "1', '".
+			 $this->titulo."','','','".
+			 date("Y-m-d")."'".
+             " )";
+        $result = $this->con->ejecutarConsulta($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
+    public function consultarUltimoID(){
+        $this->con->Conectar();        
+        $consulta = "select max(id) as id from to_casos;";        
+        $result = $this->con->getArrayModoRegistro($consulta);        
+        $this->con->desconectar();
+        return $result[0][0];
     }
     
     public function consultarPorCodigo(){

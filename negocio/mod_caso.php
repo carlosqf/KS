@@ -12,7 +12,18 @@ class mod_caso {
     
     public function __construct() {
         $this->dat_caso = new dat_caso();
-    }  
+    } 
+    
+    public function registrar($id_admin, $titulo,$id_tipocaso){
+        $this->dat_caso->setIdAdmin($id_admin);
+        $this->dat_caso->setIdTipoCaso($id_tipocaso);
+        $this->dat_caso->setTitulo($titulo);
+        return $this->dat_caso->registrar();
+    }
+    
+    public function consultarUltimoID(){
+        return $this->dat_caso->consultarUltimoID();
+    }
     
     public function consultarPorCodigo($id){
         $this->dat_caso->setId($id);

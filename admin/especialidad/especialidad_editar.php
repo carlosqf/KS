@@ -46,8 +46,8 @@
       <li ><a href="../usuario/index.php"><span>Usuarios</span></a></li>      
             <li id="menu-active"><a href="../especialidad/index.php"><span>Especialidades</span></a></li>
       <li><a href="../voces/index.php"><span>Voces</span></a></li>
-      <li><a href="../caso/miscasos.php"><span>Mis casos</span></a></li>
-      <li><a href="../caso/todoscasos.php"><span>Todos los casos</span></a></li>
+      <li><a href="../miscasos/miscasos.php"><span>Mis casos</span></a></li>
+      <li><a href="../miscasos/todoscasos.php"><span>Todos los casos</span></a></li>
       <li><a href=""><span>Documentos</span></a></li>
       <li><a href=""><span>Casos</span></a></li>
     </ul>
