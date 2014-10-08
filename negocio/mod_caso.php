@@ -21,6 +21,12 @@ class mod_caso {
         return $this->dat_caso->registrar();
     }
     
+    public function modificarTitulo($id, $titulo){
+        $this->dat_caso->setId($id);
+        $this->dat_caso->setTitulo($titulo);
+        return $this->dat_caso->modificarTitulo();
+    }
+    
     public function consultarUltimoID(){
         return $this->dat_caso->consultarUltimoID();
     }

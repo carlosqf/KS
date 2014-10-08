@@ -1,0 +1,22 @@
+.cabezera_estado_caso{
+    color: black; padding-left: 5px; padding-right: 5px; min-width: 690px; background-color: #FAAC58; width: 35px; font-weight: bold;
+}
+
+.cabezera_general_caso{
+    color: black; padding-left: 5px; padding-right: 5px; min-width: 690px; background-color: #D8D8D8; width: 35px; font-weight: bold;
+}
+
+.detalle_caso_edicion{
+    padding-left: 5px; padding-right: 5px; max-width: 690px; text-align:justify;
+}
+
+.opcion_editar{
+    float: right; color: red; cursor: pointer; text-decoration: underline;
+}
+
+
+
+
+
+
+

@@ -60,6 +60,16 @@ class dat_caso {
         return $result;
     }
     
+    public function modificarTitulo(){
+        $this->con->conectar();
+        $consulta = "update to_casos
+set titulo = '$this->titulo'
+where id = $this->id;";
+        $result = $this->con->ejecutarConsulta($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
     public function consultarUltimoID(){
         $this->con->Conectar();        
         $consulta = "select max(id) as id from to_casos;";        

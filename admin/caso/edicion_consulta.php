@@ -10,6 +10,9 @@
 <!--[if lte IE 6]><link rel="stylesheet" media="screen,projection" type="text/css" href="css/main-ie6.css" /><![endif]-->
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/style.css" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/mystyle.css" />
+
+<link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/style_edicion.css" />
+
 <script type="text/javascript" src="../../js/jquery.js"></script>
 <script type="text/javascript" src="../../js/switcher.js"></script>
 <script type="text/javascript" src="../../js/toggle.js"></script>
@@ -116,33 +119,77 @@ if (count($caso_registro)>0){
             $nombre = $admin_reg['nombre'];
             $id_rol = $admin_reg['id_rol'];            
             $descripcion_rol = $rol->getRolId($id_rol);
-        }
-        
+        }        
     }    
     ?>
-    <div align="left" style="color: black; padding-left: 5px; padding-right: 5px; min-width: 690px; background-color: #FAAC58; width: 35px; font-weight: bold;">Estado del caso:
-        <span style="float: right; color: red; cursor: pointer; text-decoration: underline;" title="Editar estado">Editar</span></div> 
-    <div style="padding-left: 5px; padding-right: 5px; max-width: 690px; text-align:justify;"><?php echo "Empezado";?></div><br />
-    <div align="left" style="color: black; padding-left: 5px; padding-right: 5px; min-width: 690px; background-color: #D8D8D8; width: 35px; font-weight: bold;">Documentalista:</div> 
-    <div style="padding-left: 5px; padding-right: 5px; max-width: 690px; text-align:justify;"><?php echo $nombre;?></div><br />
-    <div align="left" style="color: black; padding-left: 5px; padding-right: 5px; min-width: 690px; background-color: #D8D8D8; width: 35px; font-weight: bold;">Numero del caso:</div> 
-    <div style="padding-left: 5px; padding-right: 5px; max-width: 690px; text-align:justify;"><?php echo $id_caso;?></div><br />
-    <div align="left" style="color: black; padding-left: 5px; padding-right: 5px; min-width: 690px; background-color: #D8D8D8; width: 35px; font-weight: bold;">Tipo de caso:
-        <span style="float: right; color: red; cursor: pointer; text-decoration: underline;" title="Editar tipo de caso">Editar</span></div>
-    <div style="padding-left: 5px; padding-right: 5px; max-width: 690px; text-align:justify;"><?php echo "consulta";?></div><br />
-    <div align="left" style="color: black; padding-left: 5px; padding-right: 5px; min-width: 690px; background-color: #D8D8D8; width: 35px; font-weight: bold;">Titulo:
-        <span style="float: right; color: red; cursor: pointer; text-decoration: underline;" title="Editar el titulo">Editar</span></div>
-    <div style="padding-left: 5px; padding-right: 5px; max-width: 690px; text-align:justify;"><?php echo $titulo_caso;?></div><br />
     
-    <div align="left" style="color: black; padding-left: 5px; padding-right: 5px; min-width: 690px; background-color: #D8D8D8; width: 35px; font-weight: bold;">Especialidad:
-        <span style="float: right; color: red; cursor: pointer; text-decoration: underline;" title="Editar especialidad">Editar</span></div>
-    <div style="padding-left: 5px; padding-right: 5px; max-width: 690px; text-align:justify;"><?php echo "";?></div><br />
-    <div align="left" style="color: black; padding-left: 5px; padding-right: 5px; min-width: 690px; background-color: #D8D8D8; width: 35px; font-weight: bold;">Numero de Grupo de Documentos:
-        <span style="float: right; color: red; cursor: pointer; text-decoration: underline;" title="Editar numero de grupo de documentos">Editar</span></div>
-    <div style="padding-left: 5px; padding-right: 5px; max-width: 690px; text-align:justify;"><?php echo "";?></div>
-     
     
-    <?php
+    
+    <div align="left" class="cabezera_estado_caso">
+        Estado del caso:
+        <span class="opcion_editar" title="Editar estado">
+            Editar
+        </span>
+    </div> 
+    <div class="detalle_caso_edicion">
+        <?php echo "Empezado";?>
+    </div><br />
+    
+    <div align="left" class="cabezera_general_caso">
+        Documentalista:
+    </div> 
+    <div class="detalle_caso_edicion">
+        <?php echo $nombre;?>
+    </div><br />
+    
+    <div align="left" class="cabezera_general_caso">
+        Numero del caso:
+    </div> 
+    <div class="detalle_caso_edicion" id="id_caso" data-brand="<?php echo $id_caso;?>">
+        <?php echo $id_caso;?>
+    </div><br />
+    
+    <div align="left" class="cabezera_general_caso">
+        Tipo de caso:
+        <span class="opcion_editar" title="Editar tipo de caso">
+            Editar
+        </span></div>
+    <div class="detalle_caso_edicion">
+        <?php echo "consulta";?>
+    </div><br />
+    
+    <div align="left" class="cabezera_general_caso">
+        Titulo:
+        <span class="opcion_editar" title="Editar el titulo" id="edit_titulo">
+            Editar
+        </span>
+    </div>
+    <div class="detalle_caso_edicion" id="div_titulo_caso">
+        <?php echo $titulo_caso;?>
+    </div><br />
+    
+    <div align="left" class="cabezera_general_caso">
+        Especialidad:
+        <span class="opcion_editar" title="Editar especialidad">
+            Editar
+        </span>
+    </div>
+    <div class="detalle_caso_edicion">
+        <?php echo "";?>
+    </div><br />
+    
+    <div align="left" class="cabezera_general_caso">
+        Numero de Grupo de Documentos:
+        <span class="opcion_editar" title="Editar numero de grupo de documentos">
+            Editar
+        </span></div>
+    <div class="detalle_caso_edicion">
+        <?php echo "";?>
+    </div>
+    
+    
+    
+     <?php
 }else{
     echo 'NO SE ENCONTRO EL CASO';
 }
