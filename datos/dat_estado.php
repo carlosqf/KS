@@ -1,12 +1,12 @@
 <?php
 /**
- * Description of dat_tipocaso
+ * Description of dat_estado
  *
  * @author CARLOS
  */
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/datos/conexion.php';
 
-class dat_tipocaso {
+class dat_estado {
     private $con; // conexion
     private $id;
     
@@ -18,12 +18,11 @@ class dat_tipocaso {
         $this->id = $id;
     }
         
-    public function getTipoCasoId(){
+    public function getEstadoId(){
         $this->con->Conectar();
-        $consulta = "SELECT caso FROM to_tipocaso where id = $this->id;";
+        $consulta = "SELECT estado FROM to_estado where id = $this->id;";
         $result = $this->con->getArrayModoRegistro($consulta);
-        $this->con->desconectar();
-        
+        $this->con->desconectar();        
         if (count($result) > 0) {
             return $result[0][0];
         } else {
@@ -33,11 +32,9 @@ class dat_tipocaso {
     
     public function consultar(){
         $this->con->Conectar();
-        $consulta = "select id, caso from to_tipocaso order by caso asc;";
+        $consulta = "select id, estado, cod from to_estado;";
         $result = $this->con->getArrayModoColumna($consulta);        
         $this->con->desconectar();
         return $result;
     }
-    
 }
-?>

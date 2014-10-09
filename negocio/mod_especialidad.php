@@ -90,6 +90,23 @@ class mod_especialidad {
         return $ruta;
     }
     
+    public function devolverRutaSinEnlace($id_nivel){ 
+        $ruta = "";                
+        $reg = $this->consultarPorCodigo($id_nivel);
+        if (count($reg)>0){
+            $especialidad = $reg[0][1];                
+            $ruta = '<span style="font-weight: bold; color:red;"> / </span><b>'.$especialidad.'</b>';
+            $id_nivel = $this->devolverPadre($id_nivel);
+            while ($id_nivel != 0){                               
+                $reg = $this->consultarPorCodigo($id_nivel);
+                $especialidad = $reg[0][1];                
+                $ruta = '<span style="font-weight: bold; color:red;"> / </span>'.$especialidad.$ruta;
+                $id_nivel = $this->devolverPadre($id_nivel); 
+            }   
+        }
+        return $ruta;
+    }
+    
     public function buscarEspecialidad($texto_buscar){
         $this->dat_especialidad->setEspecialidad($texto_buscar);
         return $this->dat_especialidad->buscarEspecialidad();

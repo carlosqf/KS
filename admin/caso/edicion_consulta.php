@@ -10,7 +10,6 @@
 <!--[if lte IE 6]><link rel="stylesheet" media="screen,projection" type="text/css" href="css/main-ie6.css" /><![endif]-->
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/style.css" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/mystyle.css" />
-
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/style_edicion.css" />
 
 <script type="text/javascript" src="../../js/jquery.js"></script>
@@ -46,7 +45,7 @@
     <ul class="box">
       <li><a href=""><span>Inicio</span></a></li>  
       <li ><a href="../usuario/index.php"><span>Usuarios</span></a></li>      
-      <li><a href="../esp   ecialidad/index.php"><span>Especialidades</span></a></li>
+      <li><a href="../especialidad/index.php"><span>Especialidades</span></a></li>
       <li><a href="../voces/index.php"><span>Voces</span></a></li>
       <li id="menu-active"><a href="../miscasos/miscasos.php"><span>Mis casos</span></a></li>
       <li><a href="../miscasos/todoscasos.php"><span>Todos los casos</span></a></li>
@@ -91,10 +90,16 @@
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_caso.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_usuario.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_rol.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_tipocaso.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_estado.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_especialidad.php';
 
 $usuario = new mod_usuario();
 $caso = new mod_caso();
 $rol = new mod_rol();
+$tipocaso = new mod_tipocaso();
+$estado = new mod_estado();
+$especialidad = new mod_especialidad();
 
 
 if (isset($_GET['id'])) {  
@@ -111,7 +116,13 @@ if (count($caso_registro)>0){
         $id_caso     = $caso_reg['id'];
         $id_admin    = $caso_reg['id_admin'];
         $titulo_caso = $caso_reg['titulo'];
-        $tipo_caso = $caso_reg['id_tipocaso'];
+        $tipo_caso   = $caso_reg['id_tipocaso'];
+        $id_estado   = $caso_reg['id_estado'];
+        $id_especialidad = $caso_reg['id_especialidad'];
+        
+        $tipo_caso_descripcion = $tipocaso->getTipoCasoId($tipo_caso);
+        $estado_descripcion = $estado->getEstadoId($id_estado);
+        $ruta = $especialidad->devolverRutaSinEnlace($id_especialidad);
         
         $admin_caso = $usuario->consultarPorCodigo($id_admin);
         
@@ -121,18 +132,16 @@ if (count($caso_registro)>0){
             $descripcion_rol = $rol->getRolId($id_rol);
         }        
     }    
-    ?>
-    
-    
+    ?>       
     
     <div align="left" class="cabezera_estado_caso">
         Estado del caso:
-        <span class="opcion_editar" title="Editar estado">
+        <span class="opcion_editar" title="Editar estado" id="edit_estado">
             Editar
         </span>
     </div> 
-    <div class="detalle_caso_edicion">
-        <?php echo "Empezado";?>
+    <div class="detalle_caso_edicion" id="div_estado_caso">
+        <?php echo $estado_descripcion;?>
     </div><br />
     
     <div align="left" class="cabezera_general_caso">
@@ -151,11 +160,11 @@ if (count($caso_registro)>0){
     
     <div align="left" class="cabezera_general_caso">
         Tipo de caso:
-        <span class="opcion_editar" title="Editar tipo de caso">
+        <span class="opcion_editar" title="Editar tipo de caso" id="edit_tipocaso">
             Editar
         </span></div>
-    <div class="detalle_caso_edicion">
-        <?php echo "consulta";?>
+    <div class="detalle_caso_edicion" id="div_tipocaso_caso">
+        <?php echo $tipo_caso_descripcion;?>
     </div><br />
     
     <div align="left" class="cabezera_general_caso">
@@ -170,12 +179,12 @@ if (count($caso_registro)>0){
     
     <div align="left" class="cabezera_general_caso">
         Especialidad:
-        <span class="opcion_editar" title="Editar especialidad">
+        <span class="opcion_editar" title="Editar especialidad" id="edit_especialidad">
             Editar
         </span>
     </div>
-    <div class="detalle_caso_edicion">
-        <?php echo "";?>
+    <div class="detalle_caso_edicion" id="div_especialidad_caso">
+        <?php echo $ruta;?>
     </div><br />
     
     <div align="left" class="cabezera_general_caso">

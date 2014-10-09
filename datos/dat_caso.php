@@ -70,6 +70,36 @@ where id = $this->id;";
         return $result;
     }
     
+    public function modificarTipoCaso(){
+        $this->con->conectar();
+        $consulta = "update to_casos
+set id_tipocaso = $this->id_tipocaso
+where id = $this->id;";
+        $result = $this->con->ejecutarConsulta($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
+    public function modificarEstado(){
+        $this->con->conectar();
+        $consulta = "update to_casos
+set id_estado = $this->id_estado
+where id = $this->id;";
+        $result = $this->con->ejecutarConsulta($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
+    public function modificarEspecialidad(){
+        $this->con->conectar();
+        $consulta = "update to_casos
+set id_especialidad = $this->id_especialidad
+where id = $this->id;";
+        $result = $this->con->ejecutarConsulta($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
     public function consultarUltimoID(){
         $this->con->Conectar();        
         $consulta = "select max(id) as id from to_casos;";        

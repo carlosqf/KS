@@ -2,15 +2,22 @@
 <head>
 <title>Edicion de caso</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/reset.css" />
-<link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/main.css" />
-<link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/2col.css" title="2col" />
-<link rel="alternate stylesheet" media="screen,projection" type="text/css" href="../../css/1col.css" title="1col" />
+<link rel="stylesheet" media="screen,projection" type="text/css" href="../../../css/reset.css" />
+<link rel="stylesheet" media="screen,projection" type="text/css" href="../../../css/main.css" />
+<link rel="stylesheet" media="screen,projection" type="text/css" href="../../../css/2col.css" title="2col" />
+<link rel="alternate stylesheet" media="screen,projection" type="text/css" href="../../../css/1col.css" title="1col" />
 <!--[if lte IE 6]><link rel="stylesheet" media="screen,projection" type="text/css" href="css/main-ie6.css" /><![endif]-->
-<link rel="stylesheet" media="screen,projection" type="text/css" href="../../css/style.css" />
+<link rel="stylesheet" media="screen,projection" type="text/css" href="../../../css/style.css" />
 
-<script type="text/javascript" src="../../js/jquery.js"></script>
-<script type="text/javascript" src="caso.js"></script>
+<script type="text/javascript" src="../../../js/jquery.js"></script>
+<script type="text/javascript" src="../caso.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+            $('.ventana_titulo').focus();
+    });
+</script>
+
 </head>
 <body>
 <?php
@@ -35,9 +42,3 @@ foreach($caso_registro as $caso_reg) {
 
 </body>
 </html>
-<?php
-
-
-
-
-

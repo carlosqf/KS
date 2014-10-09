@@ -27,6 +27,24 @@ class mod_caso {
         return $this->dat_caso->modificarTitulo();
     }
     
+    public function modificarTipoCaso($id, $id_tipocaso){
+        $this->dat_caso->setId($id);
+        $this->dat_caso->setIdTipoCaso($id_tipocaso);
+        return $this->dat_caso->modificarTipoCaso();
+    }
+    
+    public function modificarEstado($id, $id_estado){
+        $this->dat_caso->setId($id);
+        $this->dat_caso->setIdEstado($id_estado);
+        return $this->dat_caso->modificarEstado();
+    }
+    
+    public function modificarEspecialidad($id, $id_especialidad){
+        $this->dat_caso->setId($id);
+        $this->dat_caso->setIdEspecialidad($id_especialidad);
+        return $this->dat_caso->modificarEspecialidad();
+    }
+    
     public function consultarUltimoID(){
         return $this->dat_caso->consultarUltimoID();
     }
