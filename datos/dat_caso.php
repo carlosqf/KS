@@ -157,6 +157,15 @@ where id = $this->id;";
         return $result[0][0];
     }
     
+    public function quitarVozDelCaso($id_voz){
+        $this->con->Conectar();
+        $consulta = "delete from to_caso_voces
+                     where id_caso = $this->id and
+                           id_voces = $id_voz;";
+        $result = $this->con->ejecutarConsulta($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
     
     
     

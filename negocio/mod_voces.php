@@ -24,6 +24,14 @@ class mod_voces {
         return $this->dat_voces->consultarVoces($numero_pagina);
     }
     
+    public function consultarVocesTodosHabilitados() {        
+        return $this->dat_voces->consultarVocesTodosHabilitados();
+    }
+    
+    public function buscarVocesSinonimos($texto){        
+        return $this->dat_voces->buscarVocesSinonimos($texto);
+    }
+    
     public function consultarVocesPorCaso($id_caso) {
         return $this->dat_voces->consultarVocesPorCaso($id_caso);
     }

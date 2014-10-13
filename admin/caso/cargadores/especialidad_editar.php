@@ -66,8 +66,7 @@ foreach($caso_registro as $caso_reg) {
 <?php
 $especialidades_seleccionadas =  $especialidad->consultarHijosTodos($id_nivel);
 $ruta = $especialidad->devolverRutaEditarEspecialidad($id_nivel,"especialidad_editar.php?id=".$id_caso);
-?>
-   
+?>   
     <h5><?php echo $ruta;?></h5>
     
 <?php

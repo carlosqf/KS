@@ -203,10 +203,10 @@ if (count($caso_registro)>0){
     
     <div align="left" class="cabezera_general_caso">
         Voces:
-        <span class="opcion_editar" title="Editar numero de grupo de documentos" id="edit_grupodocumentos">
+        <span class="opcion_editar" title="Editar voces del caso" id="edit_voces">
             Editar
         </span></div>
-    <div class="detalle_caso_edicion" id="div_grupodocumentos_caso">
+    <div class="detalle_caso_edicion" id="div_voces_caso">
         <br />
         <?php 
         $voces_del_caso = $voces->consultarVocesPorCaso($id_caso);
@@ -220,7 +220,7 @@ if (count($caso_registro)>0){
                 ?>
                 <tr>
                     <td width="50%" align="left">
-                        <?php echo $voces_voz;?></a>
+                        <?php echo $voces_voz;?>
                     </td>
                 </tr>
                 <?php                    

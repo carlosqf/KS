@@ -48,6 +48,29 @@ class dat_voces {
         return $result;
     }
     
+    public function consultarVocesTodosHabilitados() {
+        $this->con->Conectar();
+        $consulta = "select id, voces, estado
+                    from to_voces
+                    where estado = 1
+                    order by voces";        
+        $result = $this->con->getArrayModoColumna($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
+    public function buscarVocesSinonimos($texto){
+        $this->con->Conectar();
+        $consulta = "select  distinct vo.id, vo.voces, vo.estado
+from to_voces as vo, to_voces_sin as vosin
+where vo.voces like '%$texto%' or
+      vo.id in ( select id_voz from to_voces_sin where sinonimo like '%$texto%' )
+order by voces;";        
+        $result = $this->con->getArrayModoColumna($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
     public function consultarVocesPorCaso($id_caso) {
         $this->con->Conectar();
         $consulta = "select cv.id, cv.id_voces, v.voces

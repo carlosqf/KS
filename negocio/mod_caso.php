@@ -70,7 +70,10 @@ class mod_caso {
         return $this->dat_caso->consultarNumeroCasosPorEspecialidad();
     }
     
-    
+    public function quitarVozDelCaso($id_caso, $id_voz){
+        $this->dat_caso->setId($id_caso);
+        return $this->dat_caso->quitarVozDelCaso($id_voz);
+    }
     
     
     
