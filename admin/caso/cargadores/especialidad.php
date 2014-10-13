@@ -11,6 +11,6 @@ foreach($caso_registro as $caso_reg) {
     $id_especialidad = $caso_reg['id_especialidad'];    
 }
 
-$especialidad_caso_ruta = $especialidad->devolverRuta($id_nivel, $archivo_ruta);
+$especialidad_caso_ruta = $especialidad->devolverRutaSinEnlace($id_especialidad);
 
 echo $especialidad_caso_ruta;

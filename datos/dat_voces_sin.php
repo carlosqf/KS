@@ -59,5 +59,5 @@ class dat_voces_sin {
         $this->con->desconectar();
         return $result;
     }
-    
+       
 }

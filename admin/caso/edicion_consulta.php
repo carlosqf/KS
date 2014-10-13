@@ -93,6 +93,8 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_rol.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_tipocaso.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_estado.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_especialidad.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_voces.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_voces_sin.php';
 
 $usuario = new mod_usuario();
 $caso = new mod_caso();
@@ -100,6 +102,8 @@ $rol = new mod_rol();
 $tipocaso = new mod_tipocaso();
 $estado = new mod_estado();
 $especialidad = new mod_especialidad();
+$voces = new mod_voces();
+$voces_sin = new mod_voces_sin();
 
 
 if (isset($_GET['id'])) {  
@@ -119,6 +123,7 @@ if (count($caso_registro)>0){
         $tipo_caso   = $caso_reg['id_tipocaso'];
         $id_estado   = $caso_reg['id_estado'];
         $id_especialidad = $caso_reg['id_especialidad'];
+        $grupo_documentos = $caso_reg['id_docs'];
         
         $tipo_caso_descripcion = $tipocaso->getTipoCasoId($tipo_caso);
         $estado_descripcion = $estado->getEstadoId($id_estado);
@@ -188,14 +193,92 @@ if (count($caso_registro)>0){
     </div><br />
     
     <div align="left" class="cabezera_general_caso">
-        Numero de Grupo de Documentos:
-        <span class="opcion_editar" title="Editar numero de grupo de documentos">
+        Número de Grupo de Documentos:
+        <span class="opcion_editar" title="Editar numero de grupo de documentos" id="edit_grupodocumentos">
             Editar
         </span></div>
-    <div class="detalle_caso_edicion">
-        <?php echo "";?>
-    </div>
+    <div class="detalle_caso_edicion" id="div_grupodocumentos_caso">
+        <?php if ($grupo_documentos == NULL) echo ""; else echo $grupo_documentos;?>
+    </div><br />
     
+    <div align="left" class="cabezera_general_caso">
+        Voces:
+        <span class="opcion_editar" title="Editar numero de grupo de documentos" id="edit_grupodocumentos">
+            Editar
+        </span></div>
+    <div class="detalle_caso_edicion" id="div_grupodocumentos_caso">
+        <br />
+        <?php 
+        $voces_del_caso = $voces->consultarVocesPorCaso($id_caso);
+        if (count($voces_del_caso) > 0 ){
+        ?>        
+        <table width="100%">            
+            <?php
+            foreach($voces_del_caso as $voces_reg) {
+                $id_voz    = $voces_reg['id_voces'];
+                $voces_voz = $voces_reg['voces'];
+                ?>
+                <tr>
+                    <td width="50%" align="left">
+                        <?php echo $voces_voz;?></a>
+                    </td>
+                </tr>
+                <?php                    
+            }
+            ?>                
+        </table>
+        <?php
+        }       
+        ?>
+    </div><br />
+    
+    <div align="left" class="cabezera_general_caso">
+        Voces y Sinonimos del caso:
+    </div>
+    <div class="detalle_caso_edicion" id="div_grupodocumentos_caso">    
+        <br />
+        <?php        
+        $voces_del_caso = $voces->consultarVocesPorCaso($id_caso);
+        if (count($voces_del_caso) > 0 ){
+        ?>        
+        <table width="100%">
+            <?php
+            foreach($voces_del_caso as $voces_reg) {
+                $id_voz    = $voces_reg['id_voces'];
+                $voces_voz = $voces_reg['voces'];
+
+                $sinonimos = $voces->consultarSinonimos($id_voz);
+
+                $sinonimos_mostrar = "";
+                $last = end($sinonimos);
+                foreach ($sinonimos as $sin_reg){
+                    $sinonimo_voz = $sin_reg['sinonimo'];
+                    if ( $last == $sin_reg ){
+                        $sinonimos_mostrar = $sinonimos_mostrar.$sinonimo_voz."";
+                    }else{
+                        $sinonimos_mostrar = $sinonimos_mostrar.$sinonimo_voz.' <span style="font-weight: bold; color: red; font-size: 16px;">;</span> ';
+                    }                
+                }
+                if (count($sinonimos) > 0 ){
+                    $sinonimos_mostrar = '<span style="font-weight: bold; color: red; font-size: 12px;">[</span>'.$sinonimos_mostrar.'<span style="font-weight: bold; color: red; font-size: 12px;">]</span>';
+                }
+                ?>
+                <tr>
+                    <td width="35%" align="left">
+                        <?php echo $voces_voz;?></a>
+                    </td>
+                    <td width="65%">
+                        <?php echo $sinonimos_mostrar;?>
+                    </td>
+                </tr>
+                <?php                    
+            }                
+            ?>                
+        </table>
+        <?php
+        }
+        ?>
+    </div><br />
     
     
      <?php

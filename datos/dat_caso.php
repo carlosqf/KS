@@ -15,6 +15,8 @@ class dat_caso {
     private $id_estado;
     private $id_tipocaso;
     private $titulo;
+    private $id_docs;
+    
     
     //completar los demas atributos
 
@@ -44,6 +46,10 @@ class dat_caso {
     
     public function setTitulo($titulo) {
         $this->titulo = $titulo;
+    }
+    
+    public function setIdDocs($id_docs){
+        $this->id_docs = $id_docs;
     }
     
     public function registrar(){
@@ -94,6 +100,16 @@ where id = $this->id;";
         $this->con->conectar();
         $consulta = "update to_casos
 set id_especialidad = $this->id_especialidad
+where id = $this->id;";
+        $result = $this->con->ejecutarConsulta($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
+    public function modificarIdDocs(){
+        $this->con->conectar();
+        $consulta = "update to_casos
+set id_docs = $this->id_docs
 where id = $this->id;";
         $result = $this->con->ejecutarConsulta($consulta);
         $this->con->desconectar();

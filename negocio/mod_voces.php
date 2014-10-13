@@ -24,6 +24,10 @@ class mod_voces {
         return $this->dat_voces->consultarVoces($numero_pagina);
     }
     
+    public function consultarVocesPorCaso($id_caso) {
+        return $this->dat_voces->consultarVocesPorCaso($id_caso);
+    }
+    
     public function modificarVoces($id, $voces, $estado) {
         $this->dat_voces->setId($id);
         $this->dat_voces->setVoces($voces);

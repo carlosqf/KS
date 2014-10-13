@@ -20,6 +20,9 @@
 
 </head>
 <body>
+    
+<div id="content" class="box" style="height: 198px; width: auto;">
+    
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_caso.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_estado.php';
@@ -35,8 +38,9 @@ foreach($caso_registro as $caso_reg) {
     $estado_caso = $caso_reg['id_estado'];    
 }   
 ?>  
-    <div align="center"><h2>Edicion de Estado</h2></div><br />
-    <div style="padding-left: 93px;"><h3>Caso número: <?php echo $id_caso;?></h3>        
+    <div align="center"><h2>Editar estado</h2></div>
+    <div style="padding-left: 93px;">
+        Caso número: <b><?php echo $id_caso;?></b>  <br /><br />
         <?php   
         $estados = $estado->consultar();
         ?>    
@@ -56,6 +60,8 @@ foreach($caso_registro as $caso_reg) {
         <input style="height: 25px; width: 100px;" type="submit" value="Guardar" class="boton_modificar_estado" id="<?php echo $id_caso;?>">
         <input style="height: 25px; width: 100px;" type="submit" value="Cancelar" class="ventana_estado">
     </div>
+
+</div>    
 
 </body>
 </html>

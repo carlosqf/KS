@@ -45,6 +45,12 @@ class mod_caso {
         return $this->dat_caso->modificarEspecialidad();
     }
     
+    public function modificarIdDocs($id, $id_docs){
+        $this->dat_caso->setId($id);
+        $this->dat_caso->setIdDocs($id_docs);
+        return $this->dat_caso->modificarIdDocs();
+    }
+    
     public function consultarUltimoID(){
         return $this->dat_caso->consultarUltimoID();
     }

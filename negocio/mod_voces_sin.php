@@ -35,4 +35,5 @@ class mod_voces_sin {
         return $this->dat_voces_sin->consultarPorCodigo();
     }
     
+    
 }

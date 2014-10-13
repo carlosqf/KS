@@ -107,6 +107,29 @@ class mod_especialidad {
         return $ruta;
     }
     
+    public function devolverRutaEditarEspecialidad($id_nivel, $archivo_ruta){ 
+        $ruta = "";
+        if ($id_nivel == 0){
+            $ruta = 'Inicio ';
+        }else{                
+            $reg = $this->consultarPorCodigo($id_nivel);
+            if (count($reg)>0){
+                $especialidad = $reg[0][1];                
+                $ruta = ' / '.$especialidad.$ruta;
+                $id_nivel = $this->devolverPadre($id_nivel);
+                while ($id_nivel != 0){                               
+                    $reg = $this->consultarPorCodigo($id_nivel);
+                    $id = $reg[0][0];
+                    $especialidad = $reg[0][1];                
+                    $ruta = ' / <a href="'.$archivo_ruta.'&idesp='.$id.'">'.$especialidad.'</a>'.$ruta;
+                    $id_nivel = $this->devolverPadre($id_nivel); 
+                }
+                $ruta = '<a href="'.$archivo_ruta.'&idesp=0">Inicio</a>'.$ruta;    
+            }                        
+        }
+        return $ruta;
+    }
+    
     public function buscarEspecialidad($texto_buscar){
         $this->dat_especialidad->setEspecialidad($texto_buscar);
         return $this->dat_especialidad->buscarEspecialidad();

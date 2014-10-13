@@ -43,7 +43,17 @@ switch ($accion) {
         $caso = new mod_caso();
         $id_caso = $_POST['id_caso'];
         $id_especialidad  = $_POST['id_especialidad'];        
-        $caso->modificarEstado($id_caso, $id_especialidad);
+        $caso->modificarEspecialidad($id_caso, $id_especialidad);
+        $respuesta = "true";
+        break;
+    
+    case "modificar-id_docs":
+        $caso = new mod_caso();
+        $id_caso = $_POST['id_caso'];
+        $id_docs  = $_POST['id_docs'];        
+        if ( strcmp($id_docs, "")==0 )
+            $id_docs = 'null';        
+        $caso->modificarIdDocs($id_caso, $id_docs);
         $respuesta = "true";
         break;
     

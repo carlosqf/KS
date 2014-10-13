@@ -37,7 +37,7 @@ $(document).ready(function() {
             var left = screen.width;
             var top = screen.height;
             var width  = 600;
-            var height = 240;            
+            var height = 260;            
             var mydiv = document.getElementById('id_caso');            
             var id_caso = mydiv.getAttribute("data-brand");            
             window.open("cargadores/titulo_editar.php?id="+id_caso, "_blank", "toolbar=yes, scrollbars=yes, resizable=0, top="+((top/2)-(height/2))+", left="+((left/2)-(width/2))+", width="+width+", height="+height);
@@ -153,7 +153,7 @@ $(document).ready(function() {
         $('#edit_especialidad').click(function (){
             var left = screen.width;
             var top = screen.height;
-            var width  = 800;
+            var width  = 830;
             var height = 500;            
             var mydiv = document.getElementById('id_caso');            
             var id_caso = mydiv.getAttribute("data-brand");            
@@ -162,9 +162,13 @@ $(document).ready(function() {
         $('.ventana_especialidad').click(function (){
             javascript:window.close();     
         });        
-        $('.boton_modificar_especialidad').click(function (event){
-            var id_caso = event.target.id;
-            var id_especialidad = $.trim(document.getElementById("especialidad_nuevo_modificar").value);            
+        $('.guardar-especialidad').click(function (event){
+            var especialidad_caso = event.target.id;
+            var array = especialidad_caso.split('-');
+            
+            var id_especialidad = array[0];
+            var id_caso = array[1];
+            
             var valores = {
                 "accion" : "modificar-especialidad",
                 "id_caso" : id_caso,
@@ -185,6 +189,43 @@ $(document).ready(function() {
             });            
         });
         // FIN de modificacion de ESPECIALIDAD
+        
+        // inicio de modificacion de NUMERO GRUPO DE DOCUMENTOS
+        $('#edit_grupodocumentos').click(function (){
+            var left = screen.width;
+            var top = screen.height;
+            var width  = 400;
+            var height = 240;            
+            var mydiv = document.getElementById('id_caso');            
+            var id_caso = mydiv.getAttribute("data-brand");            
+            window.open("cargadores/grupodocumentos_editar.php?id="+id_caso, "_blank", "toolbar=yes, scrollbars=yes, resizable=0, top="+((top/2)-(height/2))+", left="+((left/2)-(width/2))+", width="+width+", height="+height);
+        });        
+        $('.ventana_grupodocumentos').click(function (){
+            javascript:window.close();     
+        });        
+        $('.boton_modificar_grupodocumentos').click(function (event){
+            var id_caso = event.target.id;            
+            var id_docs = $.trim(document.getElementById("id_docs").value);
+            var valores = {
+                "accion" : "modificar-id_docs",
+                "id_caso" : id_caso,
+                "id_docs": id_docs          
+            };
+            $.ajax({
+                    data:  valores,
+                    url:   '../caso_ajax.php',
+                    type:  'post',
+                    beforeSend: function () {
+                    },
+                    success:  function () {
+                        parametros={};
+                        parametros.id_caso = id_caso;
+                        window.opener.$('#div_grupodocumentos_caso').load('cargadores/grupodocumentos.php',parametros,function(){});
+                        javascript:window.close();                                                
+                    }
+            });            
+        });
+        // FIN de modificacion de NUMERO GRUPO DE DOCUMENTOS
            
         
 });

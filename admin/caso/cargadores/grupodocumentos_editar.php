@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Edicion de Tipo de Caso</title>
+<title>Edicion de Grupo de Docuemtos</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../../css/reset.css" />
 <link rel="stylesheet" media="screen,projection" type="text/css" href="../../../css/main.css" />
@@ -14,7 +14,7 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-            $('.ventana_tipocaso').focus();
+            $('.ventana_grupodocumentos').focus();
     });
 </script>
 
@@ -23,9 +23,7 @@
 <div id="content" class="box" style="height: 198px; width: auto;">    
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_caso.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_tipocaso.php';
 $caso = new mod_caso();
-$tipocaso = new mod_tipocaso();
 
 $id_caso = $_GET['id'];
 $caso_registro = $caso->consultarPorCodigo($id_caso);
@@ -33,30 +31,15 @@ $caso_registro = $caso->consultarPorCodigo($id_caso);
 $titulo_caso = "";
 foreach($caso_registro as $caso_reg) {
     $id_admin    = $caso_reg['id_admin'];
-    $tipocaso_caso = $caso_reg['id_tipocaso'];    
+    $id_docs_caso = $caso_reg['id_docs'];    
 }   
 ?>  
-    <div align="center"><h2>Editar tipo de caso</h2></div>
+    <div align="center"><h2>Editar grupo de documentos</h2></div>
     <div style="padding-left: 80px;">
-        Caso número: <b><?php echo $id_caso;?></b>  <br /><br />
-        <?php   
-        $tipos = $tipocaso->consultar();
-        ?>    
-        <select style="width: 205px; height: 25px;" name="id_tipocaso" size="1" class="txt" id="tipocaso_nuevo_modificar" >
-        <?php 
-            foreach ($tipos as $reg) {
-                $id_tipocaso = $reg['id'];                
-                $caso_tipocaso = $reg['caso'];                 
-                if ($id_tipocaso == $tipocaso_caso) {
-                    echo '<option value="' . $id_tipocaso . '" selected> ' . $caso_tipocaso . ' </option>';
-                } else {
-                    echo '<option value="' . $id_tipocaso . '"> ' . $caso_tipocaso . ' </option>';
-                }
-            }
-        ?>
-        </select><br /><br />        
-        <input style="height: 25px; width: 100px;" type="submit" value="Guardar" class="boton_modificar_tipocaso" id="<?php echo $id_caso;?>">
-        <input style="height: 25px; width: 100px;" type="submit" value="Cancelar" class="ventana_tipocaso">
+        Caso número: <b><?php echo $id_caso;?></b>  <br /><br />   
+        <input type="text" style="width: 200px; padding: 3px;" id="id_docs" value="<?php echo $id_docs_caso;?>"><br /><br />              
+        <input style="height: 25px; width: 100px;" type="submit" value="Guardar" class="boton_modificar_grupodocumentos" id="<?php echo $id_caso;?>">
+        <input style="height: 25px; width: 100px;" type="submit" value="Cancelar" class="ventana_grupodocumentos">
     </div>
 
 </div>    

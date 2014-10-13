@@ -48,6 +48,18 @@ class dat_voces {
         return $result;
     }
     
+    public function consultarVocesPorCaso($id_caso) {
+        $this->con->Conectar();
+        $consulta = "select cv.id, cv.id_voces, v.voces
+from to_caso_voces as cv, to_voces as v
+where cv.id_caso = $id_caso and
+      cv.id_voces = v.id
+order by v.voces;";        
+        $result = $this->con->getArrayModoColumna($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
     public function modificarVoces() {
         $this->con->conectar();
         $consulta = "update to_voces set voces = '$this->voces', estado = $this->estado where id=$this->id;";
@@ -66,7 +78,7 @@ class dat_voces {
     
     public function consultarSinonimos(){
         $this->con->Conectar();
-        $consulta = "select id, sinonimo from to_voces_sin where id_voz = $this->id;";        
+        $consulta = "select id, sinonimo from to_voces_sin where id_voz = $this->id order by sinonimo;";        
         $result = $this->con->getArrayModoColumna($consulta);
         $this->con->desconectar();
         return $result;
