@@ -22,10 +22,15 @@
     $(document).ready(function(){            
             $('.buscar_voces').click(function(event){
                 var id_caso  = event.target.id;            
-                var voz_buscar = $.trim(document.getElementById("vozsin_buscar").value);                
-                location.href = "voces_editar.php?id="+id_caso+"&txt="+voz_buscar;
+                var voz_buscar = $.trim(document.getElementById("vozsin_buscar").value); 
+                if (voz_buscar.length > 0){
+                    location.href = "voces_editar.php?id="+id_caso+"&txt="+voz_buscar;
+                }else{
+                    document.getElementById("vozsin_buscar").value = "";
+                    document.getElementById("vozsin_buscar").focus();
+                }
             });
-            
+                        
             $('#vozsin_buscar').keypress(function(event){                  
                 var keycode = (event.keyCode ? event.keyCode : event.which);                  
                 if(keycode == '13'){                      
@@ -42,13 +47,18 @@
                 }   
             });
             
-            $('.quitar-voz').click(function(event){                
+            $("#selectletra").change(function(){                
+                var mydiv = document.getElementById('id_caso');            
+                var id_caso = mydiv.getAttribute("data-brand");            
+                var letra = document.getElementById("selectletra").value;
+                location.href = "voces_editar.php?id="+id_caso+"&letra="+letra;                
+            });
+            
+            $('.quitar-voz').click(function(event){ 
                 var voz_caso = event.target.id;
                 var array = voz_caso.split('-');
-
                 var id_voz = array[0];
-                var id_caso = array[1];                
-                          
+                var id_caso = array[1];   
                 var valores = {
                     "accion" : "quitar-voz",
                     "id_caso" : id_caso,
@@ -56,7 +66,7 @@
                 };
                 $.ajax({
                         data:  valores,
-                        url:   '../cargadores_ajax.php',
+                        url:   'cargadores_ajax.php',
                         type:  'post',
                         beforeSend: function () {
                         },
@@ -66,7 +76,35 @@
                             $('#div_voces_casos').load('voces_agregados.php',parametros,function(){});          
                         }
                 }); 
-            );
+            });
+            
+            $('.agregar-voz').click(function(event){ 
+                var voz_caso = event.target.id;
+                var array = voz_caso.split('-');
+                var id_voz = array[0];
+                var id_caso = array[1];   
+                var valores = {
+                    "accion" : "agregar-voz",
+                    "id_caso" : id_caso,
+                    "id_voz": id_voz
+                };
+                $.ajax({
+                        data:  valores,
+                        url:   'cargadores_ajax.php',
+                        type:  'post',
+                        beforeSend: function () {
+                        },
+                        success:  function (respuesta) {                            
+                            if ( respuesta == 'false' ){
+                                alert("La voz esta agregada");
+                            }else{
+                                parametros={};
+                                parametros.id_caso = id_caso;
+                                $('#div_voces_casos').load('voces_agregados.php',parametros,function(){});          
+                            }                            
+                        }
+                }); 
+            });
             
     });
 </script>
@@ -94,6 +132,8 @@ $caso_registro = $caso->consultarPorCodigo($id_caso);
     <?php 
     $voces_del_caso = $voces->consultarVocesPorCaso($id_caso);    
     ?>  
+    <span onmouseover="javascript:this.style.color='red';" onmouseout="javascript:this.style.color='#0085cc';" 
+          style="float: right; cursor: pointer; text-decoration: underline; color:#0085cc;" class="guardar-voces" id="<?php echo $id_caso;?>">CERRAR Y ACTUALIZAR CASO</span>
     <div id="div_voces_casos">
     <table width="100%">  
         <tr>
@@ -121,16 +161,68 @@ $caso_registro = $caso->consultarPorCodigo($id_caso);
         }else{
             ?>
             <tr>
-                <td>No existen voces agregadas</td>
-                <td></td>
+                <td width="90%">No existen voces agregadas</td>
+                <td width="10%"></td>
             </tr>    
             <?php
         }
         ?>                
     </table>
     </div>
-    <br />
     
+    <?php
+    $letra = "a";
+    if ( isset($_GET['txt']) ){
+        $lista_voces = $voces->buscarVocesSinonimos($_GET['txt']);
+    }else{
+        if ( isset($_GET['letra']) ) {
+            $letra = $_GET['letra']; 
+        }
+        if (strcmp($letra, "todos") == 0 ){
+            $lista_voces = $voces->consultarVocesTodosHabilitados();
+        }else{
+            $lista_voces = $voces->consultarVocesPorLetra($letra);
+        }
+    }
+
+    function reemplazos_insensibles($match){   
+        global $_tag;
+        return "<$_tag>$match[0]</$_tag>";  
+    }
+    ?>
+    <br />
+    <div style="float: left;">
+        Voces por letra:
+        <select id="selectletra">
+            <option value="a" <?php if (strcmp($letra, "a")==0) echo "selected"?>>A</option>
+            <option value="b" <?php if (strcmp($letra, "b")==0) echo "selected"?>>B</option>
+            <option value="c" <?php if (strcmp($letra, "c")==0) echo "selected"?>>C</option>
+            <option value="d" <?php if (strcmp($letra, "d")==0) echo "selected"?>>D</option>
+            <option value="e" <?php if (strcmp($letra, "e")==0) echo "selected"?>>E</option>
+            <option value="f" <?php if (strcmp($letra, "f")==0) echo "selected"?>>F</option>
+            <option value="g" <?php if (strcmp($letra, "g")==0) echo "selected"?>>G</option>
+            <option value="h" <?php if (strcmp($letra, "h")==0) echo "selected"?>>H</option>
+            <option value="i" <?php if (strcmp($letra, "i")==0) echo "selected"?>>I</option>
+            <option value="j" <?php if (strcmp($letra, "j")==0) echo "selected"?>>J</option>
+            <option value="k" <?php if (strcmp($letra, "k")==0) echo "selected"?>>K</option>
+            <option value="l" <?php if (strcmp($letra, "l")==0) echo "selected"?>>L</option>
+            <option value="m" <?php if (strcmp($letra, "m")==0) echo "selected"?>>M</option>
+            <option value="n" <?php if (strcmp($letra, "n")==0) echo "selected"?>>N</option>
+            <option value="o" <?php if (strcmp($letra, "o")==0) echo "selected"?>>O</option>
+            <option value="p" <?php if (strcmp($letra, "p")==0) echo "selected"?>>P</option>
+            <option value="q" <?php if (strcmp($letra, "q")==0) echo "selected"?>>Q</option>
+            <option value="r" <?php if (strcmp($letra, "r")==0) echo "selected"?>>R</option>
+            <option value="s" <?php if (strcmp($letra, "s")==0) echo "selected"?>>S</option>
+            <option value="t" <?php if (strcmp($letra, "t")==0) echo "selected"?>>T</option>
+            <option value="u" <?php if (strcmp($letra, "u")==0) echo "selected"?>>U</option>
+            <option value="v" <?php if (strcmp($letra, "v")==0) echo "selected"?>>V</option>
+            <option value="w" <?php if (strcmp($letra, "w")==0) echo "selected"?>>W</option>
+            <option value="x" <?php if (strcmp($letra, "x")==0) echo "selected"?>>X</option>
+            <option value="y" <?php if (strcmp($letra, "y")==0) echo "selected"?>>Y</option>
+            <option value="z" <?php if (strcmp($letra, "z")==0) echo "selected"?>>Z</option>
+            <option value="todos" <?php if (strcmp($letra, "todos")==0) echo "selected"?>>TODOS</option>
+        </select>        
+    </div>    
     <div style="float: right;">
         <input style="width: 250px;" placeholder="Voz o sinonimo" type="text" name="id" size="17" class="input-text" id="vozsin_buscar"/>
         &nbsp;
@@ -143,18 +235,7 @@ $caso_registro = $caso->consultarPorCodigo($id_caso);
             <th>Sinonimos</th>
             <th><div align="right">Opcion</div></th>
         </tr>
-        <?php   
-        if ( isset($_GET['txt']) ){
-            $lista_voces = $voces->buscarVocesSinonimos($_GET['txt']);
-        }else{
-            $lista_voces = $voces->consultarVocesTodosHabilitados();
-        }
-        
-        function reemplazos_insensibles($match){   
-            global $_tag;
-            return "<$_tag>$match[0]</$_tag>";  
-        }
-        
+        <?php 
         foreach($lista_voces as $voces_reg) {
             $id_voz     = $voces_reg['id'];
             $voces_voz  = $voces_reg['voces'];
@@ -192,8 +273,10 @@ $caso_registro = $caso->consultarPorCodigo($id_caso);
                 <td width="45%">
                     <?php echo $sinonimos_mostrar;?>
                 </td>
-                <td width="7%" align="right">                    
-                    <a href="voces_editar.php?id=<?php echo $id_voz;?>">Agregar</a>
+                <td width="7%" align="right">
+                    <span onmouseover="javascript:this.style.color='red';" onmouseout="javascript:this.style.color='#0085cc';" 
+                            style="text-decoration: underline; cursor: pointer; color:#0085cc;" title="Agregar <?php echo $voces_voz;?>" class="agregar-voz" id="<?php echo $id_voz."-".$id_caso;?>">
+                            Agregar</span>
                 </td>
             </tr>
             <?php                    
@@ -217,12 +300,8 @@ $caso_registro = $caso->consultarPorCodigo($id_caso);
         ?>                
     </table>
     
+       
     
-    
-    
-    <br /> 
-    
-    <input style="height: 25px; width: 100px;" type="submit" value="Cerrar" class="ventana_voces">
         
     </div>
          

@@ -1,5 +1,35 @@
+<script type="text/javascript">
+    $(document).ready(function(){            
+                        
+            $('.quitar-voz').click(function(event){ 
+                var voz_caso = event.target.id;
+                var array = voz_caso.split('-');
+                var id_voz = array[0];
+                var id_caso = array[1];   
+                var valores = {
+                    "accion" : "quitar-voz",
+                    "id_caso" : id_caso,
+                    "id_voz": id_voz
+                };
+                $.ajax({
+                        data:  valores,
+                        url:   'cargadores_ajax.php',
+                        type:  'post',
+                        beforeSend: function () {
+                        },
+                        success:  function () {
+                            parametros={};
+                            parametros.id_caso = id_caso;
+                            $('#div_voces_casos').load('voces_agregados.php',parametros,function(){});          
+                        }
+                }); 
+            });
+                                    
+    });
+</script>
 <?php 
 require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_voces.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/KS/negocio/mod_caso.php';
 
 $caso = new mod_caso();
 $voces = new mod_voces();
@@ -34,8 +64,8 @@ $voces_del_caso = $voces->consultarVocesPorCaso($id_caso);
     }else{
         ?>
         <tr>
-            <td>No existen voces agregadas</td>
-            <td></td>
+            <td width="90%">No existen voces agregadas</td>
+            <td width="10%"></td>
         </tr>    
         <?php
     }

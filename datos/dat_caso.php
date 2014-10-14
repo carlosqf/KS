@@ -167,6 +167,26 @@ where id = $this->id;";
         return $result;
     }
     
+    public function agregarVozAlCaso($id_voz){
+        $this->con->Conectar();
+        $consulta = "insert into to_caso_voces values(default,$this->id,$id_voz);";
+        $result = $this->con->ejecutarConsulta($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
+    public function existeVozEnElCaso($id_voz){
+        $this->con->Conectar();
+        $consulta = "select id from to_caso_voces where id_caso = $this->id and id_voces = $id_voz;";
+        $result = $this->con->getArrayModoRegistro($consulta);
+        $this->con->desconectar();
+        if (count($result) > 0 ){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
     
     
     

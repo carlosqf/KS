@@ -28,6 +28,10 @@ class mod_voces {
         return $this->dat_voces->consultarVocesTodosHabilitados();
     }
     
+    public function consultarVocesPorLetra($letra) {
+        return $this->dat_voces->consultarVocesPorLetra($letra);
+    }
+    
     public function buscarVocesSinonimos($texto){        
         return $this->dat_voces->buscarVocesSinonimos($texto);
     }

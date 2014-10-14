@@ -238,34 +238,13 @@ $(document).ready(function() {
             var id_caso = mydiv.getAttribute("data-brand");            
             window.open("cargadores/voces_editar.php?id="+id_caso, "_blank", "toolbar=yes, scrollbars=yes, resizable=0, top="+(((top/2)-(height/2))-20)+", left="+((left/2)-(width/2))+", width="+width+", height="+height);
         });        
-        $('.ventana_voces').click(function (){
-            javascript:window.close();     
-        });        
         $('.guardar-voces').click(function (event){
-            var especialidad_caso = event.target.id;
-            var array = especialidad_caso.split('-');
-            
-            var id_especialidad = array[0];
-            var id_caso = array[1];
-            
-            var valores = {
-                "accion" : "modificar-especialidad",
-                "id_caso" : id_caso,
-                "id_especialidad": id_especialidad          
-            };
-            $.ajax({
-                    data:  valores,
-                    url:   '../caso_ajax.php',
-                    type:  'post',
-                    beforeSend: function () {
-                    },
-                    success:  function () {
-                        parametros={};
-                        parametros.id_caso = id_caso;
-                        window.opener.$('#div_especialidad_caso').load('cargadores/especialidad.php',parametros,function(){});
-                        javascript:window.close();                                                
-                    }
-            });            
+            var id_caso = event.target.id;
+            parametros={};
+            parametros.id_caso = id_caso;
+            window.opener.$('#div_voces_caso').load('cargadores/voces.php',parametros,function(){});
+            window.opener.$('#div_vocessinonimos_caso').load('cargadores/voces_sinonimos.php',parametros,function(){});
+            javascript:window.close();                          
         });
         // FIN de modificacion de VOCES   
         

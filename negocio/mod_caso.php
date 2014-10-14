@@ -75,6 +75,16 @@ class mod_caso {
         return $this->dat_caso->quitarVozDelCaso($id_voz);
     }
     
+    public function agregarVozAlCaso($id_caso, $id_voz){
+        $this->dat_caso->setId($id_caso);
+        return $this->dat_caso->agregarVozAlCaso($id_voz);
+    }
+    
+    public function existeVozEnElCaso($id_caso, $id_voz){
+        $this->dat_caso->setId($id_caso);
+        return $this->dat_caso->existeVozEnElCaso($id_voz);        
+    }
+    
     
     
     

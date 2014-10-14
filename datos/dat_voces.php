@@ -59,11 +59,20 @@ class dat_voces {
         return $result;
     }
     
+    public function consultarVocesPorLetra($letra) {
+        $this->con->Conectar();
+        $consulta = "SELECT * FROM to_voces WHERE  ((voces LIKE '$letra%') or (voces LIKE '$letra%')) and estado = 1;";
+        $result = $this->con->getArrayModoColumna($consulta);
+        $this->con->desconectar();
+        return $result;
+    }
+    
     public function buscarVocesSinonimos($texto){
         $this->con->Conectar();
         $consulta = "select  distinct vo.id, vo.voces, vo.estado
 from to_voces as vo, to_voces_sin as vosin
-where vo.voces like '%$texto%' or
+where vo.voces like '%$texto%' and
+      vo.estado = 1 or
       vo.id in ( select id_voz from to_voces_sin where sinonimo like '%$texto%' )
 order by voces;";        
         $result = $this->con->getArrayModoColumna($consulta);

@@ -235,7 +235,7 @@ if (count($caso_registro)>0){
     <div align="left" class="cabezera_general_caso">
         Voces y Sinonimos del caso:
     </div>
-    <div class="detalle_caso_edicion" id="div_grupodocumentos_caso">    
+    <div class="detalle_caso_edicion" id="div_vocessinonimos_caso">    
         <br />
         <?php        
         $voces_del_caso = $voces->consultarVocesPorCaso($id_caso);
@@ -280,6 +280,46 @@ if (count($caso_registro)>0){
         ?>
     </div><br />
     
+    <div align="left" class="cabezera_general_caso">
+        Supuesto de hecho:
+        <span class="opcion_editar" title="Editar voces del caso" id="edit_supuesto">
+            Editar
+        </span></div>
+    <div class="detalle_caso_edicion" id="div_supuesto_caso">
+        <br />
+        <?php 
+        //$voces_del_caso = $voces->consultarVocesPorCaso($id_caso);
+        //if (count($voces_del_caso) > 0 ){
+        ?>        
+        <table width="100%">  
+            <tr>
+                <td width="15%" align="left">
+                    <b>Fecha :</b>
+                </td>
+                <td width="85%" align="left">
+                    02/02/2015
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <b>Lugar :</b>
+                </td>
+                <td align="left">
+                    Madrid
+                </td>
+            </tr>
+            <tr>
+                <td align="left" colspan="2" style="text-align: justify;">
+                    <b>Descripcion :<br /></b>
+                    HOMBRES DE CONFIANZA, S.L. (en adelante HdC) es una entidad dedicada a la prestación de servicios de intermediación en la contratación por vía electrónica, en especial aquellos consistentes en certificar y archivar, como tercera parte imparcial, las declaraciones de voluntad que integran los contratos electrónicos para su constancia a los efectos legal y reglamentariamente oportunos, siendo titular de un website en Internet. ABSTRACTO, S.A. contrata a Hdc para mejorar su website.
+                </td>
+            </tr>
+            
+        </table>
+        <?php
+        //}       
+        ?>
+    </div><br />
     
      <?php
 }else{
