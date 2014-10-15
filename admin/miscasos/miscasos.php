@@ -246,7 +246,7 @@ if (isset($_GET['cm'])){
                     <?php echo $tipocaso_descripcion;?>
                 </td>
                 <td width="15%" align="right">                    
-                    <a href="../caso/caso_edicion.php?id=<?php echo $id_caso;?>" title="Editar el caso">Edicion</a> / <a href="../../vista/caso/caso.php?id=<?php echo $id_caso;?>"title="Vista del caso modo Cliente">Finalizado</a>
+                    <a href="../caso/edicion_consulta.php?id=<?php echo $id_caso;?>" title="Editar el caso">Edicion</a> / <a href="../../vista/caso/caso.php?id=<?php echo $id_caso;?>"title="Vista del caso modo Cliente">Finalizado</a>
                 </td>
             </tr>
             <?php                    
